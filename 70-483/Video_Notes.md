@@ -100,7 +100,6 @@ public void method(int i, int j, int o = 3)
 ```
 Named Parameters
 Can use paramters out of order.
-```C#
 public void method (parametername1: 1, paramatername2: 5)
 Parameter Attributes
 Pass by Refernce vs. Value
