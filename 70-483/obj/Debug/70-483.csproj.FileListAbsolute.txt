@@ -1,6 +1,0 @@
-c:\users\allen\documents\visual studio 2015\Projects\70-483\70-483\bin\Debug\70-483.exe.config
-c:\users\allen\documents\visual studio 2015\Projects\70-483\70-483\bin\Debug\70-483.exe
-c:\users\allen\documents\visual studio 2015\Projects\70-483\70-483\bin\Debug\70-483.pdb
-c:\users\allen\documents\visual studio 2015\Projects\70-483\70-483\obj\Debug\70-483.csprojResolveAssemblyReference.cache
-c:\users\allen\documents\visual studio 2015\Projects\70-483\70-483\obj\Debug\70-483.exe
-c:\users\allen\documents\visual studio 2015\Projects\70-483\70-483\obj\Debug\70-483.pdb
