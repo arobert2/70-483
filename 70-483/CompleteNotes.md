@@ -1,8 +1,7 @@
 # 70-483 Complete Notes
 
 <ol>
-	<li>Task Parallel Library</li>
-	<li>
+	<li>Task Parallel Library <br>
 		<ol>
 			<li>ParallelFor</li>
 			<li>PLINQ</li>

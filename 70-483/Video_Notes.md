@@ -96,7 +96,7 @@ change backing field for enum | enum newenum : long
 ~~Optional Parameters~~
 ~~o is optional because it's already definied.~~
 
-~~public void method(int i, int j, int o = 3)
+~~public void method(int i, int j, int o = 3)~~
 
 ~~Named Parameters~~
 ~~Can use paramters out of order.~~
