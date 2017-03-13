@@ -8,9 +8,14 @@ namespace _70_483
 {
     public static class program
     {
+
         public static void Main(string[] args)
         {
             Random rand = new Random();
+
+            lambdatest lt = new lambdatest();
+
+            nameparametertest(j : 1, x : 5, i : 1);
 
             int[] vara = new int[2] { 0, 1 };
             var numQuery = from num in vara
@@ -25,7 +30,9 @@ namespace _70_483
                      Thread.Sleep(rand.Next(1000));
                      Console.WriteLine(i);
                  });
-  
+
+            lt.trigger();
+
             bool stopped = false;
             Thread t = new Thread(new ThreadStart(() =>
             {
@@ -50,6 +57,40 @@ namespace _70_483
                 Console.WriteLine("ThreadProc: {0}", i);
                 Thread.Sleep(1000);
             }
+        }
+
+        public static void nameparametertest(int i, int j, int x)
+        {
+
+        }
+    }
+
+    public class lambdatest
+    {
+        public event Action lambdatestevent;
+
+        public lambdatest()
+        {
+            lambdatestevent = () =>
+            {
+                Console.WriteLine("This is from the lambda event.");
+            };
+        }
+
+        public void trigger()
+        {
+            lambdatestevent?.Invoke();
+        }
+    }
+
+    public class indexertest
+    {
+        private string[] indexedobject;
+
+        public string this [int i]
+        {
+            get { return indexedobject[i]; }
+            set { indexedobject[i] = value; }
         }
     }
 }

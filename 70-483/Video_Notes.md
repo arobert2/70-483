@@ -33,7 +33,7 @@ Community Links
 Microsoft Virtual Academy
 ## Manage Program Flow
 ### Task Paralell Library
-ParallelFor
+~~ParallelFor~~
 PLINQ
 Tasks
 ### Async/Await keywords
@@ -52,39 +52,39 @@ Passing into Task
 Cancelling a Task
 ### Locks
 ### Thread-safe methods
-### Control Statements
-if/else
-while
-do/while
-switch
-for
-foreach
-break
-continue
-Goto
-yield
+~~### Control Statements~~
+~~if/else~~
+~~while~~
+~~do/while~~
+~~switch~~
+~~for~~
+~~foreach~~
+~~break~~
+~~continue~~
+~~Goto~~
+~~yield~~
 
-yield break
-yield continue
+~~yield break~~
+~~yield continue~~
 
-Enumerable.Range(int,int);
+~~Enumerable.Range(int,int);~~
 ### Delegates
-Func<T,U>
-Action<T>
+~~Func<T,U>~~
+~~Action<T>~~
 Comparison<T>
 COmparison<T,U>
 Predicate<T>
 EventHandler<T>
-### Lambda expression
-### Anonymous Methods
-### Subscribing/Unsubscribing from event
-### Example Questions
-Try statement, want new of the same error thrown. Which statement?
-A. catch(Exception e) {throw new Exception(e); }  --- Will change the call stack
-B. catch(Execption) {throw;}  
-C. catch(Exception e) {throw e;}  --- Clear the call stack
-D. catch(Exception) {throw new Exception;} ---Waste of time.
-Answer B
+~~### Lambda expression~~
+~~### Anonymous Methods~~
+~~### Subscribing/Unsubscribing from event~~
+~~### Example Questions~~
+~~Try statement, want new of the same error thrown. Which statement?~~
+~~A. catch(Exception e) {throw new Exception(e); }  --- Will change the call stack~~
+~~B. catch(Execption) {throw;}  ~~
+~~C. catch(Exception e) {throw e;}  --- Clear the call stack~~
+~~D. catch(Exception) {throw new Exception;} ---Waste of time.~~
+~~Answer B~~
 ## Create and Use Types
 ### Value Types
 Structs
@@ -93,39 +93,39 @@ change backing field for enum | enum newenum : long
 ### Reference Types
 ### Generics
 ### Methods
-Optional Parameters
-o is optional because it's already definied.
+~~Optional Parameters~~
+~~o is optional because it's already definied.~~
 ```C#
-public void method(int i, int j, int o = 3)
+~~~public void method(int i, int j, int o = 3)
 ```
-Named Parameters
-Can use paramters out of order.
-public void method (parametername1: 1, paramatername2: 5)
+~~Named Parameters~~
+~~Can use paramters out of order.~~
+~~public void method (parametername1: 1, paramatername2: 5)~~
 Parameter Attributes
 Pass by Refernce vs. Value
-### Static Extension Methods
-By using this as a parameter it turns the object into the object passed as left. In this case an int. So you can now call any int with .Add(int) to add that int.
+~~### Static Extension Methods~~
+~~By using this as a parameter it turns the object into the object passed as left. In this case an int. So you can now call any int with .Add(int) to add that int.~~
 ```C#
-void Main()
-{
-	3.Add(4)
-}
-public static class extmethod {
-	public static int Add(this int left, int right){
-		return left + right
-	}
-}
+~~void Main()~~
+~~{~~
+	~~3.Add(4)~~
+~~}~~
+~~public static class extmethod {~~
+	~~public static int Add(this int left, int right){~~
+		~~return left + right~~
+	~~}~~
+~~}~~
 ```
-### Indexers
-### Static Variables
-### Overloaded/Overriden Members
+~~### Indexers~~
+~~### Static Variables~~
+~~### Overloaded/Overriden Members~~
 ### IDisposable
 Use best practice. Look it up on MSDN library.
 ### Finalization
 ### Unmanaged Resources
 ### Garbage Collection
-### Interfaces
-Member signatures
+~~### Interfaces~~
+~~Member signatures~~
 ### Base classes
 Abstract base classes
 virtual memebers
