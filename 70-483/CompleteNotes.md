@@ -14,6 +14,22 @@
 			<li><a href="#tasks">Tasks</a></li>
 		</ol>
 	</li>
+	<li><a href="#control-statements">Control Statements</a>
+		<ol>
+			<li><a href="#ifelse">if/else</a></li>
+			<li><a href="#while">while</a></li>
+			<li><a href="#dowhile">do/while</a></li>
+			<li><a href="#switch">switch</a></li>
+			<li><a href="#for">for</a></li>
+			<li><a href="#foreach">foreach</a></li>
+			<li><a href="#break">break</a></li>
+			<li><a href="#continue">continue</a></li>
+			<li><a href="#goto">goto</a></li>
+			<li><a href="#yield">yield</a></li>
+			<li><a href="#yield-break-and-continue">yield break and continue</a></li>
+			<li><a href="#enumerablerangeintint">Enumerable.Range(int,int)</a></li>
+		</ol>
+	</li>
 </ol>
 
 # Task Parallel Library
@@ -80,7 +96,7 @@ var r = Parallel.For(int start, int stop, (i) => {});
 
 # Control Statements
 
-## If/else
+## if/else
 **if/else** statements help with decision making in program flow. If something is satisified do this else, do this.
 ```C#
 if(variable == 0)
@@ -89,7 +105,7 @@ else
 	DoSomethingElse();
 ```
 
-## While
+## while
 **while** loop until an outcome is satisfied. Will not run if already satisfied.
 ```C#
 while (checkvar != "STOP!")
@@ -98,7 +114,7 @@ while (checkvar != "STOP!")
 };
 ```
 
-## Do/While
+## do/while
 **Do/While** Loop until an outcome is satisfied. Will run atleast once no matter the outcome.
 ```C#
 do
@@ -214,7 +230,7 @@ class enumerableTest : IEnumerable
 ```
 This can now be used in a foreach loop because of the IEnumerable interface and the implementation of the ```GetEnumerator()``` method.
 
-## Yield Break
+## yield break and continue
 **yield break** allows you to break a loop within your enumerator.
 **yield continue** allows you to break a loop within an enumerator.
 
