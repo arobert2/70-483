@@ -1,11 +1,11 @@
 # 70-483 Complete Notes
 
 <ol>
-	<li><a href="https://github.com/arobert2/70-483/blob/master/70-483/CompleteNotes.md#70-483-complete-notes">Task Parallel Library</a> <br>
+	<li><a href="#70-483-complete-notes">Task Parallel Library</a> <br>
 		<ol>
 			<li><a href="https://github.com/arobert2/70-483/blob/master/70-483/CompleteNotes.md#creating-and-running-tasks-implicitly">Creating and Running Tasks Implicitly</a></li>
 			<li><a href="https://github.com/arobert2/70-483/blob/master/70-483/CompleteNotes.md#creating-and-running-tasks-explicitly">Creating and Running Tasks Explicitly</a></li>
-			<li>ParallelFor</li>
+			<li><a href="https://github.com/arobert2/70-483/blob/master/70-483/CompleteNotes.md#parallelfor">ParallelFor</a></li>
 			<li>PLINQ</li>
 			<li>Tasks</li>
 		</ol>
