@@ -93,7 +93,7 @@
 			</li>
 			<li><a href="#data-transformation-with-linq">Data Transformation with LINQ</a>
 				<ol>
-					<li><a href="Joining Multiple Inputs into One Output Sequence Example">Joining Multiple Inputs into One Output Sequence Example</a></li>
+					<li><a href="joining-multiple-inputs-into-one-output-sequence-example">Joining Multiple Inputs into One Output Sequence Example</a></li>
 					<li><a href="#selecting-a-subset-of-each-source-element">Selecting a Subset of each Source Element</a></li>
 					<li><a href="#transforming-in-memory-objects-into-xml">Transforming in-Memory Objects into XML</a></li>
 				</ol>
