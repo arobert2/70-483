@@ -891,9 +891,9 @@ Then use standard LINQ queries by referencing the ```LinqToSQLDataContext``` obj
 
 # Example Questions
 
-Try statement, want new of the same error thrown. Which statement?
-A. catch(Exception e) {throw new Exception(e); }  --- Will change the call stack
-B. catch(Execption) {throw;}  
-C. catch(Exception e) {throw e;}  --- Clear the call stack
-D. catch(Exception) {throw new Exception;} ---Waste of time.
-Answer B
+Try statement, want new of the same error thrown but no stack change. Which statement?  
+A. catch(Exception e) { throw new Exception(e); }  --- Will change the call stack  
+B. catch(Execption) { throw; }  
+C. catch(Exception e) { throw e; }  --- Clear the call stack  
+D. catch(Exception) { throw new Exception; } ---Waste of time.  
+Answer B  
