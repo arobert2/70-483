@@ -30,6 +30,42 @@
 			<li><a href="#enumerablerangeintint">Enumerable.Range(int,int)</a></li>
 		</ol>
 	</li>
+	<li><A href="#events-and-delegates">Events and Delegates</a>
+		<ol>
+			<li><a href="#delegates">Delegates</a>
+				<ol>
+					<li><a href="#func">Func</a></li>
+					<li><a href="#action">Action</a></li>
+				</ol>
+			</li>
+			<li><a href="#lambda-expressionsanonymous-methods">Lambda Expressions/Anonymous Methods</a></li>
+			<li><a href="#subscribingunsubscribing-from-events">Subscribing\Unsubscribing from events</a></li>
+		</ol>
+	</li>
+	<li><a href="#methods">Methods</a>
+		<ol>
+			<li><a href="#optional-parameters">Optional Parameters</a></li>
+			<li><a href="#named-parameters">Named Parameters</a></li>
+		</ol>
+	</li>
+	<li><a href="#static-extension-methods">Static Extension Methods</a></li>
+	<li><a href="#indexers">Indexers</a></li>
+	<li><a href="#static-variables">Static Variables</a></li>
+	<li><a href="#interfaces">Interfaces</a>
+		<ol>
+			<li><a href="#member-signatures">Member Signatures</a></li>
+			<li><a href="#overloaded-members">Overloaded Members</a></li>
+		</ol>
+	</li>
+	<li><a href="#base-classes">Base Classes</a>
+		<ol>
+			<li><a href="#abstract-base-classes">Abstract base Classes</a>
+				<ol>
+					<li><a href="#overridden members">Overridden Members</a></li>
+				</ol>
+			</li>
+		</ol>
+	</li>
 </ol>
 
 # Task Parallel Library
@@ -293,7 +329,7 @@ This allows the second console.writeline code to print SecondFirst instead of ju
 Action is like func except it doesn't return anything, not even with ```out``` parameters.
 It can have a lot of input parameters though. Invoke the same way, don't expect any returns.
 
-## Lamdba Expressions/Anonymous Methods
+## lambda Expressions/Anonymous Methods
 Lambda Expressions and Anonymous Methods are the same thing.
 You can create a lambda expression with the operator ``=>``
 You can use a lambda expression to define delegates, actions, funcs, events.
