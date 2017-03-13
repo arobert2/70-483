@@ -3,11 +3,15 @@
 <ol>
 	<li><a href="#70-483-complete-notes">Task Parallel Library</a> <br>
 		<ol>
-			<li><a href="https://github.com/arobert2/70-483/blob/master/70-483/CompleteNotes.md#creating-and-running-tasks-implicitly">Creating and Running Tasks Implicitly</a></li>
-			<li><a href="https://github.com/arobert2/70-483/blob/master/70-483/CompleteNotes.md#creating-and-running-tasks-explicitly">Creating and Running Tasks Explicitly</a></li>
-			<li><a href="https://github.com/arobert2/70-483/blob/master/70-483/CompleteNotes.md#parallelfor">ParallelFor</a></li>
-			<li>PLINQ</li>
-			<li>Tasks</li>
+			<li><a href="#creating-and-running-tasks-implicitly">Creating and Running Tasks Implicitly</a></li>
+			<li><a href="#creating-and-running-tasks-explicitly">Creating and Running Tasks Explicitly</a></li>
+			<li><a href="#parallelfor">ParallelFor</a></li>
+			<li><a href="#plinq">PLINQ</a>
+				<ol>
+					<li><a href="#what-is-a-parallel-query">What is a Parallel Query</a></li>
+				</ol>
+			</li>
+			<li><a href="#tasks">Tasks</a></li>
 		</ol>
 	</li>
 </ol>
@@ -65,11 +69,11 @@ var r = Parallel.For(int start, int stop, (i, state) => {});
 var r = Parallel.For(int start, int stop, (i) => {});
 ```
 
-# PLINQ
+## PLINQ
 
-## What is a Parallel Query
+#### What is a Parallel Query
 
-# Tasks
+## Tasks
 
 
 
