@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace _70_483
 {
@@ -7,6 +10,22 @@ namespace _70_483
     {
         public static void Main(string[] args)
         {
+            Random rand = new Random();
+
+            int[] vara = new int[2] { 0, 1 };
+            var numQuery = from num in vara
+                           where num != 2
+                           select num;
+
+            foreach (int num in numQuery)
+                Console.WriteLine(num);
+
+            var result = Parallel.For(0, 10, (i) =>
+                 {
+                     Thread.Sleep(rand.Next(1000));
+                     Console.WriteLine(i);
+                 });
+  
             bool stopped = false;
             Thread t = new Thread(new ThreadStart(() =>
             {

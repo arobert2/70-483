@@ -1,0 +1,6 @@
+C:\Users\allen\Desktop\70-483\70-483\bin\Debug\70-483.exe.config
+C:\Users\allen\Desktop\70-483\70-483\bin\Debug\70-483.exe
+C:\Users\allen\Desktop\70-483\70-483\bin\Debug\70-483.pdb
+C:\Users\allen\Desktop\70-483\70-483\obj\Debug\70-483.csprojResolveAssemblyReference.cache
+C:\Users\allen\Desktop\70-483\70-483\obj\Debug\70-483.exe
+C:\Users\allen\Desktop\70-483\70-483\obj\Debug\70-483.pdb
