@@ -66,6 +66,41 @@
 			</li>
 		</ol>
 	</li>
+	<li><a href="#linq">
+		<ol>
+			<li><a href="#basic-linq-queries">Basic LINQ Queries</a>
+				<ol>
+					<li><a href="#query-exmaple">Query Example</a></li>
+					<li><a href="#data-source">Data Source</a></li>
+					<li><a href-"#the-query">The Query</a></li>
+				</ol>
+			</li>
+			<li><a href="#deferred-execution">Deferred Execution</a></li>
+			<li><a href="#linq-and-generic-types">LINQ and Generic Types</a></li>
+			<li><a href="#basic-linq-query-operations">Basic LINQ Query Operations</a>
+				<ol>
+					<li><a href="#obtaining-a-data-source">Obtaining A Data Source</a></li>
+					<li><a href="#filtering">Filtering</a></li>
+					<li><a href="#grouping">Grouping</a></li>
+					<li><a href="#joining">Joining</a></li>
+					<li><a href="#group-join">Group Join</a></li>
+					<li><a href="#left-outer-join">Left Outer Join</a></li>
+					<li><a href="#the-equuils-operator">The Equals Operator</a></li>
+					<li><a href="#non-equijoins">Non-Equijoins</a></li>
+					<li><a href="#joins-on-object-collections-vs-relational-tables">Joins on object collections vs relation tables</a></li>
+					<li><a href="#composite-keys">Composite Keys</a></li>
+				</ol>
+			</li>
+			<li><a href="#data-transformation-with-linq">Data Transformation with LINQ</a>
+				<ol>
+					<li><a href="Joining Multiple Inputs into One Output Sequence Example">Joining Multiple Inputs into One Output Sequence Example</a></li>
+					<li><a href="#selecting-a-subset-of-each-source-element">Selecting a Subset of each Source Element</a></li>
+					<li><a href="#transforming-in-memory-objects-into-xml">Transforming in-Memory Objects into XML</a></li>
+				</ol>
+			</li>	
+		</ol>
+	</li>
+	<li><a href="#example-questions">Example Questions</a></li>
 </ol>
 
 # Task Parallel Library

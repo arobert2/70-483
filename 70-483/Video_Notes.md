@@ -27,7 +27,7 @@ Microsoft 70-483 exam site.
 Broken down by percentage
 ### Preparation Options
 Instructor-led training
-Exam prep video
+Exam prep video  
 Community Links
 
 Microsoft Virtual Academy
