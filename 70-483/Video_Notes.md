@@ -95,9 +95,9 @@ change backing field for enum | enum newenum : long
 ### Methods
 ~~Optional Parameters~~
 ~~o is optional because it's already definied.~~
-```C#
-~~~public void method(int i, int j, int o = 3)
-```
+
+~~public void method(int i, int j, int o = 3)
+
 ~~Named Parameters~~
 ~~Can use paramters out of order.~~
 ~~public void method (parametername1: 1, paramatername2: 5)~~
@@ -105,7 +105,7 @@ Parameter Attributes
 Pass by Refernce vs. Value
 ~~### Static Extension Methods~~
 ~~By using this as a parameter it turns the object into the object passed as left. In this case an int. So you can now call any int with .Add(int) to add that int.~~
-```C#
+
 ~~void Main()~~
 ~~{~~
 	~~3.Add(4)~~
@@ -115,7 +115,7 @@ Pass by Refernce vs. Value
 		~~return left + right~~
 	~~}~~
 ~~}~~
-```
+
 ~~### Indexers~~
 ~~### Static Variables~~
 ~~### Overloaded/Overriden Members~~
