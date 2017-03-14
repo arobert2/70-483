@@ -80,6 +80,7 @@
             1. [ Transforming in-Memory Objects into XML](#transforming-in-memory-objects-into-xml)
       1. [ Connect LINQ to a databse](#connect-linq-to-a-databse)
    1. [ Example Questions](#example-questions)
+
 # 70-483 Complete Notes
 
 # Manage Program FLow
