@@ -103,22 +103,37 @@
 	<li><a href="#example-questions">Example Questions</a></li>
 </ol>
 
-# Task Parallel Library
+# Manage Program FLow
 
-**Task Parallelilsm** - One or more independent tasks running concurrently.
+## Task Parallel Library
+```System.Threading```
+```System.Threading.Tasks```
+
+The purpose of the TPL is to make developers more productive by simplifying the process of adding parallelism and concurrency to applications.  
+Scales processes to use the processor most efficiently.  
 
 Benefits of using Tasks: More efficient and more scalable use of system resources
 						 More programmatic control than is possible with a thread or work item.
 
-## Creating and Running Tasks Implicitly
+### Data Parallelism
+Data parallelism - The Scenario in which the same operation is performed concurrently on elements in a source collection or array.  
+Portions of the collections are segregated off so each thread can access it without disturbing the others.
 
+Part of ```System.Threading.Tasks.Parallel```
+```Parallel.For``` and ```Parallel.ForEach``` handle data parallelism.
+
+### Task Parallelism
+The TPL is based on the concept of a task, which represents an asynchonous operation.  
+A task resembles a thread or ThreadPool but at a higher level of abstraction.
+Task Parallelism refers to one or more independent tasks running concurrently. 
+
+#### Creating and Running Tasks Implicitly
 Parallel.Invoke method is quick way to run a statement concurently. Pass an Action Delegate or anonymous method to start.
 ```C#
 Parallel.Invoke(() => DoWork(), () => DoMoreWork());
 ```
 
-## Creating and Running Tasks Explicitly
-
+#### Creating and Running Tasks Explicitly
 System.Threading.Tasks.Task are Tasks that do not return anything.
 System.Threading.Tasks.Task<TResult> are Tasks that return a value.
 Task.Status will return whether the Task has run or not.
@@ -145,8 +160,7 @@ public class Examples
 ```
 To create and run a task in one command use the Task.Run(() => DoSomething()); method.
 
-## Parallel.For
-
+#### Parallel.For
 System.Threading.Tasks
 Parallel.For executes a for loop that runs each loop on a different thread.
 
@@ -156,14 +170,87 @@ var r = Parallel.For(int start, int stop, (i, state) => {});
 var r = Parallel.For(int start, int stop, (i) => {});
 ```
 
+#### Parallel.ForEach
+Foreach loop that runs parallel.
+```C#
+Parallel.ForEach(enumerablecollection, delegate);
+Parallel.ForEach(enumerablecollection, () => {
+	DoSomething();
+});
+```
+### Dataflow
+
+
 ## PLINQ
 
 #### What is a Parallel Query
 
-## Tasks
+## Tasks and TaskFactories
+```Task``` and ```TaskFactory``` are used to create and manage tasks. Task is robust but still doesn't provide as many options as TaskFacotry. TaskFactory is clunky because of the options.
 
+### Task
+Examples of running tasks
+```C#
+//creates a task and starts it.
+Task newtask = Task(() => {
+	DoSomething();
+});
+newtask.Start();
 
+### TaskFactory
 
+## Locks, Deadlocks, and Race Conditions
+
+### Race Condition
+Race conditions occure when more than one thread is trying to access a shared variable at the same time.
+
+Two or more threads take in the same variable and output to the same variable. It's a race to who's last. Each thread will overwrite the last.
+
+### Deadlocks
+Deadlocks occur when two or more threads try to lock a resource the other has already locked. Neither thread can make any furhter progress.
+
+Many methods of the managed threading classes provide time-outs to help you detect deadlocks.
+```C#
+if(Monitor.TryEnter(lockObject, 300)) {
+	try {
+		//code that will run if the monitor locks
+	}
+	finally {
+		Monitor.Exit(this);
+	}
+else{
+		//code that will run if the monitor doesn't lock
+	}
+}
+```
+
+### lock
+The ```lock``` keyword marks a statement block as a critical section.
+By locking a block of code it will make sure it cannot execute while another locked thread is accessing a shared resource.
+```C#
+class lock_example
+{
+	object locthis;
+
+	public void Go()
+	{
+		Task.Run(()=>{
+			loc(new Object())
+			{
+				locthis = new Object {Tag = "this"};
+			}
+		});
+
+		Task.Tun(()=>{
+			loc(new Object())
+			{
+				locthis = new Object {Tag = "that"};
+			}
+		});
+	}
+}
+```
+The bottom thread will wait for the top thread to finish before turning locthis into a new object with the Tag Property of "that".
 
 # Control Statements
 
@@ -312,7 +399,7 @@ Generates a quick enumerated set of integers between a set of numbers.
 
 ## Delegates
 Delegates hold methods as objects and allow you to invoke them at will.
-```
+```C#
 public delegate void MyDelegate(string info);
 public MyDelegate delegatehandler;
 
@@ -387,7 +474,7 @@ public class lambdatest
 ```
 Whenever lambdatestevent is triggered it will run the lambda expression that is created on object instantiation.
 
-## Subscribing\Unsubscriping from events
+## Subscribing/Unsubscriping from events
 You can subscribe with += and unsubscribe with -=
 ```C#
 public event action thisevent;
@@ -406,11 +493,85 @@ The above code allows you to subscribe and unsubscribe Action delegates from eve
 += and -= actually access custom accessors available only to events ```add``` and ```remove```
 
 You can subscribe more than one method to a event/delegate/generic delegate and they will execute in order.
+# Create and Use Types
 
-# Methods
+## Reference Types
+Reference types return a memory reference.
+
+
+## Value Types
+Derived from System.ValueType.
+Value types are types that return a value instead of a memory reference. When given a value you cannot modify the value like reference objects.
+Can not inherit from value types.
+Values can be assigned null if declared nullable.
+
+All integrals inherit from System.Int32.
+
+### struct
+The ```struct``` declaration is similar to a class in that it stores data and can execute methods. Structs though only return values instead of references.
+structs must have all their public properties and fields initialized during the struct initialization. This is because you cannot modify information in a struct.
+In order to declare new information in a struct you have to make a new one. 
+```C#
+public struct struct_example
+{
+	public int X;
+	public int Y => 25
+	public int Z;
+	//x is required as an argument because X is not initialized by the constructor or during instantiation.
+	public struct_example(int x)
+	{
+		Z = 10;
+		X = x;
+	}
+}
+```
+Structs fall into the followiung
+#### Numeric Types
+Structs hold numerical data, integrals, floats, decimals  
+Structs also hold bools  
+Structs can have user defined values
+
+### enum
+```enum``` is a value that declares a keyword assigned to a number (or other types).
+```C#
+public enum NewEnum {val1, val2, val3}
+public enum NewEnum2 {val1 = 10, val2 = 5, val3 = 0}
+```
+You can declare an enum with default values like in the first example. In this example val1 = 0, val2 = 1, val3 = 2.  
+You can also declare enums with custom values like in second example.
+
+You can also declare your enum as a different data type to store different information.
+```C#
+public enum NewEnum3 : float {val1 = .5, val2 = .25 val3 = 0;}
+```
+
+Enums can also be cast between their value class and their enum class.
+```
+int ex1 = NewEnum.val2;  //1
+int ex2 = NewEnum2.val1;  //10
+float ex3 = NewEnum3.val3; //0
+
+NewEnum ne = NewEnum.val1;
+NewEnum2 ne2 = NewEnum.val3;
+NewEnum3 ne3 = NewEnum.val2;
+
+ne = (NewEnum)2; //NewEnum.val3
+ne2 = (NewENum2)10 //NewEnum2.val1
+ne3 = (NewEnum3).25 //NewEnum.val2
+```
+
+## Methods
 Methods are blocks of codes within a class or struct that execute on variables that are passed into them or local variables within the class.
-
-## Optional Parameters
+```C#
+public class method_example
+{
+	public void method()
+	{
+		...
+	}
+}
+```
+### Optional Parameters
 Optional Parameters are predefined parameters in a method. They must come at the end of all requires variables.
 If they are not referenced in the call they will use the default value provided.
 ```C#
@@ -418,13 +579,13 @@ public void optionalexample(int i, int j, string optional = "optional"){ ... }
 
 public void Main()
 {
-	//Don't have to declare'
+	//Don't have to declare
 	ExampleClass.optionalexample(1,2);
 	//But can
 	ExampleClass.optoinalexample(1,2,"not optional");
 }
 ```
-## Named Parameters
+### Named Parameters
 You can name parameters during instantiation. You can apply parameters in any order when doing so.
 ```C#
 void method(int i, int j, int x) { ... }
@@ -435,7 +596,7 @@ void Main()
 }
 ```
 
-# Static Extension Methods
+### Static Extension Methods
 You can extend objects by creating a static method that references it's first parameter with this
 ```C#
 public static int Sigma(this int x)
@@ -452,10 +613,11 @@ void Main()
 	int sigmatest = 20;
 	Console.WriteLine(sigmatest.Sigma());
 }
-```
+```,
 Sigma is now a method available to all Integer type classes because the first parameter is this, refering to it's self as an int.
+static extention methods must be created in a static class.
 
-# Indexers
+## Indexers
 Anytime you reference information like this ```[]``` you are using an indexer.
 You can add indexers to any objects.
 ```C#
@@ -467,7 +629,7 @@ public object this [int]
 ```
 The this command references the object this Property belongs to. This defines the [] part to this and defines how it functions.
 
-# Static Variables
+## Static Variables
 Static variables (and classes and methods) are instantiated on runtime. They are globally accessible. This is a great way for shared assets.
 ```C#
 public class newobject
@@ -507,7 +669,7 @@ StaticVariableAndMethod.taskqueue;
 //To access the static method CheckForUpdate
 StaticVariableAndMethod.CheckForUpdate(objectwithid.ID);
 ```
-# Interfaces
+## Interfaces
 Interfaces are a type of inheritable object. Public members are defined within an Interface but no code to execute.
 Classes that inherit from an interface must implement each members of the interface publicly.
 Interfaces are basically a contract in which you agree that a particular class will conform to.
@@ -545,7 +707,7 @@ int Main()
 }
 ```
 
-## Member Signatures
+### Member Signatures
 The signature of a member is the name and any argumnents that can be provided.
 ```C#
 public void method() { ... }
@@ -556,7 +718,7 @@ This can apply to constructors by name and parameters
 Indexers by assigning different variables to index.
 Opterators but that's not really important.
 
-## Overloaded Members
+### Overloaded Members
 An overloaded members is a member of an object that is named the same but have a different signature.
 ```C#
 public void overload_method(int i) { ... }
@@ -564,9 +726,52 @@ public void overload_method(int i, int j) { ... }
 ```
 Both methods above have the same name but are legal. overload_method is overloaded because when you accept different parameters the method has a different signature so it can exist on it's own.
 
-# Base Classes
+## Base Classes
 
-## Abstract base classes
+### Abstract base classes
+Abstract classes are similar to interfaces in that they cannot be instantiated, they outline required methods and properties in classes that inherit it,
+and they can be used for polymorphism. But ```abstract``` classes can contain complete inheritable methods and properties that can be used by derived classes.
+```C#
+public abstract class abstractexample
+{
+	//must be overriden
+	public abstract int Property {get;set;}
+	//can be overriden
+	public virtual int Property2 {get;set;}
+	//cannot be overriden but can be accessed
+	public int Property3 {get;set;}
+
+	//the same works for methods
+	//Must be overridden, no code can be written for abstract.
+	public abstract int GetNumber();
+	//Can be overridden, code must be provided.
+	public virtual int GetNumber2() { return 1; }
+	//Cannot be overridden but can be accessed.
+	public int GetNumber3() { return 2; }
+}
+
+public class inheritabstract : abstractexample
+{
+	//override property.
+	public override int Property {get {return 2} set {value} };
+
+	//override class is required.
+	public override int GetNumber()
+	{
+		return 5;
+	}
+	//override, but didn't have to.
+	public override GetNumber2()
+	{
+		return 7;
+	}
+}
+```
+The above code uses the ```virtual``` and ```abstract``` method modifiers to determine how they will be handled with derived classes.
+**virtual** - is a method modifier that allows a derived class to ```override``` it and use it's own code.
+**abstract** - defines a signature for a property or method but does not supply any code. Derived classes must ```override``` this class.
+
+Any method or property not merked with a modifier are inherited and can be executed by the derived class, but the derived class cannot ```override``` them.
 
 ### Overridden Members
 Overriden Members are members of a class that are inherited and marked as ```abstract``` or ```virtual```
@@ -598,9 +803,6 @@ int Main()
 	ah.runthistoo();
 }
 ```
-
-
-# No Section Yet
 
 # LINQ
 
@@ -932,3 +1134,10 @@ B. catch(Execption) { throw; }
 C. catch(Exception e) { throw e; }  --- Clear the call stack  
 D. catch(Exception) { throw new Exception; } ---Waste of time.  
 Answer B  
+
+Combine a bunch of text. Best way?  
+A. String append operator +=  
+B. String concatenation  
+C. StringBuilder class  
+D. StringWriter class  
+Answer C  

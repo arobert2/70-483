@@ -20,4 +20,14 @@ namespace _70_483
             Console.WriteLine("This is written from a delegate");
         }
     }
+
+    public abstract class test
+    {
+        public abstract int Property { get; set; }
+    }
+
+    public class test2 : test
+    {
+        public override int Property { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    }
 }

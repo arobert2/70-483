@@ -50,7 +50,7 @@ BlockingCollection
 CancellationTokenSource, CancellationToken
 Passing into Task
 Cancelling a Task
-### Locks
+~~### Locks~~
 ### Thread-safe methods
 ~~### Control Statements~~
 ~~if/else~~
@@ -87,9 +87,9 @@ EventHandler<T>
 ~~Answer B~~
 ## Create and Use Types
 ### Value Types
-Structs
-Enum
-change backing field for enum | enum newenum : long
+~~Structs~~
+~~Enum~~
+~~change backing field for enum | enum newenum : long~~
 ### Reference Types
 ### Generics
 ### Methods
@@ -127,9 +127,9 @@ Use best practice. Look it up on MSDN library.
 ~~### Interfaces~~
 ~~Member signatures~~
 ### Base classes
-Abstract base classes
-virtual memebers
-abstract memebers
+~~Abstract base classes~~
+~~virtual memebers~~
+~~abstract memebers~~
 ### Existing Interfaces
 IComparable
 IEnumerable
