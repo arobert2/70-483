@@ -1,113 +1,14 @@
 # 70-483 Complete Notes
 
-<ol>
-	<li><a href="#70-483-complete-notes">Task Parallel Library</a> <br>
-		<ol>
-			<li><a href="#creating-and-running-tasks-implicitly">Creating and Running Tasks Implicitly</a></li>
-			<li><a href="#creating-and-running-tasks-explicitly">Creating and Running Tasks Explicitly</a></li>
-			<li><a href="#parallelfor">ParallelFor</a></li>
-			<li><a href="#plinq">PLINQ</a>
-				<ol>
-					<li><a href="#what-is-a-parallel-query">What is a Parallel Query</a></li>
-				</ol>
-			</li>
-			<li><a href="#tasks">Tasks</a></li>
-		</ol>
-	</li>
-	<li><a href="#control-statements">Control Statements</a>
-		<ol>
-			<li><a href="#ifelse">if/else</a></li>
-			<li><a href="#while">while</a></li>
-			<li><a href="#dowhile">do/while</a></li>
-			<li><a href="#switch">switch</a></li>
-			<li><a href="#for">for</a></li>
-			<li><a href="#foreach">foreach</a></li>
-			<li><a href="#break">break</a></li>
-			<li><a href="#continue">continue</a></li>
-			<li><a href="#goto">goto</a></li>
-			<li><a href="#yield">yield</a></li>
-			<li><a href="#yield-break-and-continue">yield break and continue</a></li>
-			<li><a href="#enumerablerangeintint">Enumerable.Range(int,int)</a></li>
-		</ol>
-	</li>
-	<li><A href="#events-and-delegates">Events and Delegates</a>
-		<ol>
-			<li><a href="#delegates">Delegates</a>
-				<ol>
-					<li><a href="#func">Func</a></li>
-					<li><a href="#action">Action</a></li>
-				</ol>
-			</li>
-			<li><a href="#lambda-expressionsanonymous-methods">Lambda Expressions/Anonymous Methods</a></li>
-			<li><a href="#subscribingunsubscribing-from-events">Subscribing\Unsubscribing from events</a></li>
-		</ol>
-	</li>
-	<li><a href="#methods">Methods</a>
-		<ol>
-			<li><a href="#optional-parameters">Optional Parameters</a></li>
-			<li><a href="#named-parameters">Named Parameters</a></li>
-		</ol>
-	</li>
-	<li><a href="#static-extension-methods">Static Extension Methods</a></li>
-	<li><a href="#indexers">Indexers</a></li>
-	<li><a href="#static-variables">Static Variables</a></li>
-	<li><a href="#interfaces">Interfaces</a>
-		<ol>
-			<li><a href="#member-signatures">Member Signatures</a></li>
-			<li><a href="#overloaded-members">Overloaded Members</a></li>
-		</ol>
-	</li>
-	<li><a href="#base-classes">Base Classes</a>
-		<ol>
-			<li><a href="#abstract-base-classes">Abstract base Classes</a>
-				<ol>
-					<li><a href="#overridden members">Overridden Members</a></li>
-				</ol>
-			</li>
-		</ol>
-	</li>
-	<li><a href="#linq">
-		<ol>
-			<li><a href="#basic-linq-queries">Basic LINQ Queries</a>
-				<ol>
-					<li><a href="#query-exmaple">Query Example</a></li>
-					<li><a href="#data-source">Data Source</a></li>
-					<li><a href-"#the-query">The Query</a></li>
-				</ol>
-			</li>
-			<li><a href="#deferred-execution">Deferred Execution</a></li>
-			<li><a href="#linq-and-generic-types">LINQ and Generic Types</a></li>
-			<li><a href="#basic-linq-query-operations">Basic LINQ Query Operations</a>
-				<ol>
-					<li><a href="#obtaining-a-data-source">Obtaining A Data Source</a></li>
-					<li><a href="#filtering">Filtering</a></li>
-					<li><a href="#grouping">Grouping</a></li>
-					<li><a href="#joining">Joining</a></li>
-					<li><a href="#group-join">Group Join</a></li>
-					<li><a href="#left-outer-join">Left Outer Join</a></li>
-					<li><a href="#the-equuils-operator">The Equals Operator</a></li>
-					<li><a href="#non-equijoins">Non-Equijoins</a></li>
-					<li><a href="#joins-on-object-collections-vs-relational-tables">Joins on object collections vs relation tables</a></li>
-					<li><a href="#composite-keys">Composite Keys</a></li>
-				</ol>
-			</li>
-			<li><a href="#data-transformation-with-linq">Data Transformation with LINQ</a>
-				<ol>
-					<li><a href="#joining-multiple-inputs-into-one-output-sequence-example">Joining Multiple Inputs into One Output Sequence Example</a></li>
-					<li><a href="#selecting-a-subset-of-each-source-element">Selecting a Subset of each Source Element</a></li>
-					<li><a href="#transforming-in-memory-objects-into-xml">Transforming in-Memory Objects into XML</a></li>
-				</ol>
-			</li>	
-		</ol>
-	</li>
-	<li><a href="#example-questions">Example Questions</a></li>
-</ol>
-
 # Manage Program FLow
 
 ## Task Parallel Library
-```System.Threading```
-```System.Threading.Tasks```
+```C#
+System.Threading
+```
+```C#
+System.Threading.Tasks
+```
 
 The purpose of the TPL is to make developers more productive by simplifying the process of adding parallelism and concurrency to applications.  
 Scales processes to use the processor most efficiently.  
@@ -196,7 +97,7 @@ Task newtask = Task(() => {
 	DoSomething();
 });
 newtask.Start();
-
+```
 ### TaskFactory
 
 ## Locks, Deadlocks, and Race Conditions
@@ -613,7 +514,7 @@ void Main()
 	int sigmatest = 20;
 	Console.WriteLine(sigmatest.Sigma());
 }
-```,
+```
 Sigma is now a method available to all Integer type classes because the first parameter is this, refering to it's self as an int.
 static extention methods must be created in a static class.
 
