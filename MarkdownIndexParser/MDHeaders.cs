@@ -8,7 +8,7 @@ namespace MarkdownIndexParser
 {
     public class MDHeaders
     {
-        public int Tier { get; set; } = 1;
+        public int Tier { get; set; } = 0;
         public string Title { get; set; }
         public string Anchor { get; set; }
 
@@ -26,15 +26,7 @@ namespace MarkdownIndexParser
         /// <returns>tier number. 1 to 5 in theory.</returns>
         private int GetTier(string titleheader)
         {
-            int count = 0;
-            foreach (char c in titleheader)
-            {
-                if (c == '#')
-                    count++;
-                else
-                    break;
-            }
-            return count;
+            return titleheader.Filter("#").Length - 1;
         }
         /// <summary>
         /// Creates an anchor for a link.
@@ -43,19 +35,13 @@ namespace MarkdownIndexParser
         /// <returns>anchor string.</returns>
         private string GetAnchor(string titleheader)
         {
-            string newstring = "#";         //start string
-            string title = titleheader.Substring(titleheader.LastIndexOf("#") + 1); //remove the MD format header.
-            //clip space between MD hashtag and title if there.
-            if (title[0] == ' ')
-                title = title.Substring(1);        
-            title = title.Replace(' ', '-');        //change spaces to dashes
-            //filter for characters a-z and -
-            char[] filter = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '-', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-            //filter and build.
-            foreach (char c in title.ToLower())
-                if (filter.Contains<char>(c))
-                    newstring += c;
-            return newstring;
+            //new string, convert to lower case and filter for all letters, numbers and - and ' '
+            string newstring = titleheader.ToLower().Filter("abcdefghijklmnopqrstuvwxyz- 1234567890");  
+            //clip space between MD hashtag and newstring if there.
+            if (newstring[0] == ' ')
+                newstring = newstring.Substring(1);        
+            newstring = newstring.Replace(' ', '-');        //change spaces to dashes
+            return "#" + newstring;
         }
     }
 }
