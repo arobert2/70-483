@@ -68,13 +68,13 @@ Cancelling a Task
 ~~yield continue~~
 
 ~~Enumerable.Range(int,int);~~
-### Delegates
+~~### Delegates~~
 ~~Func<T,U>~~
 ~~Action<T>~~
-Comparison<T>
-COmparison<T,U>
-Predicate<T>
-EventHandler<T>
+~~Comparison<T>~~
+~~COmparison<T,U>~~
+~~Predicate<T>~~
+~~EventHandler<T>~~
 ~~### Lambda expression~~
 ~~### Anonymous Methods~~
 ~~### Subscribing/Unsubscribing from event~~
@@ -86,13 +86,13 @@ EventHandler<T>
 ~~D. catch(Exception) {throw new Exception;} ---Waste of time.~~
 ~~Answer B~~
 ## Create and Use Types
-### Value Types
+~~### Value Types~~
 ~~Structs~~
 ~~Enum~~
 ~~change backing field for enum | enum newenum : long~~
-### Reference Types
+~~### Reference Types~~
 ### Generics
-### Methods
+~~### Methods~~
 ~~Optional Parameters~~
 ~~o is optional because it's already definied.~~
 
@@ -101,8 +101,8 @@ EventHandler<T>
 ~~Named Parameters~~
 ~~Can use paramters out of order.~~
 ~~public void method (parametername1: 1, paramatername2: 5)~~
-Parameter Attributes
-Pass by Refernce vs. Value
+~~Parameter Attributes~~
+~~Pass by Refernce vs. Value~~
 ~~### Static Extension Methods~~
 ~~By using this as a parameter it turns the object into the object passed as left. In this case an int. So you can now call any int with .Add(int) to add that int.~~
 
@@ -126,7 +126,7 @@ Use best practice. Look it up on MSDN library.
 ### Garbage Collection
 ~~### Interfaces~~
 ~~Member signatures~~
-### Base classes
+~~### Base classes~~
 ~~Abstract base classes~~
 ~~virtual memebers~~
 ~~abstract memebers~~
@@ -135,13 +135,13 @@ IComparable
 IEnumerable
 IDisposable
 IUnknown
-### Example Question
-Combine a bunch of text. Best way?
-A. String append operator +=
-B. String concatenation
-C. StringBuilder class
-D. StringWriter class
-Answer C
+~~### Example Question~~
+~~Combine a bunch of text. Best way?~~
+~~A. String append operator +=~~
+~~B. String concatenation~~
+~~C. StringBuilder class~~
+~~D. StringWriter class~~
+~~Answer C~~
 ## Debug Applications and Implement Security
 ### Asemmetric
 RSACryptoServerProvider (RSA alcorithm)
@@ -165,13 +165,13 @@ Debug, Release
 ### Versioning Assemblies
 ### Signing Assemblies using Strong Names
 create a new windows app look at SNK file.
-### Example Question
-Guy gives you password, must hash and salt can't expose provided password. What classes can be used to encrypt provided password at login?
-A. SHA1CryptoServiceProvider   --- Technically yes, but not actual.
-B. RSACryptoServiceProvider 
-C. TripleDESCryptoServiceProvider
-D. MD5CryptoServiceProvider  --- Official answer
-Answer D
+~~### Example Question~~
+~~Guy gives you password, must hash and salt can't expose provided password. What classes can be used to encrypt provided password at login?~~
+~~A. SHA1CryptoServiceProvider   --- Technically yes, but not actual.~~
+~~B. RSACryptoServiceProvider ~~
+~~C. TripleDESCryptoServiceProvider~~
+~~D. MD5CryptoServiceProvider  --- Official answer~~
+~~Answer D~~
 ## Implement Data Access
 ### Working with Files
 File.ReadAllLines, File.ReadLine
@@ -199,8 +199,8 @@ XmlNavigator
 ## LINQ
 ### Operators
 Projection
-Join
-Group
+~~Join~~
+~~Group~~
 Take
 Skip
 Aggregate
@@ -211,11 +211,11 @@ Number 1 trip up
 IQuerableProvideable
 LINQToEntity
 ### Generic COllection
-Dictionary <T,U>
-List<T>
-Queue<T>
-SortedList<T,U>
-Stack<T>
+~~Dictionary <T,U>~~
+~~List<T>~~
+~~Queue<T>~~
+~~SortedList<T,U>~~
+~~Stack<T>~~
 ### ArrayList
 ### Hashtable
 ### Queue

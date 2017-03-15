@@ -821,6 +821,8 @@ int Main()
 	ah.runthistoo();
 }
 ```
+# Debug Applications and Implementing Security
+
 
 # LINQ
 
@@ -1143,6 +1145,52 @@ string connectString = System.Configuration.ConfigurationManager.ConnectionStrin
 LinqToSQLDataContext db = new LinqToSQLDataContext(connectString); 
 ```
 Then use standard LINQ queries by referencing the ```LinqToSQLDataContext``` object.
+
+## Generic Collections
+Collections of like objects.
+
+### Dictionary<T,U>
+```C#
+Dictionary<string, int> dict = new Dictionary<string,int>();
+dict[key];
+```
+A Dictionary takes an object as a key and allows you to use those objects as indexers. it has a dynamic size.
+
+### List<T>
+```C#
+List<int> newlist = new List<int>();
+newlist[0];
+```
+A list holds a set of numbers that can be referenced like an array. It has a dynamic size.
+
+### Queue<T>
+```C#
+Queue<object> aqueue = new Queue<object>();
+//enqueue object
+aqueue.Enqueue(new object());
+//Look at next in line
+aqueue.Peak();
+//Remove the variable on the top
+aqueue.Dequeue();
+```
+A queue uses the first in first out principal. You can add items to the back of the line with ```Dequeue()``` , see whats at the front with ```Peak()``` , and remove the first item from the Queue with ```Dequeue()```
+
+### SortedList<T,U>
+A collcetion of Key/Value pairs that are sorted by key based on the associeted IComparer<T> implementation.
+
+Pretty much a Dictionary but doesn't follow input order. Sorts by key.
+
+### Stack<T>
+```C#
+Stack<int> newstack = new Stack<int>();
+//Push an object to the top of the stack.
+newstack.Push(1);
+//Look at the top of the stack
+newstack.Peak();
+//remove object from top of stack
+newstack.Pop();
+```
+Stacks work on a first in last out principal. You can add varibles to the top of the stack with ```Push()``` , You can look at the top veriable with ```Peak()``` . You can remove the top variable with ```Pop()```
 
 # Example Questions
 
