@@ -542,7 +542,6 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 ```
 
 ### Other Value Types
-
 **bool** - Boolean value - True or False - False
 **byte** - 8-bit unsigned integer - 0 to 255 - 0
 **char** - 16 bit unicode character - U +0000 to U +ffff - '\0'
@@ -556,6 +555,44 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 **uint** - 32-bit unsigned integer - 0 to 4,294,967,295 - 0
 **ulong** - 64-bit unsigned integer type - 0 to 18,446,744,073,709,551,615 - 0
 **ushort** - 16-bit unsigned integer type - 0 to 65,535 - 0
+
+## Generics
+
+Generics are the implementation of the concept of a Type parameter.
+you can provide a type to this object on creation. Previously you would need to make a custom class for each object you wanted to interact with.
+
+You can implement existing Generic types, or create custom Generic types.
+
+### Generic type parameters
+```C#
+//This defines an object called GenericList which takes in a type parameter. The generic list now expects floats to interact with in some way.
+//This is common with collections. List<T> when declared can dynamically add new object equivalent to the type provided at T.
+GenericList<float> list1 = new GenericList<float>()
+```
+
+#### Type Parameter Naming Guidlines
+
+Name generic type parameters with descripting names, unless a single letter name is completely self explanatory and a descriptive name would not add value.
+```C#
+public interface ISeesionChannel<TSession>{//...}
+public delegate TOutput Converter<TInput, TOutPut(TInput from);
+public class List<T>{//...}
+```
+
+Consider using T as the type parameter name for types with ong single letter type parameter.
+```C#
+public int ICompare<t>() {return 0; }
+public delegate bool Predicate<t>(T item);
+public struct Nullable<t> where T | struct {//...}
+```
+
+Prefix descriptive type parameter names with "T"
+```C#
+public interface ISessionChannel<TSession>
+{
+	TSession Session {get;}
+}
+```
 
 ## Methods
 Methods are blocks of codes within a class or struct that execute on variables that are passed into them or local variables within the class.
@@ -1458,3 +1495,10 @@ B. RSACryptoServiceProvider
 C. TripleDESCryptoServiceProvider  
 D. MD5CryptoServiceProvider  --- Official answer  
 Answer D  
+
+Deserialize JSON strings to pre-defined type. Which class?  
+A. XmlObjectSerializer  
+B. DataContractSerializer  
+C. DataContractJsonSerializer  
+D. SoapFormatter  
+Answer C  

@@ -174,8 +174,8 @@ create a new windows app look at SNK file.
 ~~Answer D~~
 ## Implement Data Access
 ### Working with Files
-File.ReadAllLines, File.ReadLine
-File.WriteAllLines
+~~File.ReadAllLines, File.ReadLine~~
+~~File.WriteAllLines~~
 ### Streams
 CryptoStream
 FileStream
@@ -221,12 +221,12 @@ LINQToEntity
 ### Queue
 ### Stack
 ### Example Question
-Deserialize JSON strings to pre-defined type. Which class?
-A. XmlObjectSerializer
-B. DataContractSerializer
-C. DataContractJsonSerializer
-D. SoapFormatter
-Answer C
+~~Deserialize JSON strings to pre-defined type. Which class?~~
+~~A. XmlObjectSerializer~~
+~~B. DataContractSerializer~~
+~~C. DataContractJsonSerializer~~
+~~D. SoapFormatter~~
+~~Answer C~~
 
 ```C#
 int[] values = {1,3,5,7,9}; int threshold = 6;
