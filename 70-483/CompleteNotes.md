@@ -542,7 +542,7 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 ```
 
 ### Other Value Types
-|**Type**|**Represents**|**Range**|**Default Value**|
+|Type|Represents|Range|Default Value|
 |---|---|---|---|
 |bool|Boolean value|True or False|False|
 |byte|8-bit unsigned integer|0 to 255|0|
@@ -602,7 +602,7 @@ bottom line, passing by value(default) will not effect the variable that was pas
 
 #### Ref vs. Out
 They are basically the same except for key points.
-|**ref**|**out**|
+|ref|out|
 |---|---|
 |must be initialized before passing|can be uninitialized when passed.|
 |Not required to return anything|Must return something|
