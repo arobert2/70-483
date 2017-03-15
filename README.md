@@ -67,6 +67,17 @@
 		1. [ Abstract base classes](#abstract-base-classes)
 		1. [ Overridden Members](#overridden-members)
 1. [ Debug Applications and Implementing Security](#debug-applications-and-implementing-security)
+1. [ Implement Data Access](#implement-data-access)
+	1. [ Working with files](#working-with-files)
+		1. [ System.IO.File](#systemiofile)
+			1. [ File.AppendAllLines](#fileappendalllines)
+			1. [ File.AppendAllText](#fileappendalltext)
+			1. [ File.AppendTest](#fileappendtest)
+			1. [ File.Copy](#filecopy)
+			1. [ File.ReadAlllines()](#filereadalllines)
+			1. [ File.ReadLine()](#filereadline)
+			1. [ File.WriteAllLines()](#filewritealllines)
+			1. [ Example](#example)
 1. [ LINQ](#linq)
 	1. [ Basic LINQ Queries](#basic-linq-queries)
 		1. [ Query Example](#query-example)
@@ -993,6 +1004,99 @@ int Main()
 # Debug Applications and Implementing Security
 [top](#index)  
 
+# Implement Data Access
+[top](#index)  
+
+## Working with files
+[top](#index)  
+
+### System.IO.File
+[top](#index)  
+A class that's able to interact and manipulate files.
+
+#### File.AppendAllLines
+[top](#index)  
+Appends lines to a file. Creates a file if one doesn't exist. Closes file when finished.
+
+overload methods:  
+(string path, IEnumerable<string> contents)  
+(string path, IEnumerable<string> contents, Encoding encoding)		When the file is created or written to it uses the specified text encoding.  
+
+example:
+```C#
+List<string> listofstrings = new List<string>(new string[] { 
+		"This is a test", 
+		"yes it is", 
+		"this is a test", 
+		"yes it is", 
+		"it's a test", 
+		"it's a test"
+	});
+string path = "path\\to\\file"
+File.AppendAllLines(path, listofstrings);
+File.AppendAllLines(path, listofstrings, Encoding.UTF8);
+```
+
+#### File.AppendAllText
+[top](#index)  
+Appends a specified string to a file. If a file doesn't exist, it creates one, writes to it, then closes the file.
+
+overload methods:  
+(string path, string content)  
+(string path, string content, Encoding encoding)		When the file is created or written to it uses the specified text encoding.  
+
+example:
+```C#
+string path = "path\\to\\file";
+File.AppendAllText(path, "just a string");
+File.AppendAllText(path, "just a string", Encoding.UTF8);
+```
+
+#### File.AppendTest
+[top](#index)  
+Creates a StreamWriter that appends UTF-8 encoded text to an existing file or creates a new one.
+
+overload methods:  
+(string path)  
+
+example:
+```
+string path = "path\\to\\file";
+using(StreamWriter sw = File.AppendText(path))
+{
+	sw.WriteLine("append this.")
+	sw.WriteLine("append this too.")
+}
+```
+
+#### File.Copy
+[top](#index)  
+Copies an existing file to a new file
+
+overload methods:  
+(string source, string dest)					overwriting existing files is not allowed  
+(string source, string dest, bool overwrite)	overwriting is allowed.  
+
+example:
+```C#
+string filetocopy = "path\\to\\file";
+string wheretocopy = "path\\to\\destination"
+File.Copy(filetocopy, wheretocopy);
+File.Copy(filetocopy, wheretocopy, true)	//will overwrite
+File.Copy(filetocopy, wheretocopy, false)	//won't overwrite
+```
+
+#### File.ReadAlllines()
+[top](#index)  
+
+#### File.ReadLine()
+[top](#index)  
+
+#### File.WriteAllLines()
+[top](#index)  
+
+#### Example
+[top](#index)  
 
 # LINQ
 [top](#index)  
