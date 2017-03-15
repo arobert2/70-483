@@ -691,6 +691,7 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 ### Other Value Types
 [top](#index)  
 |**Type**|**Represents**|**Range**|**Default Value**|
+|---|---|---|---|
 |bool|Boolean value|True or False|False|
 |byte|8-bit unsigned integer|0 to 255|0|
 |char|16 bit unicode character|U +0000 to U +ffff|
@@ -755,6 +756,7 @@ bottom line, passing by value(default) will not effect the variable that was pas
 [top](#index)  
 They are basically the same except for key points.
 |**ref**|**out**|
+|---|---|
 |must be initialized before passing|can be uninitialized when passed.|
 |Not required to return anything|Must return something|
 |Good for modifying parameter|Good for returning multiple values|
