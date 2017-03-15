@@ -74,10 +74,24 @@
 			1. [ File.AppendAllText](#fileappendalltext)
 			1. [ File.AppendTest](#fileappendtest)
 			1. [ File.Copy](#filecopy)
-			1. [ File.ReadAlllines()](#filereadalllines)
-			1. [ File.ReadLine()](#filereadline)
-			1. [ File.WriteAllLines()](#filewritealllines)
-			1. [ Example](#example)
+			1. [ File.Create](#filecreate)
+			1. [ File.ReadAllLines()](#filereadalllines)
+			1. [ File.Decrypt(string)](#filedecryptstring)
+			1. [ File.Encrypt](#fileencrypt)
+			1. [ File.Delete](#filedelete)
+			1. [ File.Exists](#fileexists)
+			1. [ File.GetAccessControl](#filegetaccesscontrol)
+			1. [ File.GetAttribute](#filegetattribute)
+			1. [ File.GetCreationTime](#filegetcreationtime)
+			1. [ File.GetCreationTimeUtc](#filegetcreationtimeutc)
+			1. [ File.GetLastAccessTime](#filegetlastaccesstime)
+			1. [ File.GetLastAccessTimeUtc](#filegetlastaccesstimeutc)
+			1. [ File.GetLastWriteTime](#filegetlastwritetime)
+			1. [ File.GetLastWriteTimeUtc](#filegetlastwritetimeutc)
+			1. [ File.Move](#filemove)
+			1. [ File.Open](#fileopen)
+			1. [ File.ReadLine](#filereadline)
+			1. [ File.WriteAllLines](#filewritealllines)
 1. [ LINQ](#linq)
 	1. [ Basic LINQ Queries](#basic-linq-queries)
 		1. [ Query Example](#query-example)
@@ -692,7 +706,7 @@ public enum NewEnum3 : float {val1 = .5, val2 = .25 val3 = 0;}
 ```
 
 Enums can also be cast between their value class and their enum class.
-```
+```C#
 int ex1 = NewEnum.val2;  //1
 int ex2 = NewEnum2.val1;  //10
 float ex3 = NewEnum3.val3; //0
@@ -708,21 +722,20 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 
 ### Other Value Types
 [top](#index)  
-|Type|Represents|Range|Default Value|
-|---|---|---|---|
-|bool|Boolean value|True or False|False|
-|byte|8-bit unsigned integer|0 to 255|0|
-|char|16 bit unicode character|U +0000 to U +ffff|
-|decimal|128-bit precise decimal values with 28-28 significant digits|(-7.9x10^28 to 7.9x10^28) / 10^0 to 10^28|0.0M|
-|double|64-bit double precision floating point type|(+/-)5.0x10^-324 to (+/-)1.7x10^308|0.0D|
-|float|32-bit single-precision floating type|-3.4x10^38 +3.4x10^28|0.0F|
-|int|32-bit signed integer|-2,147,483,648 to 2,147,483,647|0|
-|long|64-bit signed integer type|-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 |0L|
-|sbyte|8-bit signed integer type|-128 to 127|0|
-|short|16-bit signed integer type|-32,768 to 32,767|0|
-|uint|32-bit unsigned integer|0 to 4,294,967,295|0|
-|ulong|64-bit unsigned integer type|0 to 18,446,744,073,709,551,615|0|
-|ushort|16-bit unsigned integer type|0 to 65,535|0|
+
+**bool** - Boolean value - True or False - False
+**byte** - 8-bit unsigned integer - 0 to 255 - 0
+**char** - 16 bit unicode character - U +0000 to U +ffff - '\0'
+**decimal** - 128-bit precise decimal values with 28-28 significant digits - (-7.9x10^28 to 7.9x10^28) / 10^0 to 10^28 - 0.0M
+**double** - 64-bit double precision floating point type - (+/-)5.0x10^-324 to (+/-)1.7x10^308 - 0.0D 
+**float** - 32-bit single-precision floating type - -3.4x10^38 +3.4x10^28 - 0.0F
+**int** - 32-bit signed integer - -2,147,483,648 to 2,147,483,647 - 0
+**long** - 64-bit signed integer type - -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807  - 0L
+**sbyte** - 8-bit signed integer type - -128 to 127 - 0
+**short** - 16-bit signed integer type - -32,768 to 32,767 - 0
+**uint** - 32-bit unsigned integer - 0 to 4,294,967,295 - 0
+**ulong** - 64-bit unsigned integer type - 0 to 18,446,744,073,709,551,615 - 0
+**ushort** - 16-bit unsigned integer type - 0 to 65,535 - 0
 
 ## Methods
 [top](#index)  
@@ -1060,7 +1073,7 @@ overload methods:
 (string path)  
 
 example:
-```
+```C#
 string path = "path\\to\\file";
 using(StreamWriter sw = File.AppendText(path))
 {
@@ -1086,17 +1099,194 @@ File.Copy(filetocopy, wheretocopy, true)	//will overwrite
 File.Copy(filetocopy, wheretocopy, false)	//won't overwrite
 ```
 
-#### File.ReadAlllines()
+#### File.Create
 [top](#index)  
+Creates or overwrites a file.
 
-#### File.ReadLine()
-[top](#index)  
+overload methods
+(string path)
+(string path, int buffersize)	Number of bytes buffered for read and write
+(string path, int buffersize, FileOptions.Encrypted)	has a buffer, and allows for FileOptions to be declared.
+(string path, int buffersize, FileOptions.None, FileSecurity accesscontrol)		Allows file security to determine access control.
 
-#### File.WriteAllLines()
+#### File.ReadAllLines()
 [top](#index)  
+Creates or opens a file writing UTF-8 encoded text
 
-#### Example
+overload methods:
+(string path)
+
+example:
+```C#
+string path "path\\to\\file";
+using(StreamWriter sw = File.CreateText(path))
+{
+	sw.WriteLine("Hello");
+}
+```
+
+#### File.Decrypt(string)
 [top](#index)  
+Decrypt a file that was encrypted by the current account using the Encrypt method.
+
+overload methods:
+(string path)
+
+example:
+```C#
+string path = "path\\to\\file";
+File.Decrypt(path);
+```
+
+#### File.Encrypt
+[top](#index)  
+Encrypt a file
+
+overload methods:
+(string path)
+
+example:
+```C#
+string path = "path\\to\\file"
+File.Encrypt(path);
+```
+
+#### File.Delete
+[top](#index)  
+Delete a file
+
+overload methods:
+(string path)
+
+example:
+```C#
+string path = "path\\to\\file"
+File.Delete(path);
+```
+
+#### File.Exists
+[top](#index)  
+Checks to see if a file exists
+
+overload methods:
+(string path)
+
+example:
+```C#
+string path = "path\\to\\file";
+File.Exists(path);
+```
+
+#### File.GetAccessControl
+[top](#index)  
+Gets the FileSecurity object that encapsulates the access control list.
+
+overload methods:
+(string path)
+(string path, AccessControlSections.Owner)	specifies the type of access control list information to receive.
+
+example:
+```C#
+string path = "path\\to\\file";
+FileSecurity filesecurity = File.GetAccessControl(path);
+FileSecurity morefilesecurity = File.GetAccessControl(path, AccessControlSection.All);
+```
+
+#### File.GetAttribute
+[top](#index)  
+Gets the attribuets of a file
+
+overload methods;
+(string path)
+
+example:
+```C#
+File.GetAttributes(path)
+```
+
+#### File.GetCreationTime
+[top](#index)  
+returns the creation time
+File.GetCreationTime(path)
+
+#### File.GetCreationTimeUtc
+[top](#index)  
+Returns the creation time in UTC.
+File.GetCreationTimeUtc(path)
+
+#### File.GetLastAccessTime
+[top](#index)  
+Returns the last time the file was accessed
+File.GetLastAccessTime(path)
+
+#### File.GetLastAccessTimeUtc
+[top](#index)  
+Returns the last tim the file was accessed in UTC
+File.GetLastAccessTimeUtc(path)
+
+#### File.GetLastWriteTime
+[top](#index)  
+Last time file was written to.
+File.GetLastWriteTime(path)
+
+#### File.GetLastWriteTimeUtc
+[top](#index)  
+What do you think?
+
+#### File.Move
+[top](#index)  
+Moves the file
+File.Move(dest,target)
+
+#### File.Open
+[top](#index)  
+Opens a file and sets the file mode.
+
+overload methods:
+(string path, FileMode.Create)
+(string path, FileMode.Append, FileAccess.ReadWrite)	Sets file access as well
+(string path, FileMode.Open, FileAccess.Read, FileShare.Write) sets file access and stream access with FileShare.
+
+example:
+```C#
+using(FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+{
+	Console.WriteLine(fs.ReadByte())
+}
+
+#### File.ReadLine
+[top](#index)  
+Reads the lines of a file
+
+overload methods:
+(stirng path)
+(string path, Encode.Unicode)	What encoding is needed to read.
+
+examples:
+```C#
+foreach(string line in File.ReadLine(path))
+	Console.WriteLine(line);
+```
+
+#### File.WriteAllLines
+[top](#index)  
+Creates a file if needed, writes a collection of strings to a file, closes the file.
+
+overload methods:
+(string path, IEnumerable<string> stringlist)
+(string path, IEnumerable<string> stringlist, Encoding.UTF8)	Specifies text encoding.
+(string path, string[] content)		Uses an array instead of a list
+(string path, string[] content, Encoding.UTF8)	Uses an array and specifies text encoding.
+
+example:
+```C#
+List<string> stringlist = new List<string>(new string[] {
+	"we are testing",
+	"yes we are"
+});
+
+File.WriteAllLines(path, stringlist, Encode.UTF8)
+```
 
 # LINQ
 [top](#index)  
@@ -1439,7 +1629,7 @@ var studentsToXml = new XElement("Root",
 [top](#index)  
 create a connection in visual studio
 reference it in code  
-```
+```C#
 string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
 LinqToSQLDataContext db = new LinqToSQLDataContext(connectString); 
 ```
