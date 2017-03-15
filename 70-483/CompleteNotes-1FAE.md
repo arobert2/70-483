@@ -88,7 +88,7 @@
 		1. [ Joins on object collections vs relation tables](#joins-on-object-collections-vs-relation-tables)
 		1. [ Composite Keys](#composite-keys)
 	1. [ Data Transformation with LINQ](#data-transformation-with-linq)
-		1. [Joining Multiple Inputs into One Output Sequence Example](#joining-multiple-inputs-into-one-output-sequence-example)
+		1. [ Joining Multiple Inputs into One Output Sequence Example](#joining-multiple-inputs-into-one-output-sequence-example)
 		1. [ Selecting a Subset of each Source Element](#selecting-a-subset-of-each-source-element)
 		1. [ Transforming in-Memory Objects into XML](#transforming-in-memory-objects-into-xml)
 	1. [ Connect LINQ to a databse](#connect-linq-to-a-databse)
@@ -1235,7 +1235,7 @@ Can transform data
 	<li>Create output sequence in a different format. For example, you can transform data from SQL rows or test files into XML.</li>
 </ul>
 
-###Joining Multiple Inputs into One Output Sequence Example
+### Joining Multiple Inputs into One Output Sequence Example
 [top](#index)  
 ```C#
 //Data classes

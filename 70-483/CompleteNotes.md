@@ -1044,7 +1044,7 @@ Can transform data
 	<li>Create output sequence in a different format. For example, you can transform data from SQL rows or test files into XML.</li>
 </ul>
 
-###Joining Multiple Inputs into One Output Sequence Example
+### Joining Multiple Inputs into One Output Sequence Example
 ```C#
 //Data classes
 class Student
