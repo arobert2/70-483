@@ -82,14 +82,14 @@ Parallel.ForEach(enumerablecollection, () => {
 ### Dataflow
 
 
-## PLINQ
+### PLINQ
 
 #### What is a Parallel Query
 
-## Tasks and TaskFactories
+### Tasks and TaskFactories
 ```Task``` and ```TaskFactory``` are used to create and manage tasks. Task is robust but still doesn't provide as many options as TaskFacotry. TaskFactory is clunky because of the options.
 
-### Task
+#### Task
 Examples of running tasks
 ```C#
 //creates a task and starts it.
@@ -98,10 +98,23 @@ Task newtask = Task(() => {
 });
 newtask.Start();
 ```
-### TaskFactory
+```C#
+//runs right away.
+Task.Run(() => {
+	Do Something
+});
+```
+
+#### TaskFactory
+```C#
+//Task factory examples of Task.Run();
+Task.Factory.StartNew<string>(() => {
+	DoSomething();
+});
+```
 
 ## Locks, Deadlocks, and Race Conditions
-
+Common multithreading error and how to deal with them.
 ### Race Condition
 Race conditions occure when more than one thread is trying to access a shared variable at the same time.
 
@@ -153,9 +166,9 @@ class lock_example
 ```
 The bottom thread will wait for the top thread to finish before turning locthis into a new object with the Tag Property of "that".
 
-# Control Statements
+## Control Statements
 
-## if/else
+### if/else
 **if/else** statements help with decision making in program flow. If something is satisified do this else, do this.
 ```C#
 if(variable == 0)
@@ -164,7 +177,7 @@ else
 	DoSomethingElse();
 ```
 
-## while
+### while
 **while** loop until an outcome is satisfied. Will not run if already satisfied.
 ```C#
 while (checkvar != "STOP!")
@@ -173,7 +186,7 @@ while (checkvar != "STOP!")
 };
 ```
 
-## do/while
+### do/while
 **Do/While** Loop until an outcome is satisfied. Will run atleast once no matter the outcome.
 ```C#
 do
@@ -182,7 +195,7 @@ do
 }while(checkvar != "STOP!");
 ```
 
-## switch
+### switch
 **switch** Similar to if used to satisfy multiple outcomes cleanly. Has ability for default for unexpected value.
 ```C#
 switch(varcheck)
@@ -199,7 +212,7 @@ switch(varcheck)
 }
 ```
 
-## for
+### for
 **for** loops are simple loops that will loop a set amount of times. loop.
 ```C#
 for(int i = 0;i < 10;i++)
@@ -209,7 +222,7 @@ for(int i = 0; i < variable;i++)
 	DoSomething();
 ```
 
-## foreach
+### foreach
 **foreach** loops through any object that inherites from the IEnumerable interface. These are collections of the same object type.
 ```C#
 foreach(object o in objectcollection)
@@ -217,7 +230,7 @@ foreach(object o in objectcollection)
 ```
 passes each object in objectcollection to the DoSomething(object o) method.
 
-## break
+### break
 **break** forces your program out of a loop. The following is common.
 ```C#
 while(true)
@@ -228,7 +241,7 @@ while(true)
 ```
 this will continue to run until something and outcome equal the same.
 
-## continue
+### continue
 **continue** allows the loop to continue.
 ```C#
 while(true)
@@ -241,7 +254,7 @@ while(true)
 ```
 this will continue until something and outcome do not equal the same.
 
-## goto
+### goto
 **goto** can be used to move the code between tagged areas. This is similar to basic and batch. Tagged areas are written as ```Label:``` 
 ```C#
 Goto10:
@@ -264,7 +277,7 @@ switch (integer)
 }
 ```
 
-## yield
+### yield
 Returns enumerated objects. Everytime the method with the yield return is called it will return the next yield.
 ```C#
 public int ReturnNum()
@@ -289,16 +302,16 @@ class enumerableTest : IEnumerable
 ```
 This can now be used in a foreach loop because of the IEnumerable interface and the implementation of the ```GetEnumerator()``` method.
 
-## yield break and continue
+### yield break and continue
 **yield break** allows you to break a loop within your enumerator.
 **yield continue** allows you to break a loop within an enumerator.
 
-## Enumerable.Range(int,int)
+### Enumerable.Range(int,int)
 Generates a quick enumerated set of integers between a set of numbers.
 
-# Events and Delegates
+## Events and Delegates
 
-## Delegates
+### Delegates
 Delegates hold methods as objects and allow you to invoke them at will.
 ```C#
 public delegate void MyDelegate(string info);
@@ -313,7 +326,7 @@ public void MyNewMethod(string info)
 ```
 Whenever the delegatehandler is called it will execute the method passed to the delegate.
 
-### Func<T,U>
+#### Func<T,U>
 ```Func``` is a generic delegate that takes and input and returns an output.
 ```C#
 public class functest
@@ -348,11 +361,67 @@ It also returns a what ever type you have set.
 The first call prints the return, but at the same time it updates inputoutput.
 This allows the second console.writeline code to print SecondFirst instead of just Second.
 
-### Action<t>
+#### Action<t>
 Action is like func except it doesn't return anything, not even with ```out``` parameters.
 It can have a lot of input parameters though. Invoke the same way, don't expect any returns.
 
-## lambda Expressions/Anonymous Methods
+#### Comparison<T>
+Delegate that returns a custom comparison by int form.
+```
+public void Main()
+{
+	List<object> objectlist = new List<object>();
+	objectlist.Sort(compare);
+}
+
+public int compare(object find, object compare)
+{
+	if(find > compare)
+		return 1;
+	if(find < compare)
+		return -1;
+	if(find == compare)
+		return 0;
+}
+```
+Sort uses a Compare<T> delegate. You can pass a method to it that must return a 1, 0, or -1 in order to function.
+
+You can create multiple methods for different cases.
+```C#
+Array.Sort(Collection, Collection.PropertyToSortBy);
+```
+Array.Sort's first parameter is an out param. Collection is updated on execution without return.
+
+#### Predicate<T>
+Predicate<T> set a particular constraint and filter items that do not conform to the constraint.
+```
+//Find the first number in a string.
+public bool search(char c)
+{
+	string[] str = {1234567890}
+	return str.Contains(c);
+}
+
+public void Main()
+{
+	Console.WriteLine(Array.Find("This is a 21 Test.", search));
+}
+```
+THe above code will return the first number in a string.
+
+#### EventHandler<TEventArgs>
+You can create custom EventArgs by inheriting from EventArgs. Then you can use it an a generic inside of an EventHandler to pass event arguments.
+
+Events conform to the following
+```C#
+//The event
+EventHandler<CustomerEventArgs> eventhandler = CustomMethod;
+//The event method.
+public void EventMethod(sender o, CustomEventArgs cea)
+```
+EventHandler<T> will pass the event args input during invoke so you can pass information into the trigger method. It also passes the object that trigger the event.
+
+### lambda Expressions/Anonymous Methods
 Lambda Expressions and Anonymous Methods are the same thing.
 You can create a lambda expression with the operator ``=>``
 You can use a lambda expression to define delegates, actions, funcs, events.
@@ -375,7 +444,7 @@ public class lambdatest
 ```
 Whenever lambdatestevent is triggered it will run the lambda expression that is created on object instantiation.
 
-## Subscribing/Unsubscriping from events
+### Subscribing/Unsubscriping from events
 You can subscribe with += and unsubscribe with -=
 ```C#
 public event action thisevent;
@@ -399,6 +468,23 @@ You can subscribe more than one method to a event/delegate/generic delegate and 
 ## Reference Types
 Reference types return a memory reference.
 
+### class
+```class``` is the blueprint of an object. It contains fields, properties, methods, and constructors to create and manipulated objects.
+
+### interface
+```interface``` is an inheritable class like object that can only be inherited. It outlines how a class must function and is used for polymorphism and Liskov Substitution Principal.
+
+### delegate
+```delegate``` is an object that holds a method. When a delegate is called is executes that method. A delegate can change which methods are executed.
+
+### object
+```object``` is the most basic class in C#. All classes eventually inherit from object. An object is a broad term to describe any field holding an instantiated class.
+
+### string
+```string``` holds an array of characters and is used convey text.
+
+### dynamic
+```dynamic``` is a reference type that bypasses compile time checking. It is commonly used by COM APIs such as Office Automation API, IronPython Libraries, and HTML Document Object Model(DOM)
 
 ## Value Types
 Derived from System.ValueType.
@@ -426,12 +512,6 @@ public struct struct_example
 	}
 }
 ```
-Structs fall into the followiung
-#### Numeric Types
-Structs hold numerical data, integrals, floats, decimals  
-Structs also hold bools  
-Structs can have user defined values
-
 ### enum
 ```enum``` is a value that declares a keyword assigned to a number (or other types).
 ```C#
@@ -460,6 +540,22 @@ ne = (NewEnum)2; //NewEnum.val3
 ne2 = (NewENum2)10 //NewEnum2.val1
 ne3 = (NewEnum3).25 //NewEnum.val2
 ```
+
+### Other Value Types
+|**Type**|**Represents**|**Range**|**Default Value**|
+|bool|Boolean value|True or False|False|
+|byte|8-bit unsigned integer|0 to 255|0|
+|char|16 bit unicode character|U +0000 to U +ffff|
+|decimal|128-bit precise decimal values with 28-28 significant digits|(-7.9x10^28 to 7.9x10^28) / 10^0 to 10^28|0.0M|
+|double|64-bit double precision floating point type|(+/-)5.0x10^-324 to (+/-)1.7x10^308|0.0D|
+|float|32-bit single-precision floating type|-3.4x10^38 +3.4x10^28|0.0F|
+|int|32-bit signed integer|-2,147,483,648 to 2,147,483,647|0|
+|long|64-bit signed integer type|-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 |0L|
+|sbyte|8-bit signed integer type|-128 to 127|0|
+|short|16-bit signed integer type|-32,768 to 32,767|0|
+|uint|32-bit unsigned integer|0 to 4,294,967,295|0|
+|ulong|64-bit unsigned integer type|0 to 18,446,744,073,709,551,615|0|
+|ushort|16-bit unsigned integer type|0 to 65,535|0|
 
 ## Methods
 Methods are blocks of codes within a class or struct that execute on variables that are passed into them or local variables within the class.
@@ -496,8 +592,26 @@ void Main()
 	method(j : 1, x :  5, i: 2);
 }
 ```
+### Passing by Reference vs. Passing by Value
+By default, when a value type is passed to a amtheod, a copy is passed instead of the object itself. 
+Therefore, changes to the argument have no effect on the original copy in the calling method. You can pass 
+a value0type by reference by using the ```ref``` or ```out``` keyword.
 
-### Static Extension Methods
+bottom line, passing by value(default) will not effect the variable that was passesd. Passing by reference will.
+
+#### Ref vs. Out
+They are basically the same except for key points.
+|**ref**|**out**|
+|must be initialized before passing|can be uninitialized when passed.|
+|Not required to return anything|Must return something|
+|Good for modifying parameter|Good for returning multiple values|
+|Doesn't need to be initialized in the calling method|Must be initialized in the calling method.|
+|Ref passes data bi-drecitonaly|out passas data uni-directionaly|
+
+Both ref and out ar etreatd differently at runtime and they are treated the same at compile time.
+Properties are not variables, therfore it cannot be passed as an out or ref parameter.
+
+## Static Extension Methods
 You can extend objects by creating a static method that references it's first parameter with this
 ```C#
 public static int Sigma(this int x)
@@ -628,6 +742,7 @@ public void overload_method(int i, int j) { ... }
 Both methods above have the same name but are legal. overload_method is overloaded because when you accept different parameters the method has a different signature so it can exist on it's own.
 
 ## Base Classes
+Classes that can be inherited from. Some cannot be instantiated.
 
 ### Abstract base classes
 Abstract classes are similar to interfaces in that they cannot be instantiated, they outline required methods and properties in classes that inherit it,
@@ -1042,3 +1157,10 @@ B. String concatenation
 C. StringBuilder class  
 D. StringWriter class  
 Answer C  
+
+Guy gives you password, must hash and salt can't expose provided password. What classes can be used to encrypt provided password at login?  
+A. SHA1CryptoServiceProvider   --- Technically yes, but not actual.  
+B. RSACryptoServiceProvider  
+C. TripleDESCryptoServiceProvider  
+D. MD5CryptoServiceProvider  --- Official answer  
+Answer D  
