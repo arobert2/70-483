@@ -823,6 +823,88 @@ int Main()
 ```
 # Debug Applications and Implementing Security
 
+# Implement Data Access
+
+## Working with files
+
+### System.IO.File
+A class that's able to interact and manipulate files.
+
+#### File.AppendAllLines
+Appends lines to a file. Creates a file if one doesn't exist. Closes file when finished.
+
+overload methods:  
+(string path, IEnumerable<string> contents)  
+(string path, IEnumerable<string> contents, Encoding encoding)		When the file is created or written to it uses the specified text encoding.  
+
+example:
+```C#
+List<string> listofstrings = new List<string>(new string[] { 
+		"This is a test", 
+		"yes it is", 
+		"this is a test", 
+		"yes it is", 
+		"it's a test", 
+		"it's a test"
+	});
+string path = "path\\to\\file"
+File.AppendAllLines(path, listofstrings);
+File.AppendAllLines(path, listofstrings, Encoding.UTF8);
+```
+
+#### File.AppendAllText
+Appends a specified string to a file. If a file doesn't exist, it creates one, writes to it, then closes the file.
+
+overload methods:  
+(string path, string content)  
+(string path, string content, Encoding encoding)		When the file is created or written to it uses the specified text encoding.  
+
+example:
+```C#
+string path = "path\\to\\file";
+File.AppendAllText(path, "just a string");
+File.AppendAllText(path, "just a string", Encoding.UTF8);
+```
+
+#### File.AppendTest
+Creates a StreamWriter that appends UTF-8 encoded text to an existing file or creates a new one.
+
+overload methods:  
+(string path)  
+
+example:
+```
+string path = "path\\to\\file";
+using(StreamWriter sw = File.AppendText(path))
+{
+	sw.WriteLine("append this.")
+	sw.WriteLine("append this too.")
+}
+```
+
+#### File.Copy
+Copies an existing file to a new file
+
+overload methods:  
+(string source, string dest)					overwriting existing files is not allowed  
+(string source, string dest, bool overwrite)	overwriting is allowed.  
+
+example:
+```C#
+string filetocopy = "path\\to\\file";
+string wheretocopy = "path\\to\\destination"
+File.Copy(filetocopy, wheretocopy);
+File.Copy(filetocopy, wheretocopy, true)	//will overwrite
+File.Copy(filetocopy, wheretocopy, false)	//won't overwrite
+```
+
+#### File.ReadAlllines()
+
+#### File.ReadLine()
+
+#### File.WriteAllLines()
+
+#### Example
 
 # LINQ
 
