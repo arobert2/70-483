@@ -36,16 +36,16 @@ Microsoft Virtual Academy
 ~~ParallelFor~~
 PLINQ
 Tasks
-### Async/Await keywords
---anything run in await is run in a Task.Continuef()
-Task.Run(delegate) == Task.Factory.StartNew<T>(delegate)
-Task.Wait() == wait on multiple tasks at the same time. If you put in awaits in tasks you're still waiting on one task to finish before starting the other.
-Task.Factory.StartNew().Unwrap(); does the same as Task.Run();
-### Concurrent Collections
-ConcurrentBag
-ConcurrentDictionary
-ConccurrentQueue
-BlockingCollection
+~~### Async/Await keywords~~
+~~--anything run in await is run in a Task.Continuef()~~
+~~Task.Run(delegate) == Task.Factory.StartNew<T>(delegate)~~
+~~Task.Wait() == wait on multiple tasks at the same time. If you put in awaits in tasks you're still waiting on one task to finish before starting the other.~~
+~~Task.Factory.StartNew().Unwrap(); does the same as Task.Run();~~
+~~### Concurrent Collections~~
+~~ConcurrentBag~~
+~~ConcurrentDictionary~~
+~~ConccurrentQueue~~
+~~BlockingCollection~~
 ### Cancelation Tokens
 CancellationTokenSource, CancellationToken
 Passing into Task

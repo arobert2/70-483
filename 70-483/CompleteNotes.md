@@ -105,13 +105,17 @@ Task.Run(() => {
 });
 ```
 
+using Task.Wait() will cause your application to wait until all tasks are finished.
+
 #### TaskFactory
 ```C#
 //Task factory examples of Task.Run();
-Task.Factory.StartNew<string>(() => {
+TaskFactory.StartNew<string>(() => {
 	DoSomething();
 });
 ```
+
+TaskFactory.StartNew.Unwrap will automatically return the result. Task.Run does this without prompting.
 
 ## Locks, Deadlocks, and Race Conditions
 Common multithreading error and how to deal with them.
@@ -165,6 +169,254 @@ class lock_example
 }
 ```
 The bottom thread will wait for the top thread to finish before turning locthis into a new object with the Tag Property of "that".
+
+## Async/Await Keywords
+Aynchronous programmer is complicated but increases the performance of your application.
+
+Introduced in VS2012 async and await takes away a lot of the complicated code required for multithreading.
+
+### Async Improves responsiveness
+Syncrhony is essential for activites that are potentially blocking, like when you are running a large query and it blocks updates to your UI making the program unresponsive.
+
+The following areas are common for async programming
+
+Web access - ```HttpClient``` ```SyndicationClient```  
+Working with files - ```StorageFile``` ```StreamWriter``` ```StreamReader``` ```XmlReader```  
+Working with images - ```MediaCapture``` ```BitmapEncoder``` ```BitmapDecoder```  
+WCF programming - Synchronous and Asynchronous Operations  
+
+Especially vailable for applications that access the UI thread because all UI-related activity usually shares one thread.
+Without, your UI will be blocked, locking the program until the task is finished.
+
+### Async Methods are Easiere to Write
+The async and await keyword are the heart of async programming. They use resources in the .NET Framework or the Windowws Runtime to create asynchronous method almost as easily as you create a synchronous method. Asycnhronous methods that you define by suing async and await are referred to as async methods.
+
+```C#
+//This is an async method
+public async Task<int> AccessTheWebAsync()
+{
+	HttpClient client = new HttpClient();
+	//Runs asynchrounously because of the call to Task. Code will not wait.
+	Task<String> getStringTask = client.GetStringAsync("http://www.google.com")
+	//This cannot rely on getStringTask because it may still be waiting for client.GetStringAsync to return information.
+	ExecuteSomeCode()
+	//The await keyword lets the program know that if getStringTask isn't populated yet it will wait until it is.
+	string urlContents = await getStringTask
+	//returns urlContent length.
+	return urlContents.Length;
+}
+```
+
+If you don't need to do work in between ```client.GetStringAsync``` and string ```url.Contents = await getStringTask``` the code can be simplifed.
+```C#
+string urlContents = await client.GetStringAsync();
+```
+
+#### What makes an async method
+* ```async``` keyword used
+* Method name ends with Async to help the user know this is an async method.
+* The return type is of the following
+	* Task<TResult>
+	* Task
+	* void
+* usually have atleast one await statement.
+
+### Examples of API Async Methods
+```CopyToAsync``` Asynchonously copies bytes from the current stream to another stream.    
+```ReadAsync``` Asychronously reads a sequence of bytes from the current stream then advances position by that sequence of bytes.  
+```WriteAsync```Asynchronously write a sequence of bytes to the current stream thena advances it's position by that sequence of bytes.  
+
+The Synchronous counterparts of each of thsee methods are ```CopyTo```, ```Read```, and ```Write``` and are available in most streams.
+
+### Threads
+Async methods are intended to be non-blocking operations. An await expression in an async method doesn't block the current thread while the awaited task is running. Instaead, the expression signs up the rest of the method as a continuation and returns control to the caller of the async method.
+
+The async and await keywords don't cause additional threads to be created. Async methods dont' require multithreading beacuse an async method doens't run on it's own thread. The method runs on the current synchronization context and uses tim on the thread only when the method is active.
+You can use Task.Run or TaskFactory.StartNew to move CPU-bound work to a background thread, but a background thread doesn't help with a process that's just waiting for results to become available.
+
+The async-based approach to asynchronous programming is preferable to existing approaches in almost every case. In aprticular, this approach is better than BackgroundWorker  for IO-bound operations beacuse the code is ismpler and you don't have to gaurd against race coniditions.
+In combination with Task.Run, async programming is better than a BackgroundWorker for CPU-bound operations because async programmign separates the coordination defailts of running your code from the work that Task.Run transfers to the threadpool.
+
+### async and await
+If you specify a method as an async method you enable the following
+
+* The marked async method can use await to designate suspension points. The await operator tells the compiler that the async method can't continue past that point until awaited async process is complete. In the meantime control is returned to the caller of the async method. The suspension of an async method at an await expression doesn't constitute an exit from the method, and ```finally``` blocks don't run.
+
+* The marked async method can istelf be awaited by methods that call it.
+
+Without an await key used in an async method the method will run synchornously.
+
+### Return types
+You can't await void async methods because they have nothing to return.
+
+You can't use ```ref``` or ```out``` on async methods.
+
+Asynchronous APIs in Windows Runtime programmign have on eo fhte following return types, which are similar to tasks:
+
+* IAsyncOperations, which corresponds to Task<TResult>
+* IAsyncAction, which corresponds to Task
+* IAsyncActionWithProgress
+* IAsyncOperationWithProgress
+
+### Naming Convention
+You should put Async as the last part of your method names.
+
+## Concurrent Collections
+```System.Collections.Concurrent```
+
+Provides several thraed-safe collection classes taht should be used in place of the corresponding types in System.Collections and System.Collections.Generic namespaces whenever multiple threas are accesing the collection concurrent.
+
+Members accessed through one of the interfaces implemented by the current collection are not garaunteed to be thread-safe, including extension methods, and may need to be synchronized by the caller.
+
+### Classes
+
+#### IProducerConsumerCollection<T>
+
+Interface defines methods to manipulate thread-safe collections intended for producer/consumer usage. This interface provides a unified representation for producer/consumer collections fo that higher level abstractions such as System.Collections.Concurrent.BlockingCollection<T> can use the collection as a data-store.
+
+#### BlockingCollection<T>
+Provides blocking and bounding capabilities for thread-safe collections that implement ```IProducerConsumerCollections<T>```
+
+Implements IDisposable interface. When you have finished using the type, you should dispose of it either directly or inderectly. To dispose of it directly call Dispose in a try/catch block. To dispose of it directly call it in a using block
+```C#
+//Direct disposal
+BlockingCollection<object> bc = new BlockingCollection<object>();
+try{
+	bc.Dispose()
+}
+
+//indirect disposal
+using(BlockingCollection<object> bc = new BlockingCollection<string>())
+{
+	...
+}
+```
+BlockingCollection will automatically dispose at the end of the using block.
+
+Constructors:  
+()		Initializing BlockingCollection without upperbounds.  
+(int upperbound)	Initialize BlockingCollection with upperbounds.  
+(IProducerConsumerCollection<T> datastore)	Initializes a new instance using the IProducerConsumerCollection as an underlying data store.  
+(IproducerConsumerCollection<T> datastore, int upperbounds)		Uses IProducerConsumerCollection as a data store and defines an upperbounds.  
+
+Properties:  
+BoundedCapacity - Gets the bounded capacity of this BlockingCollection<T> instance.  
+Count - Gets the number of items  
+IsAddingCompleted - Gets whether this BlockingCollection<T> has been makred as completed for adding.  
+IsCompleted - Gets whether this BlockingCollection<T> has been marked as complete for addign and is empty.  
+
+Methods:  
+Add(T) - Adds an item  
+Add(T, CancellationToken) - Adds an item but the process can be cancelled by using a CancellationToken.  
+AddToAny(BlockingCollection[], T) - Adds the specified item to any one of the specified BlockCollection<T> instances.  
+AddToAny(BlockingCollection<t>[], T, CancellationToken)	- Adds the specified item to any one of the specified BlockColletion<T> Instances.  
+CompleteAdding() - Marks theBlockingCollection<T> instance as not accepting any more additions.  
+CopyTo(T[], int) - Copies all of the items to a compatible one-dimensional array, starting at the specified index.  
+Dispose - Release all resources used by the current instance of the class.  
+Dispose(bool) - release resources used by hte instance.  
+Equals - Determine if this object is equal to another.  
+Finalize() - Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.  
+GetConsumingEnumerable - Provides a consuming IEnumerator<T> for items in the collection.  
+GetConsumingEnumerable(CancellationToken) - same but can be cancelled.  
+GetHashCode() - Serves as the default hash function.  
+GetType() - returns the objects Type.  
+MemberwiseClone() - Creates a shwllow copy of the current object.  
+Take() - Removes an item from the collection  
+Take(CancellationToken) - Cancellable remove command.  
+TakeFromAny(BlockingCollection<T>[], T) - Takes an item from any one of the specified instances.  
+TakeFromAny(BlockingCollection<T>[], T, CancellationToken) - Same but can be cancelled.  
+ToArray() - Returns an array of items in collection.  
+ToString() - Returns a string that resprents the current object.  
+TryAdd(T) - Tries to add the specified item to the BlockingCollection<T>.  
+TryAdd(T, int) - Tries to add the specified item to the BlockingCollection<T> within the specified time period.  
+TryAdd(T, int, CancellationToken) - Same but can be cancelled.  
+TryAddToAny(BlockingCollection<T>[], T) - Tries to add an object to any of the provided collections.  
+TryAddToAny(BlockingCollection, T, int32, CancellationToken) - same but within a time span with a cancellation token.  
+TryAddToAny(BlockingCollection<T>[], T, Timespan) - Same but no cancellation and uses a TimeSpan object for the timeout.  
+TryTake(T) - Tries to remove an object  
+TryTake(T, int) - Tries to remove object within a specific time.  
+TryTake(T, int, CancellationToken) - Same but cancellable.  
+TryTake(T, TimeSpan) - Uses TimeSpan object instead of int to set time out.  
+TryTakeFromAny(BlockingCollection<T>[], T) - Try to remove an object from any of the provided BlockingCollections  
+TryTakeFromAny(BlockingCollection<T>[], T, int) - same but wtihin a time frame.  
+TryTakeFromAny(BlockingCollection<T>[], T, int, CancellationToken) - Same but can be cancelled  
+TryTakeFromAny(BlockingCollection<T>[], T, TimeSpan) - same but not cancellation and uses TimeSpan for timeout instead of int.  
+
+Explicit Interface Implementations:  
+IEnumerable<T>.GetEnumerator() - Gets an IEnumerator<T> which can be used for things like foreach loops.  
+ICollection.CopyTo(Array, int) - Copies all of the items in the BlockingCollection<T> instance to a compatible on-dimensional arra, startin at the specified index of the target array.  
+IEnumerable.GetEnumerator() - Provides an IEnumerator for items in the collection, used for things like foreach loops.  
+ICollection.IsSyncrhonized - Gets a value indicating whether access to the ICollection is synchronized.  
+ICollection.SyncRoot - Gets an object that can be used to synchronize access to the ICollection. This property is not supported.  
+
+### ConcurrentBag<T>
+Represents thread-safe unorder collection objects.
+
+Otherwise functions like any standard List.
+
+Accepts ```null``` as a valid value for reference types.
+
+### ConcurrentDictionary<T,U>
+A thread-safe dictionary.
+
+It work like a ```Dictionary<T,U>``` except it's thraed safe.
+
+### ConcurrentQueue<T>
+A thread-safe Queue
+
+It works like a ```Queue<T>``` except it's thread safe.
+
+### ConcurrentStack<T>
+A thread-safe Stack
+
+It works like a ```Stack<T>``` except it's thread safe.
+
+### OrderablePartitioner<TSource>
+Splits an orderable data source into multiple partitions
+
+Constructors:  
+(bool KeysOrderedInEachPartition, bool KeysOrderedAcrossPartitions, bool KeysNormalized)  
+
+**KeysOrderedIneachPartition** - Inidcates whether the elemnts in each partition are yielded in the order of increasing keys.  
+**KeysOrderedAcrossPartition** - Indicates whether elements in an earlier partition always come before elements in a later partition. If true, each element in aprtition 0 has a smaller order key than any element in partition 1, each element in partition 1 has a smaller order key than any element in partition 2, and so on.  
+**KeysNormalized** - Indicates whether keys are normalized. If true, all order keys are distinct integers in the range [0 .. numberOfElements - 1] if false, order keys must still be distinct, but only their relative order is considered, not their absolute values.  
+
+Properties:  
+KeysNormalized - Gets whether order keys are normalized.  
+KeysOrderedAcrossPartition - Gets whether elements in any earlier partition always come before elements in a later partition.  
+KeysOrderedInEachPartition - Gets whether elements in each partition are yielded in the order of increasing keys.  
+SupportsDynamicPartitions - Gets whether additional partitions can be created dynamically.  
+
+Methods:  
+GetDynamicPartitions() - Creates an object that can partition the underlying collection into a variable number of partitions.  
+GetOrderablDynamicPartitions - Creates an object that can partition the underlying collection into a variable number of partitions.  
+GetOrderableParittions(int numberofpartitions) - Partitions the underlying collection into the specified number of orderable partitions.  
+GetPartitions(int numberofpartitions) - Partitions the underlying collction into the given number of ordered partitions.  
+
+### Partitioner
+Static class provides common parittioning startegies for arrays, lists, and enumerables.
+
+Methods:  
+Create(int32, int32) -  Creats a partition that chunks the user-specified range.  
+Create(int32, int32, int32 - ) - same  
+Create(int64, int64) - same  
+Create(int64, int64, int64) - same  
+Create<TSource>(TSource[], bool) - Creats an orderable partition from an Array instance. Bool sets the object to dynamically load balance or statically load balance.  
+Craete<TSource>(IEnumerable<TSource>, EnumerablePartitionerOptions) - Same but with an IEnumerable, EnumerablePartitionOptions allows you to set the buffering behavior of the partition.  
+Create<TSource>(IList<TSource>, Boolean) - Creates an orderable partitioner from an IList<T> object. Bool sets the object to dynamically load balance or statically load balance.  
+
+### Partitioner<TSource>
+Represents a particular manner of splitting a data source into multiple partitions
+
+Constructor:  
+Partitioner<TSource>() - Creates a new partitioner instance.
+
+Properties:  
+SupportsDynamicPartitions - Gets whether additional parittions can be created dynamically.  
+
+Methods:  
+GetDynamicPartition() - Creates an object that can partition the underlying collection into a variable number of partitions.  
+GetPartitions(int32) - Partitions the underlying collection into the given number of partitions.  
 
 ## Control Statements
 
@@ -356,7 +608,7 @@ public class functest
 This will output:
 FirstSecond
 SecondFirst
-The last variable in Func is na out variable which means it updataes the variable a scope above that was passed to it.
+The last variable in Func is an out variable which means it updataes the variable a scope above that was passed to it.
 It also returns a what ever type you have set.
 The first call prints the return, but at the same time it updates inputoutput.
 This allows the second console.writeline code to print SecondFirst instead of just Second.
@@ -542,19 +794,19 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 ```
 
 ### Other Value Types
-**bool** - Boolean value - True or False - False
-**byte** - 8-bit unsigned integer - 0 to 255 - 0
-**char** - 16 bit unicode character - U +0000 to U +ffff - '\0'
-**decimal** - 128-bit precise decimal values with 28-28 significant digits - (-7.9x10^28 to 7.9x10^28) / 10^0 to 10^28 - 0.0M
-**double** - 64-bit double precision floating point type - (+/-)5.0x10^-324 to (+/-)1.7x10^308 - 0.0D 
-**float** - 32-bit single-precision floating type - -3.4x10^38 +3.4x10^28 - 0.0F
-**int** - 32-bit signed integer - -2,147,483,648 to 2,147,483,647 - 0
-**long** - 64-bit signed integer type - -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807  - 0L
-**sbyte** - 8-bit signed integer type - -128 to 127 - 0
-**short** - 16-bit signed integer type - -32,768 to 32,767 - 0
-**uint** - 32-bit unsigned integer - 0 to 4,294,967,295 - 0
-**ulong** - 64-bit unsigned integer type - 0 to 18,446,744,073,709,551,615 - 0
-**ushort** - 16-bit unsigned integer type - 0 to 65,535 - 0
+**bool** - Boolean value - True or False - False  
+**byte** - 8-bit unsigned integer - 0 to 255 - 0  
+**char** - 16 bit unicode character - U +0000 to U +ffff - '\0'  
+**decimal** - 128-bit precise decimal values with 28-28 significant digits - (-7.9x10^28 to 7.9x10^28) / 10^0 to 10^28 - 0.0M  
+**double** - 64-bit double precision floating point type - (+/-)5.0x10^-324 to (+/-)1.7x10^308 - 0.0D   
+**float** - 32-bit single-precision floating type - -3.4x10^38 +3.4x10^28 - 0.0F  
+**int** - 32-bit signed integer - -2,147,483,648 to 2,147,483,647 - 0  
+**long** - 64-bit signed integer type - -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807  - 0L  
+**sbyte** - 8-bit signed integer type - -128 to 127 - 0  
+**short** - 16-bit signed integer type - -32,768 to 32,767 - 0  
+**uint** - 32-bit unsigned integer - 0 to 4,294,967,295 - 0  
+**ulong** - 64-bit unsigned integer type - 0 to 18,446,744,073,709,551,615 - 0  
+**ushort** - 16-bit unsigned integer type - 0 to 65,535 - 0  
 
 ## Generics
 
@@ -1072,7 +1324,7 @@ using(FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.
 {
 	Console.WriteLine(fs.ReadByte())
 }
-
+```
 #### File.ReadLine
 Reads the lines of a file
 
@@ -1227,17 +1479,17 @@ System.IO.Filestream
 Provides a stream for a file, supporting both synchronous and asynchronous read and write operations.
 
 #### Constructors
-(SafeFileHandle FileHandle, FileAccess.ReadWrite)	Initializes a new instance of the FileStream class for the specified file handle, with the specified read/write permission. 
-(SafeFileHandle FileHandle, FileAccess.Read, int buffersize)	Adds buffer size to the previous constructor
-(SafeFileHandle FileHandle, FileAccess.Write, int buffersize, Boolean runasync)		Adds a bool to determin async run or not to the previous constructor
-(string path, FileMode.Create)		Uses a string for the file path, and uses FileMode to tell the system how to access the file.
-(string path, FileMode.Open, FileAccess.ReadWrite)		Uses FileAccess to determine how much access the program has.
-(string path, FileMode.Create, FileAccess.Write, FileShare.Read)	Uses FileShare to share the file with other StreamObjects
-(string path, FileMode.Create, FileAccess.Write, FileShare.Read, int buffer)	Adds a buffer
-(string path, FileMode.Create, FileAccess.Write, FileShare.Read, bool aync)		Adds a bool to determin if you are writing asyncrounously or not.
-(string path, FileMode.Create, FileAccess.Write, FileShare.Read, int buffer, FileOptions.None)		Uses FileOption to implement advanced featuers.
-(String path, FileMode.Create, FileSystemRights.AppendData, FileShare.Read, Int buffer, FileOptions.RandomAccess)	Uses System.Security.AccessControl to set more optoins.
-(String jpath, FileMode.Create, FileSystemRights.ChangePermissions, FileShare.Read, Int buffer, FileOptions.Asynchronous, FileSecurity filesecuritysettings)	Adds the ability to pass a FileSecurity object to setup file security.
+(SafeFileHandle FileHandle, FileAccess.ReadWrite)	Initializes a new instance of the FileStream class for the specified file handle, with the specified read/write permission.   
+(SafeFileHandle FileHandle, FileAccess.Read, int buffersize)	Adds buffer size to the previous constructor  
+(SafeFileHandle FileHandle, FileAccess.Write, int buffersize, Boolean runasync)		Adds a bool to determin async run or not to the previous constructor  
+(string path, FileMode.Create)		Uses a string for the file path, and uses FileMode to tell the system how to access the file.  
+(string path, FileMode.Open, FileAccess.ReadWrite)		Uses FileAccess to determine how much access the program has.  
+(string path, FileMode.Create, FileAccess.Write, FileShare.Read)	Uses FileShare to share the file with other StreamObjects  
+(string path, FileMode.Create, FileAccess.Write, FileShare.Read, int buffer)	Adds a buffer  
+(string path, FileMode.Create, FileAccess.Write, FileShare.Read, bool aync)		Adds a bool to determin if you are writing asyncrounously or not.  
+(string path, FileMode.Create, FileAccess.Write, FileShare.Read, int buffer, FileOptions.None)		Uses FileOption to implement advanced featuers.  
+(String path, FileMode.Create, FileSystemRights.AppendData, FileShare.Read, Int buffer, FileOptions.RandomAccess)	Uses System.Security.AccessControl to set more optoins.  
+(String jpath, FileMode.Create, FileSystemRights.ChangePermissions, FileShare.Read, Int buffer, FileOptions.Asynchronous, FileSecurity filesecuritysettings)	Adds the ability to pass a FileSecurity object to setup file security.  
 
 ### MemoryStream
 
@@ -1638,3 +1890,18 @@ B. DataContractSerializer
 C. DataContractJsonSerializer  
 D. SoapFormatter  
 Answer C  
+
+```C#
+int[] values = {1,3,5,7,9}; int threshold = 6;
+var highValues = from v in values where v >= threshold select v;
+threshold = 3;
+var results = highValues.ToList();
+```
+Result?  
+A. {3,5,7,9}  
+B. {7,9}  
+C. {1,3,5,7,9}  
+D. {5,7,9}  
+Answer A  
+
+ToList() calls the enumeration creating the execution. Threshold was changed to 3 before execution of LINQ query.  
