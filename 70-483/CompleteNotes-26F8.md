@@ -1,8 +1,172 @@
-﻿# 70-483 Complete Notes
+# Index
+1. [ 70-483 Complete Notes](#70-483-complete-notes)
+1. [ Manage Program FLow](#manage-program-flow)
+	1. [ Task Parallel Library](#task-parallel-library)
+		1. [ Data Parallelism](#data-parallelism)
+		1. [ Task Parallelism](#task-parallelism)
+			1. [ Creating and Running Tasks Implicitly](#creating-and-running-tasks-implicitly)
+			1. [ Creating and Running Tasks Explicitly](#creating-and-running-tasks-explicitly)
+			1. [ Parallel.For](#parallelfor)
+			1. [ Parallel.ForEach](#parallelforeach)
+		1. [ Dataflow](#dataflow)
+		1. [ PLINQ](#plinq)
+			1. [ What is a Parallel Query](#what-is-a-parallel-query)
+		1. [ Tasks and TaskFactories](#tasks-and-taskfactories)
+			1. [ Task](#task)
+			1. [ TaskFactory](#taskfactory)
+	1. [ Locks, Deadlocks, and Race Conditions](#locks-deadlocks-and-race-conditions)
+		1. [ Race Condition](#race-condition)
+		1. [ Deadlocks](#deadlocks)
+		1. [ lock](#lock)
+	1. [ Control Statements](#control-statements)
+		1. [ if/else](#ifelse)
+		1. [ while](#while)
+		1. [ do/while](#dowhile)
+		1. [ switch](#switch)
+		1. [ for](#for)
+		1. [ foreach](#foreach)
+		1. [ break](#break)
+		1. [ continue](#continue)
+		1. [ goto](#goto)
+		1. [ yield](#yield)
+		1. [ yield break and continue](#yield-break-and-continue)
+		1. [ Enumerable.Range(int,int)](#enumerablerangeintint)
+	1. [ Events and Delegates](#events-and-delegates)
+		1. [ Delegates](#delegates)
+			1. [ Func<T,U>](#functu)
+			1. [ Action<t>](#actiont)
+			1. [ Comparison<T>](#comparisont)
+			1. [ Predicate<T>](#predicatet)
+			1. [ EventHandler<TEventArgs>](#eventhandlerteventargs)
+		1. [ lambda Expressions/Anonymous Methods](#lambda-expressionsanonymous-methods)
+		1. [ Subscribing/Unsubscriping from events](#subscribingunsubscriping-from-events)
+1. [ Create and Use Types](#create-and-use-types)
+	1. [ Reference Types](#reference-types)
+		1. [ class](#class)
+		1. [ interface](#interface)
+		1. [ delegate](#delegate)
+		1. [ object](#object)
+		1. [ string](#string)
+		1. [ dynamic](#dynamic)
+	1. [ Value Types](#value-types)
+		1. [ struct](#struct)
+		1. [ enum](#enum)
+		1. [ Other Value Types](#other-value-types)
+	1. [ Generics](#generics)
+		1. [ Generic type parameters](#generic-type-parameters)
+			1. [ Type Parameter Naming Guidlines](#type-parameter-naming-guidlines)
+	1. [ Methods](#methods)
+		1. [ Optional Parameters](#optional-parameters)
+		1. [ Named Parameters](#named-parameters)
+		1. [ Passing by Reference vs. Passing by Value](#passing-by-reference-vs-passing-by-value)
+			1. [ Ref vs. Out](#ref-vs-out)
+	1. [ Static Extension Methods](#static-extension-methods)
+	1. [ Indexers](#indexers)
+	1. [ Static Variables](#static-variables)
+	1. [ Interfaces](#interfaces)
+		1. [ Member Signatures](#member-signatures)
+		1. [ Overloaded Members](#overloaded-members)
+	1. [ Base Classes](#base-classes)
+		1. [ Abstract base classes](#abstract-base-classes)
+		1. [ Overridden Members](#overridden-members)
+1. [ Debug Applications and Implementing Security](#debug-applications-and-implementing-security)
+1. [ Implement Data Access](#implement-data-access)
+	1. [ Working with files](#working-with-files)
+		1. [ System.IO.File](#systemiofile)
+			1. [ File.AppendAllLines](#fileappendalllines)
+			1. [ File.AppendAllText](#fileappendalltext)
+			1. [ File.AppendTest](#fileappendtest)
+			1. [ File.Copy](#filecopy)
+			1. [ File.Create](#filecreate)
+			1. [ File.ReadAllLines()](#filereadalllines)
+			1. [ File.Decrypt(string)](#filedecryptstring)
+			1. [ File.Encrypt](#fileencrypt)
+			1. [ File.Delete](#filedelete)
+			1. [ File.Exists](#fileexists)
+			1. [ File.GetAccessControl](#filegetaccesscontrol)
+			1. [ File.GetAttribute](#filegetattribute)
+			1. [ File.GetCreationTime](#filegetcreationtime)
+			1. [ File.GetCreationTimeUtc](#filegetcreationtimeutc)
+			1. [ File.GetLastAccessTime](#filegetlastaccesstime)
+			1. [ File.GetLastAccessTimeUtc](#filegetlastaccesstimeutc)
+			1. [ File.GetLastWriteTime](#filegetlastwritetime)
+			1. [ File.GetLastWriteTimeUtc](#filegetlastwritetimeutc)
+			1. [ File.Move](#filemove)
+			1. [ File.Open](#fileopen)
+			1. [ File.ReadLine](#filereadline)
+			1. [ File.WriteAllLines](#filewritealllines)
+		1. [ System.IO.FileMode](#systemiofilemode)
+			1. [ Append](#append)
+			1. [ Create ](#create-)
+			1. [ CreateNew](#createnew)
+			1. [ Open](#open)
+			1. [ OpenOrCreate](#openorcreate)
+			1. [ Truncate ](#truncate-)
+		1. [ System.IO.FileAccess](#systemiofileaccess)
+			1. [ Read](#read)
+			1. [ Write](#write)
+			1. [ ReadWrite](#readwrite)
+		1. [ System.IO.FileShare](#systemiofileshare)
+			1. [ Delete](#delete)
+			1. [ Inheritable](#inheritable)
+			1. [ None](#none)
+			1. [ Read](#read)
+			1. [ ReadWrite](#readwrite)
+			1. [ Write](#write)
+		1. [ System.IO.FileOptions](#systemiofileoptions)
+			1. [ Asynchronous](#asynchronous)
+			1. [ DeleteOnClose](#deleteonclose)
+			1. [ Encrypted](#encrypted)
+			1. [ None](#none)
+			1. [ RandomAccess](#randomaccess)
+			1. [ SequentialScan](#sequentialscan)
+			1. [ WriteThrough](#writethrough)
+	1. [ Streams](#streams)
+		1. [ CryptoStream](#cryptostream)
+		1. [ FileStream](#filestream)
+			1. [ Constructors](#constructors)
+		1. [ MemoryStream](#memorystream)
+1. [ LINQ](#linq)
+	1. [ Basic LINQ Queries](#basic-linq-queries)
+		1. [ Query Example](#query-example)
+		1. [ Data Source](#data-source)
+		1. [ The Query](#the-query)
+	1. [ Deferred Execution](#deferred-execution)
+	1. [ LINQ and Generic Types](#linq-and-generic-types)
+	1. [ Basic LINQ Query Operations](#basic-linq-query-operations)
+		1. [ Documentation](#documentation)
+		1. [ Obtaining a Data Source](#obtaining-a-data-source)
+		1. [ Filtering](#filtering)
+		1. [ Ordering](#ordering)
+		1. [ Grouping](#grouping)
+		1. [ Joining](#joining)
+		1. [ Group Join](#group-join)
+		1. [ Left Outer Join](#left-outer-join)
+		1. [ The Equals Operator](#the-equals-operator)
+		1. [ Non-Equijoins](#non-equijoins)
+		1. [ Joins on object collections vs relation tables](#joins-on-object-collections-vs-relation-tables)
+		1. [ Composite Keys](#composite-keys)
+	1. [ Data Transformation with LINQ](#data-transformation-with-linq)
+		1. [ Joining Multiple Inputs into One Output Sequence Example](#joining-multiple-inputs-into-one-output-sequence-example)
+		1. [ Selecting a Subset of each Source Element](#selecting-a-subset-of-each-source-element)
+		1. [ Transforming in-Memory Objects into XML](#transforming-in-memory-objects-into-xml)
+	1. [ Connect LINQ to a databse](#connect-linq-to-a-databse)
+	1. [ Generic Collections](#generic-collections)
+		1. [ Dictionary<T,U>](#dictionarytu)
+		1. [ List<T>](#listt)
+		1. [ Queue<T>](#queuet)
+		1. [ SortedList<T,U>](#sortedlisttu)
+		1. [ Stack<T>](#stackt)
+1. [ Example Questions](#example-questions)
+
+# 70-483 Complete Notes
+[top](#index)  
 
 # Manage Program FLow
+[top](#index)  
 
 ## Task Parallel Library
+[top](#index)  
 ```C#
 System.Threading
 ```
@@ -17,6 +181,7 @@ Benefits of using Tasks: More efficient and more scalable use of system resource
 						 More programmatic control than is possible with a thread or work item.
 
 ### Data Parallelism
+[top](#index)  
 Data parallelism - The Scenario in which the same operation is performed concurrently on elements in a source collection or array.  
 Portions of the collections are segregated off so each thread can access it without disturbing the others.
 
@@ -24,17 +189,20 @@ Part of ```System.Threading.Tasks.Parallel```
 ```Parallel.For``` and ```Parallel.ForEach``` handle data parallelism.
 
 ### Task Parallelism
+[top](#index)  
 The TPL is based on the concept of a task, which represents an asynchonous operation.  
 A task resembles a thread or ThreadPool but at a higher level of abstraction.
 Task Parallelism refers to one or more independent tasks running concurrently. 
 
 #### Creating and Running Tasks Implicitly
+[top](#index)  
 Parallel.Invoke method is quick way to run a statement concurently. Pass an Action Delegate or anonymous method to start.
 ```C#
 Parallel.Invoke(() => DoWork(), () => DoMoreWork());
 ```
 
 #### Creating and Running Tasks Explicitly
+[top](#index)  
 System.Threading.Tasks.Task are Tasks that do not return anything.
 System.Threading.Tasks.Task<TResult> are Tasks that return a value.
 Task.Status will return whether the Task has run or not.
@@ -62,6 +230,7 @@ public class Examples
 To create and run a task in one command use the Task.Run(() => DoSomething()); method.
 
 #### Parallel.For
+[top](#index)  
 System.Threading.Tasks
 Parallel.For executes a for loop that runs each loop on a different thread.
 
@@ -72,6 +241,7 @@ var r = Parallel.For(int start, int stop, (i) => {});
 ```
 
 #### Parallel.ForEach
+[top](#index)  
 Foreach loop that runs parallel.
 ```C#
 Parallel.ForEach(enumerablecollection, delegate);
@@ -80,16 +250,21 @@ Parallel.ForEach(enumerablecollection, () => {
 });
 ```
 ### Dataflow
+[top](#index)  
 
 
 ### PLINQ
+[top](#index)  
 
 #### What is a Parallel Query
+[top](#index)  
 
 ### Tasks and TaskFactories
+[top](#index)  
 ```Task``` and ```TaskFactory``` are used to create and manage tasks. Task is robust but still doesn't provide as many options as TaskFacotry. TaskFactory is clunky because of the options.
 
 #### Task
+[top](#index)  
 Examples of running tasks
 ```C#
 //creates a task and starts it.
@@ -106,6 +281,7 @@ Task.Run(() => {
 ```
 
 #### TaskFactory
+[top](#index)  
 ```C#
 //Task factory examples of Task.Run();
 Task.Factory.StartNew<string>(() => {
@@ -114,13 +290,16 @@ Task.Factory.StartNew<string>(() => {
 ```
 
 ## Locks, Deadlocks, and Race Conditions
+[top](#index)  
 Common multithreading error and how to deal with them.
 ### Race Condition
+[top](#index)  
 Race conditions occure when more than one thread is trying to access a shared variable at the same time.
 
 Two or more threads take in the same variable and output to the same variable. It's a race to who's last. Each thread will overwrite the last.
 
 ### Deadlocks
+[top](#index)  
 Deadlocks occur when two or more threads try to lock a resource the other has already locked. Neither thread can make any furhter progress.
 
 Many methods of the managed threading classes provide time-outs to help you detect deadlocks.
@@ -139,6 +318,7 @@ else{
 ```
 
 ### lock
+[top](#index)  
 The ```lock``` keyword marks a statement block as a critical section.
 By locking a block of code it will make sure it cannot execute while another locked thread is accessing a shared resource.
 ```C#
@@ -167,8 +347,10 @@ class lock_example
 The bottom thread will wait for the top thread to finish before turning locthis into a new object with the Tag Property of "that".
 
 ## Control Statements
+[top](#index)  
 
 ### if/else
+[top](#index)  
 **if/else** statements help with decision making in program flow. If something is satisified do this else, do this.
 ```C#
 if(variable == 0)
@@ -178,6 +360,7 @@ else
 ```
 
 ### while
+[top](#index)  
 **while** loop until an outcome is satisfied. Will not run if already satisfied.
 ```C#
 while (checkvar != "STOP!")
@@ -187,6 +370,7 @@ while (checkvar != "STOP!")
 ```
 
 ### do/while
+[top](#index)  
 **Do/While** Loop until an outcome is satisfied. Will run atleast once no matter the outcome.
 ```C#
 do
@@ -196,6 +380,7 @@ do
 ```
 
 ### switch
+[top](#index)  
 **switch** Similar to if used to satisfy multiple outcomes cleanly. Has ability for default for unexpected value.
 ```C#
 switch(varcheck)
@@ -213,6 +398,7 @@ switch(varcheck)
 ```
 
 ### for
+[top](#index)  
 **for** loops are simple loops that will loop a set amount of times. loop.
 ```C#
 for(int i = 0;i < 10;i++)
@@ -223,6 +409,7 @@ for(int i = 0; i < variable;i++)
 ```
 
 ### foreach
+[top](#index)  
 **foreach** loops through any object that inherites from the IEnumerable interface. These are collections of the same object type.
 ```C#
 foreach(object o in objectcollection)
@@ -231,6 +418,7 @@ foreach(object o in objectcollection)
 passes each object in objectcollection to the DoSomething(object o) method.
 
 ### break
+[top](#index)  
 **break** forces your program out of a loop. The following is common.
 ```C#
 while(true)
@@ -242,6 +430,7 @@ while(true)
 this will continue to run until something and outcome equal the same.
 
 ### continue
+[top](#index)  
 **continue** allows the loop to continue.
 ```C#
 while(true)
@@ -255,6 +444,7 @@ while(true)
 this will continue until something and outcome do not equal the same.
 
 ### goto
+[top](#index)  
 **goto** can be used to move the code between tagged areas. This is similar to basic and batch. Tagged areas are written as ```Label:``` 
 ```C#
 Goto10:
@@ -278,6 +468,7 @@ switch (integer)
 ```
 
 ### yield
+[top](#index)  
 Returns enumerated objects. Everytime the method with the yield return is called it will return the next yield.
 ```C#
 public int ReturnNum()
@@ -303,15 +494,19 @@ class enumerableTest : IEnumerable
 This can now be used in a foreach loop because of the IEnumerable interface and the implementation of the ```GetEnumerator()``` method.
 
 ### yield break and continue
+[top](#index)  
 **yield break** allows you to break a loop within your enumerator.
 **yield continue** allows you to break a loop within an enumerator.
 
 ### Enumerable.Range(int,int)
+[top](#index)  
 Generates a quick enumerated set of integers between a set of numbers.
 
 ## Events and Delegates
+[top](#index)  
 
 ### Delegates
+[top](#index)  
 Delegates hold methods as objects and allow you to invoke them at will.
 ```C#
 public delegate void MyDelegate(string info);
@@ -327,6 +522,7 @@ public void MyNewMethod(string info)
 Whenever the delegatehandler is called it will execute the method passed to the delegate.
 
 #### Func<T,U>
+[top](#index)  
 ```Func``` is a generic delegate that takes and input and returns an output.
 ```C#
 public class functest
@@ -362,10 +558,12 @@ The first call prints the return, but at the same time it updates inputoutput.
 This allows the second console.writeline code to print SecondFirst instead of just Second.
 
 #### Action<t>
+[top](#index)  
 Action is like func except it doesn't return anything, not even with ```out``` parameters.
 It can have a lot of input parameters though. Invoke the same way, don't expect any returns.
 
 #### Comparison<T>
+[top](#index)  
 Delegate that returns a custom comparison by int form.
 ```
 public void Main()
@@ -393,6 +591,7 @@ Array.Sort(Collection, Collection.PropertyToSortBy);
 Array.Sort's first parameter is an out param. Collection is updated on execution without return.
 
 #### Predicate<T>
+[top](#index)  
 Predicate<T> set a particular constraint and filter items that do not conform to the constraint.
 ```
 //Find the first number in a string.
@@ -410,6 +609,7 @@ public void Main()
 THe above code will return the first number in a string.
 
 #### EventHandler<TEventArgs>
+[top](#index)  
 You can create custom EventArgs by inheriting from EventArgs. Then you can use it an a generic inside of an EventHandler to pass event arguments.
 
 Events conform to the following
@@ -422,6 +622,7 @@ public void EventMethod(sender o, CustomEventArgs cea)
 EventHandler<T> will pass the event args input during invoke so you can pass information into the trigger method. It also passes the object that trigger the event.
 
 ### lambda Expressions/Anonymous Methods
+[top](#index)  
 Lambda Expressions and Anonymous Methods are the same thing.
 You can create a lambda expression with the operator ``=>``
 You can use a lambda expression to define delegates, actions, funcs, events.
@@ -445,6 +646,7 @@ public class lambdatest
 Whenever lambdatestevent is triggered it will run the lambda expression that is created on object instantiation.
 
 ### Subscribing/Unsubscriping from events
+[top](#index)  
 You can subscribe with += and unsubscribe with -=
 ```C#
 public event action thisevent;
@@ -464,29 +666,38 @@ The above code allows you to subscribe and unsubscribe Action delegates from eve
 
 You can subscribe more than one method to a event/delegate/generic delegate and they will execute in order.
 # Create and Use Types
+[top](#index)  
 
 ## Reference Types
+[top](#index)  
 Reference types return a memory reference.
 
 ### class
+[top](#index)  
 ```class``` is the blueprint of an object. It contains fields, properties, methods, and constructors to create and manipulated objects.
 
 ### interface
+[top](#index)  
 ```interface``` is an inheritable class like object that can only be inherited. It outlines how a class must function and is used for polymorphism and Liskov Substitution Principal.
 
 ### delegate
+[top](#index)  
 ```delegate``` is an object that holds a method. When a delegate is called is executes that method. A delegate can change which methods are executed.
 
 ### object
+[top](#index)  
 ```object``` is the most basic class in C#. All classes eventually inherit from object. An object is a broad term to describe any field holding an instantiated class.
 
 ### string
+[top](#index)  
 ```string``` holds an array of characters and is used convey text.
 
 ### dynamic
+[top](#index)  
 ```dynamic``` is a reference type that bypasses compile time checking. It is commonly used by COM APIs such as Office Automation API, IronPython Libraries, and HTML Document Object Model(DOM)
 
 ## Value Types
+[top](#index)  
 Derived from System.ValueType.
 Value types are types that return a value instead of a memory reference. When given a value you cannot modify the value like reference objects.
 Can not inherit from value types.
@@ -495,6 +706,7 @@ Values can be assigned null if declared nullable.
 All integrals inherit from System.Int32.
 
 ### struct
+[top](#index)  
 The ```struct``` declaration is similar to a class in that it stores data and can execute methods. Structs though only return values instead of references.
 structs must have all their public properties and fields initialized during the struct initialization. This is because you cannot modify information in a struct.
 In order to declare new information in a struct you have to make a new one. 
@@ -513,6 +725,7 @@ public struct struct_example
 }
 ```
 ### enum
+[top](#index)  
 ```enum``` is a value that declares a keyword assigned to a number (or other types).
 ```C#
 public enum NewEnum {val1, val2, val3}
@@ -542,6 +755,7 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 ```
 
 ### Other Value Types
+[top](#index)  
 **bool** - Boolean value - True or False - False
 **byte** - 8-bit unsigned integer - 0 to 255 - 0
 **char** - 16 bit unicode character - U +0000 to U +ffff - '\0'
@@ -557,6 +771,7 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 **ushort** - 16-bit unsigned integer type - 0 to 65,535 - 0
 
 ## Generics
+[top](#index)  
 
 Generics are the implementation of the concept of a Type parameter.
 you can provide a type to this object on creation. Previously you would need to make a custom class for each object you wanted to interact with.
@@ -564,6 +779,7 @@ you can provide a type to this object on creation. Previously you would need to 
 You can implement existing Generic types, or create custom Generic types.
 
 ### Generic type parameters
+[top](#index)  
 ```C#
 //This defines an object called GenericList which takes in a type parameter. The generic list now expects floats to interact with in some way.
 //This is common with collections. List<T> when declared can dynamically add new object equivalent to the type provided at T.
@@ -571,6 +787,7 @@ GenericList<float> list1 = new GenericList<float>()
 ```
 
 #### Type Parameter Naming Guidlines
+[top](#index)  
 
 Name generic type parameters with descripting names, unless a single letter name is completely self explanatory and a descriptive name would not add value.
 ```C#
@@ -595,6 +812,7 @@ public interface ISessionChannel<TSession>
 ```
 
 ## Methods
+[top](#index)  
 Methods are blocks of codes within a class or struct that execute on variables that are passed into them or local variables within the class.
 ```C#
 public class method_example
@@ -606,6 +824,7 @@ public class method_example
 }
 ```
 ### Optional Parameters
+[top](#index)  
 Optional Parameters are predefined parameters in a method. They must come at the end of all requires variables.
 If they are not referenced in the call they will use the default value provided.
 ```C#
@@ -620,6 +839,7 @@ public void Main()
 }
 ```
 ### Named Parameters
+[top](#index)  
 You can name parameters during instantiation. You can apply parameters in any order when doing so.
 ```C#
 void method(int i, int j, int x) { ... }
@@ -630,6 +850,7 @@ void Main()
 }
 ```
 ### Passing by Reference vs. Passing by Value
+[top](#index)  
 By default, when a value type is passed to a amtheod, a copy is passed instead of the object itself. 
 Therefore, changes to the argument have no effect on the original copy in the calling method. You can pass 
 a value0type by reference by using the ```ref``` or ```out``` keyword.
@@ -637,6 +858,7 @@ a value0type by reference by using the ```ref``` or ```out``` keyword.
 bottom line, passing by value(default) will not effect the variable that was passesd. Passing by reference will.
 
 #### Ref vs. Out
+[top](#index)  
 They are basically the same except for key points.
 |ref|out|
 |---|---|
@@ -650,6 +872,7 @@ Both ref and out ar etreatd differently at runtime and they are treated the same
 Properties are not variables, therfore it cannot be passed as an out or ref parameter.
 
 ## Static Extension Methods
+[top](#index)  
 You can extend objects by creating a static method that references it's first parameter with this
 ```C#
 public static int Sigma(this int x)
@@ -671,6 +894,7 @@ Sigma is now a method available to all Integer type classes because the first pa
 static extention methods must be created in a static class.
 
 ## Indexers
+[top](#index)  
 Anytime you reference information like this ```[]``` you are using an indexer.
 You can add indexers to any objects.
 ```C#
@@ -683,6 +907,7 @@ public object this [int]
 The this command references the object this Property belongs to. This defines the [] part to this and defines how it functions.
 
 ## Static Variables
+[top](#index)  
 Static variables (and classes and methods) are instantiated on runtime. They are globally accessible. This is a great way for shared assets.
 ```C#
 public class newobject
@@ -723,6 +948,7 @@ StaticVariableAndMethod.taskqueue;
 StaticVariableAndMethod.CheckForUpdate(objectwithid.ID);
 ```
 ## Interfaces
+[top](#index)  
 Interfaces are a type of inheritable object. Public members are defined within an Interface but no code to execute.
 Classes that inherit from an interface must implement each members of the interface publicly.
 Interfaces are basically a contract in which you agree that a particular class will conform to.
@@ -761,6 +987,7 @@ int Main()
 ```
 
 ### Member Signatures
+[top](#index)  
 The signature of a member is the name and any argumnents that can be provided.
 ```C#
 public void method() { ... }
@@ -772,6 +999,7 @@ Indexers by assigning different variables to index.
 Opterators but that's not really important.
 
 ### Overloaded Members
+[top](#index)  
 An overloaded members is a member of an object that is named the same but have a different signature.
 ```C#
 public void overload_method(int i) { ... }
@@ -780,9 +1008,11 @@ public void overload_method(int i, int j) { ... }
 Both methods above have the same name but are legal. overload_method is overloaded because when you accept different parameters the method has a different signature so it can exist on it's own.
 
 ## Base Classes
+[top](#index)  
 Classes that can be inherited from. Some cannot be instantiated.
 
 ### Abstract base classes
+[top](#index)  
 Abstract classes are similar to interfaces in that they cannot be instantiated, they outline required methods and properties in classes that inherit it,
 and they can be used for polymorphism. But ```abstract``` classes can contain complete inheritable methods and properties that can be used by derived classes.
 ```C#
@@ -828,6 +1058,7 @@ The above code uses the ```virtual``` and ```abstract``` method modifiers to det
 Any method or property not merked with a modifier are inherited and can be executed by the derived class, but the derived class cannot ```override``` them.
 
 ### Overridden Members
+[top](#index)  
 Overriden Members are members of a class that are inherited and marked as ```abstract``` or ```virtual```
 **virtual** - virtual denotes that a class can be overridden but is not required to be. This class can be fully defined.
 **abstract** - abstract denotes that a class must be overridden. Abstract methods and properties are never defined and abstract classes cannot be instantiated.
@@ -858,15 +1089,20 @@ int Main()
 }
 ```
 # Debug Applications and Implementing Security
+[top](#index)  
 
 # Implement Data Access
+[top](#index)  
 
 ## Working with files
+[top](#index)  
 
 ### System.IO.File
+[top](#index)  
 A class that's able to interact and manipulate files.
 
 #### File.AppendAllLines
+[top](#index)  
 Appends lines to a file. Creates a file if one doesn't exist. Closes file when finished.
 
 overload methods:  
@@ -889,6 +1125,7 @@ File.AppendAllLines(path, listofstrings, Encoding.UTF8);
 ```
 
 #### File.AppendAllText
+[top](#index)  
 Appends a specified string to a file. If a file doesn't exist, it creates one, writes to it, then closes the file.
 
 overload methods:  
@@ -903,6 +1140,7 @@ File.AppendAllText(path, "just a string", Encoding.UTF8);
 ```
 
 #### File.AppendTest
+[top](#index)  
 Creates a StreamWriter that appends UTF-8 encoded text to an existing file or creates a new one.
 
 overload methods:  
@@ -919,6 +1157,7 @@ using(StreamWriter sw = File.AppendText(path))
 ```
 
 #### File.Copy
+[top](#index)  
 Copies an existing file to a new file
 
 overload methods:  
@@ -935,6 +1174,7 @@ File.Copy(filetocopy, wheretocopy, false)	//won't overwrite
 ```
 
 #### File.Create
+[top](#index)  
 Creates or overwrites a file.
 
 overload methods
@@ -944,6 +1184,7 @@ overload methods
 (string path, int buffersize, FileOptions.None, FileSecurity accesscontrol)		Allows file security to determine access control.
 
 #### File.ReadAllLines()
+[top](#index)  
 Creates or opens a file writing UTF-8 encoded text
 
 overload methods:
@@ -959,6 +1200,7 @@ using(StreamWriter sw = File.CreateText(path))
 ```
 
 #### File.Decrypt(string)
+[top](#index)  
 Decrypt a file that was encrypted by the current account using the Encrypt method.
 
 overload methods:
@@ -971,6 +1213,7 @@ File.Decrypt(path);
 ```
 
 #### File.Encrypt
+[top](#index)  
 Encrypt a file
 
 overload methods:
@@ -983,6 +1226,7 @@ File.Encrypt(path);
 ```
 
 #### File.Delete
+[top](#index)  
 Delete a file
 
 overload methods:
@@ -995,6 +1239,7 @@ File.Delete(path);
 ```
 
 #### File.Exists
+[top](#index)  
 Checks to see if a file exists
 
 overload methods:
@@ -1007,6 +1252,7 @@ File.Exists(path);
 ```
 
 #### File.GetAccessControl
+[top](#index)  
 Gets the FileSecurity object that encapsulates the access control list.
 
 overload methods:
@@ -1021,6 +1267,7 @@ FileSecurity morefilesecurity = File.GetAccessControl(path, AccessControlSection
 ```
 
 #### File.GetAttribute
+[top](#index)  
 Gets the attribuets of a file
 
 overload methods;
@@ -1032,33 +1279,41 @@ File.GetAttributes(path)
 ```
 
 #### File.GetCreationTime
+[top](#index)  
 returns the creation time
 File.GetCreationTime(path)
 
 #### File.GetCreationTimeUtc
+[top](#index)  
 Returns the creation time in UTC.
 File.GetCreationTimeUtc(path)
 
 #### File.GetLastAccessTime
+[top](#index)  
 Returns the last time the file was accessed
 File.GetLastAccessTime(path)
 
 #### File.GetLastAccessTimeUtc
+[top](#index)  
 Returns the last tim the file was accessed in UTC
 File.GetLastAccessTimeUtc(path)
 
 #### File.GetLastWriteTime
+[top](#index)  
 Last time file was written to.
 File.GetLastWriteTime(path)
 
 #### File.GetLastWriteTimeUtc
+[top](#index)  
 What do you think?
 
 #### File.Move
+[top](#index)  
 Moves the file
 File.Move(dest,target)
 
 #### File.Open
+[top](#index)  
 Opens a file and sets the file mode.
 
 overload methods:
@@ -1074,6 +1329,7 @@ using(FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.
 }
 
 #### File.ReadLine
+[top](#index)  
 Reads the lines of a file
 
 overload methods:
@@ -1087,6 +1343,7 @@ foreach(string line in File.ReadLine(path))
 ```
 
 #### File.WriteAllLines
+[top](#index)  
 Creates a file if needed, writes a collection of strings to a file, closes the file.
 
 overload methods:
@@ -1105,9 +1362,11 @@ List<string> stringlist = new List<string>(new string[] {
 File.WriteAllLines(path, stringlist, Encode.UTF8)
 ```
 ### System.IO.FileMode
+[top](#index)  
 FileMode enum - not to be confused with FileAccess enum - specifies how the operating system should open a file.
 
 #### Append
+[top](#index)  
 ```FileMode.Append``` Opens the file if it exists and seeks to the end of the file, or creates a new file. Can only be used with ```FileAccess.Write```
 
 ```C#
@@ -1118,6 +1377,7 @@ using(FileStream fs = FileStream(path, FileMode.Append, FileAccess.Write))
 ```
 
 #### Create 
+[top](#index)  
 ```FileMode.Create``` Creates a new file, if the file already exists it will be overwritten. Throws ```UnauthorizedAccessException``` if the file is hidden.
 
 ```C#
@@ -1129,6 +1389,7 @@ using(FileStream fs = FileStream(path, FileMode.Create))
 ```
 
 #### CreateNew
+[top](#index)  
 ```FileMode.CreateNew``` Creates a new file, if it exists it throws a ```System.IO.FileNoteFoundException```
 
 ```C#
@@ -1140,6 +1401,7 @@ using(FileStream fs = FileStream(path, FileMode.CreateNew))
 ```
 
 #### Open
+[top](#index)  
 ```FileMode.Open``` Tells the operating system to open an existing file. ```FileNotFoundException``` thrown if file doesn't exist.
 
 ```C#
@@ -1151,82 +1413,107 @@ using(FileStream fs = FileStream(path, FileMode.Open, FileAccess.ReadWrite))
 ```
 
 #### OpenOrCreate
+[top](#index)  
 ```OpenOrCreate``` Tries to open a file, if it can't be found it creates a new one.
 
 #### Truncate 
+[top](#index)  
 ```Truncate``` Opens an existing file and then deletes all contents. Reading from it throw sArgumentException.
 
 ### System.IO.FileAccess
+[top](#index)  
 ```FileAccess``` enumeration, not to be confused with System.IO.FileMode, Defines the constants for read, write or read/write access to a file.
 
 #### Read
+[top](#index)  
 You can read the file.
 
 #### Write
+[top](#index)  
 You can write to a file.
 
 #### ReadWrite
+[top](#index)  
 You can both read and write to a file.
 
 ### System.IO.FileShare
+[top](#index)  
 Contains constants for controlling the kind of access other FileStream objects can have to the same file.
 By settings these, you can allow other streams to read and write to object.
 
 #### Delete
+[top](#index)  
 Allows subsequent deleting of a file.
 
 #### Inheritable
+[top](#index)  
 Makes the file handle inheritable by child processes. This is not directly supported by Win32.
 
 #### None
+[top](#index)  
 Declines sharing of the current file. Any request to open the file will fail until the file is closed.
 
 #### Read
+[top](#index)  
 Allows subsequent opening of the file for reading.
 
 #### ReadWrite
+[top](#index)  
 Allows subsequent openings of the file for read or write.
 
 #### Write
+[top](#index)  
 Allows subsequent openings of the file for writing.
 
 ### System.IO.FileOptions
+[top](#index)  
 Represents advanced optoins for creating a FileStream object
 
 This enumration has a FlagsAttribute attribute that allows a bitwise combination of it's values.
 
 #### Asynchronous
+[top](#index)  
 Indicates that a file can be used for asynchronous reading and writing.
 
 #### DeleteOnClose
+[top](#index)  
 Indicates that a file is autmatically deleted when it is no longer in use.
 
 #### Encrypted
+[top](#index)  
 Indicates that a file is encreypted and can be decrypted only by using the same user account used for encryption.
 
 #### None
+[top](#index)  
 Inidcates taht no additional optoins should be used.
 
 #### RandomAccess
+[top](#index)  
 Inidcates that the file is accessed randomly. THe system can use this as a hint to optimize file caching.
 
 #### SequentialScan
+[top](#index)  
 Inidcates taht the file is to be accessed sequentially from beginning to end. The system can use this as a hint to optimize file caching. If an application moves the file pointer for ranomd access, optimum caching may not occur; however, correct operation is still garaunteed.
 
 #### WriteThrough
+[top](#index)  
 Indicates that the system should write through any intermediate cache and go directly to disk.
 
 ## Streams
+[top](#index)  
 
 ### CryptoStream
+[top](#index)  
 
 ### FileStream
+[top](#index)  
 ```C#
 System.IO.Filestream
 ```
 Provides a stream for a file, supporting both synchronous and asynchronous read and write operations.
 
 #### Constructors
+[top](#index)  
 (SafeFileHandle FileHandle, FileAccess.ReadWrite)	Initializes a new instance of the FileStream class for the specified file handle, with the specified read/write permission. 
 (SafeFileHandle FileHandle, FileAccess.Read, int buffersize)	Adds buffer size to the previous constructor
 (SafeFileHandle FileHandle, FileAccess.Write, int buffersize, Boolean runasync)		Adds a bool to determin async run or not to the previous constructor
@@ -1240,8 +1527,10 @@ Provides a stream for a file, supporting both synchronous and asynchronous read 
 (String jpath, FileMode.Create, FileSystemRights.ChangePermissions, FileShare.Read, Int buffer, FileOptions.Asynchronous, FileSecurity filesecuritysettings)	Adds the ability to pass a FileSecurity object to setup file security.
 
 ### MemoryStream
+[top](#index)  
 
 # LINQ
+[top](#index)  
 
 Language-Integrated Query - LINQ - Introduced in .Net 3.5
 Must be used against Strongly Typed collections
@@ -1251,6 +1540,7 @@ LINQ to Objects is the name for LINQ queries in memory.
 Can be used to query SQL Server, XML Documents, ADO.NET Datasets, IEnumerable or IEnumerable<T>.
 
 ## Basic LINQ Queries
+[top](#index)  
 
 Query is an expression that retieves data from a data source. LINQ simplifies queries between languages.
 
@@ -1261,6 +1551,7 @@ Query is an expression that retieves data from a data source. LINQ simplifies qu
 </ol>
 
 ### Query Example
+[top](#index)  
 Example calls an array which executes foreach to query the information.
 Foreach can only be executed on objects that inherit from IEnumerable, Ienumerable<T>, IQueryable<T> or any derived interface.
 Classes that inherit from those interfaces are called Queryable Types.
@@ -1286,6 +1577,7 @@ class foo
 }
 ```
 ### Data Source
+[top](#index)  
 The above example is LINQ To Object against an array.
 
 You can also use Linq to XML
@@ -1311,10 +1603,12 @@ IQueryable<Customer> custQuery = from cust in db.Customers
 A LINQ data source is any object that inherits the generic IEnumerable<T> interface or any interface that derives from it.
 
 ### The Query
+[top](#index)  
 Queries are stored in a query variable and initialized with a query expression
 The query doesn't actually run until the data is accessed.
 
 ## Deferred Execution
+[top](#index)  
 Query is not run until data is acessed
 ```C#
 //The query
@@ -1338,6 +1632,7 @@ List<int> query1 = //or int[] query1
 	 select num).ToList(); // or ToArray()
 ```
 ## LINQ and Generic Types
+[top](#index)  
 
 ```C#
 IEnumerable<Customer> query = //LINQ query...
@@ -1350,12 +1645,15 @@ var query = //LINQ query...
 ```
 
 ## Basic LINQ Query Operations
+[top](#index)  
 
 ### Documentation
+[top](#index)  
 <a href="https://msdn.microsoft.com/en-us/library/bb397927(v=vs.110).aspx">Microsoft Basic LINQ Query Operations</a>
 <a href="https://msdn.microsoft.com/en-us/library/bb311040(v=vs.110).aspx">Microsoft Join clause documentation</a>
 
 ### Obtaining a Data Source
+[top](#index)  
 from defines the range variable (range of data)
 in defines the data source
 ```C#
@@ -1364,6 +1662,7 @@ from cust in customers
 Additional range variables can be added with the ```let``` clause.
 
 ### Filtering
+[top](#index)  
 Using the ```where``` clause allows you to specify content.
 ```C#
 where cust.City == "London"
@@ -1375,12 +1674,14 @@ where cust.City == "London" || cust.Name == "Bob"
 ```
 
 ### Ordering
+[top](#index)  
 use the ```orderby``` clause to sort.
 ```
 orderby cust.Name ascending
 ```
 
 ### Grouping
+[top](#index)  
 The ```group``` clause enables you to gorup your results based on a key that you specify.
 example: group by city so all cities are in a group.
 ```C#
@@ -1406,6 +1707,7 @@ group cust by cust.City into custGroup
 ```
 
 ### Joining
+[top](#index)  
 Joining allows you to create associations between sequence that are not explicitly modeled in the data sources.
 In LINQ ```join``` clause always works against object collections instead of database tables directly.
 ```C#
@@ -1416,6 +1718,7 @@ var innerJoinQuery =
 ```
 
 ### Group Join
+[top](#index)  
 a ```join``` clause with an ```into``` clause
 
 ```C#
@@ -1426,6 +1729,7 @@ var innerGroupJoinQuery =
 ```
 
 ### Left Outer Join
+[top](#index)  
 Use the ```DefaultIfEmpty()``` method in combination with a group join
 ```C#
 var leftOuterJoinQuery =
@@ -1436,21 +1740,26 @@ var leftOuterJoinQuery =
 ```
 
 ### The Equals Operator
+[top](#index)  
 A ```join``` clause performas an equijoin this means you can only base matches on the equality of two keys.
 greater than and not equals are not supported
 join uses ```equal``` to make sure there isn't confusion between other C# operators.
 
 ### Non-Equijoins
+[top](#index)  
 You can perform non-equijoins, cross joins,a nd other custom join operations by using the ```from``` clause
 
 ### Joins on object collections vs relation tables
+[top](#index)  
 join is only necessary when joining objects that are not modeled
 LINQ to SQL stores the primary and seconadary key tables in the object
 
 ### Composite Keys
+[top](#index)  
 You can test for equality of multiple values by using a composite key.
 
 ## Data Transformation with LINQ
+[top](#index)  
 <a href="https://msdn.microsoft.com/en-us/library/bb397914(v=vs.110).aspx">Microsoft Data Transformations with LINQ Documentation</a>
 
 Can transform data
@@ -1462,6 +1771,7 @@ Can transform data
 </ul>
 
 ### Joining Multiple Inputs into One Output Sequence Example
+[top](#index)  
 ```C#
 //Data classes
 class Student
@@ -1532,6 +1842,7 @@ class DataTransformation
 ```
 
 ### Selecting a Subset of each Source Element
+[top](#index)  
 ```C#
 var query = from cust in customers
 			select cust.City;
@@ -1541,6 +1852,7 @@ var query = from cust in Customers
 ```
 
 ### Transforming in-Memory Objects into XML
+[top](#index)  
 ```C#
 var studentsToXml = new XElement("Root",
 	from student in students
@@ -1555,6 +1867,7 @@ var studentsToXml = new XElement("Root",
 ```
 
 ## Connect LINQ to a databse
+[top](#index)  
 create a connection in visual studio
 reference it in code  
 ```C#
@@ -1564,9 +1877,11 @@ LinqToSQLDataContext db = new LinqToSQLDataContext(connectString);
 Then use standard LINQ queries by referencing the ```LinqToSQLDataContext``` object.
 
 ## Generic Collections
+[top](#index)  
 Collections of like objects.
 
 ### Dictionary<T,U>
+[top](#index)  
 ```C#
 Dictionary<string, int> dict = new Dictionary<string,int>();
 dict[key];
@@ -1574,6 +1889,7 @@ dict[key];
 A Dictionary takes an object as a key and allows you to use those objects as indexers. it has a dynamic size.
 
 ### List<T>
+[top](#index)  
 ```C#
 List<int> newlist = new List<int>();
 newlist[0];
@@ -1581,6 +1897,7 @@ newlist[0];
 A list holds a set of numbers that can be referenced like an array. It has a dynamic size.
 
 ### Queue<T>
+[top](#index)  
 ```C#
 Queue<object> aqueue = new Queue<object>();
 //enqueue object
@@ -1593,11 +1910,13 @@ aqueue.Dequeue();
 A queue uses the first in first out principal. You can add items to the back of the line with ```Dequeue()``` , see whats at the front with ```Peak()``` , and remove the first item from the Queue with ```Dequeue()```
 
 ### SortedList<T,U>
+[top](#index)  
 A collcetion of Key/Value pairs that are sorted by key based on the associeted IComparer<T> implementation.
 
 Pretty much a Dictionary but doesn't follow input order. Sorts by key.
 
 ### Stack<T>
+[top](#index)  
 ```C#
 Stack<int> newstack = new Stack<int>();
 //Push an object to the top of the stack.
@@ -1610,6 +1929,7 @@ newstack.Pop();
 Stacks work on a first in last out principal. You can add varibles to the top of the stack with ```Push()``` , You can look at the top veriable with ```Peak()``` . You can remove the top variable with ```Pop()```
 
 # Example Questions
+[top](#index)  
 
 Try statement, want new of the same error thrown but no stack change. Which statement?  
 A. catch(Exception e) { throw new Exception(e); }  --- Will change the call stack  
@@ -1638,3 +1958,4 @@ B. DataContractSerializer
 C. DataContractJsonSerializer  
 D. SoapFormatter  
 Answer C  
+
