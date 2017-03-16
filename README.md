@@ -28,9 +28,8 @@
 		1. [ Return types](#return-types)
 		1. [ Naming Convention](#naming-convention)
 	1. [ Concurrent Collections](#concurrent-collections)
-		1. [ Classes](#classes)
-			1. [ IProducerConsumerCollection<T>](#iproducerconsumercollectiont)
-			1. [ BlockingCollection<T>](#blockingcollectiont)
+		1. [ IProducerConsumerCollection<T>](#iproducerconsumercollectiont)
+		1. [ BlockingCollection<T>](#blockingcollectiont)
 		1. [ ConcurrentBag<T>](#concurrentbagt)
 		1. [ ConcurrentDictionary<T,U>](#concurrentdictionarytu)
 		1. [ ConcurrentQueue<T>](#concurrentqueuet)
@@ -478,15 +477,12 @@ Provides several thraed-safe collection classes taht should be used in place of 
 
 Members accessed through one of the interfaces implemented by the current collection are not garaunteed to be thread-safe, including extension methods, and may need to be synchronized by the caller.
 
-### Classes
-[top](#index)  
-
-#### IProducerConsumerCollection<T>
+### IProducerConsumerCollection<T>
 [top](#index)  
 
 Interface defines methods to manipulate thread-safe collections intended for producer/consumer usage. This interface provides a unified representation for producer/consumer collections fo that higher level abstractions such as System.Collections.Concurrent.BlockingCollection<T> can use the collection as a data-store.
 
-#### BlockingCollection<T>
+### BlockingCollection<T>
 [top](#index)  
 Provides blocking and bounding capabilities for thread-safe collections that implement ```IProducerConsumerCollections<T>```
 

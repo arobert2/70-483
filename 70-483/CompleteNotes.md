@@ -268,13 +268,11 @@ Provides several thraed-safe collection classes taht should be used in place of 
 
 Members accessed through one of the interfaces implemented by the current collection are not garaunteed to be thread-safe, including extension methods, and may need to be synchronized by the caller.
 
-### Classes
-
-#### IProducerConsumerCollection<T>
+### IProducerConsumerCollection<T>
 
 Interface defines methods to manipulate thread-safe collections intended for producer/consumer usage. This interface provides a unified representation for producer/consumer collections fo that higher level abstractions such as System.Collections.Concurrent.BlockingCollection<T> can use the collection as a data-store.
 
-#### BlockingCollection<T>
+### BlockingCollection<T>
 Provides blocking and bounding capabilities for thread-safe collections that implement ```IProducerConsumerCollections<T>```
 
 Implements IDisposable interface. When you have finished using the type, you should dispose of it either directly or inderectly. To dispose of it directly call Dispose in a try/catch block. To dispose of it directly call it in a using block
