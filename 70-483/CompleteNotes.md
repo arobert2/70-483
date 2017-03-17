@@ -36,7 +36,7 @@ Parallel.Invoke(() => DoWork(), () => DoMoreWork());
 
 #### Creating and Running Tasks Explicitly
 System.Threading.Tasks.Task are Tasks that do not return anything.
-System.Threading.Tasks.Task<TResult> are Tasks that return a value.
+System.Threading.Tasks.Task< TResult> are Tasks that return a value.
 Task.Status will return whether the Task has run or not.
 Task.Status is returned as a TaskStatus enumeration.
 
@@ -110,7 +110,7 @@ using Task.Wait() will cause your application to wait until all tasks are finish
 #### TaskFactory
 ```C#
 //Task factory examples of Task.Run();
-TaskFactory.StartNew<string>(() => {
+TaskFactory.StartNew< string>(() => {
 	DoSomething();
 });
 ```
@@ -193,11 +193,11 @@ The async and await keyword are the heart of async programming. They use resourc
 
 ```C#
 //This is an async method
-public async Task<int> AccessTheWebAsync()
+public async Task< int> AccessTheWebAsync()
 {
 	HttpClient client = new HttpClient();
 	//Runs asynchrounously because of the call to Task. Code will not wait.
-	Task<String> getStringTask = client.GetStringAsync("http://www.google.com")
+	Task< String> getStringTask = client.GetStringAsync("http://www.google.com")
 	//This cannot rely on getStringTask because it may still be waiting for client.GetStringAsync to return information.
 	ExecuteSomeCode()
 	//The await keyword lets the program know that if getStringTask isn't populated yet it will wait until it is.
@@ -216,7 +216,7 @@ string urlContents = await client.GetStringAsync();
 * ```async``` keyword used
 * Method name ends with Async to help the user know this is an async method.
 * The return type is of the following
-	* Task<TResult>
+	* Task< TResult>
 	* Task
 	* void
 * usually have atleast one await statement.
@@ -253,7 +253,7 @@ You can't use ```ref``` or ```out``` on async methods.
 
 Asynchronous APIs in Windows Runtime programmign have on eo fhte following return types, which are similar to tasks:
 
-* IAsyncOperations, which corresponds to Task<TResult>
+* IAsyncOperations, which corresponds to Task< TResult>
 * IAsyncAction, which corresponds to Task
 * IAsyncActionWithProgress
 * IAsyncOperationWithProgress
@@ -268,23 +268,23 @@ Provides several thraed-safe collection classes taht should be used in place of 
 
 Members accessed through one of the interfaces implemented by the current collection are not garaunteed to be thread-safe, including extension methods, and may need to be synchronized by the caller.
 
-### IProducerConsumerCollection<T>
+### IProducerConsumerCollection< T>
 
-Interface defines methods to manipulate thread-safe collections intended for producer/consumer usage. This interface provides a unified representation for producer/consumer collections fo that higher level abstractions such as System.Collections.Concurrent.BlockingCollection<T> can use the collection as a data-store.
+Interface defines methods to manipulate thread-safe collections intended for producer/consumer usage. This interface provides a unified representation for producer/consumer collections fo that higher level abstractions such as System.Collections.Concurrent.BlockingCollection< T> can use the collection as a data-store.
 
-### BlockingCollection<T>
-Provides blocking and bounding capabilities for thread-safe collections that implement ```IProducerConsumerCollections<T>```
+### BlockingCollection< T>
+Provides blocking and bounding capabilities for thread-safe collections that implement ```IProducerConsumerCollections< T>```
 
 Implements IDisposable interface. When you have finished using the type, you should dispose of it either directly or inderectly. To dispose of it directly call Dispose in a try/catch block. To dispose of it directly call it in a using block
 ```C#
 //Direct disposal
-BlockingCollection<object> bc = new BlockingCollection<object>();
+BlockingCollection< object> bc = new BlockingCollection< object>();
 try{
 	bc.Dispose()
 }
 
 //indirect disposal
-using(BlockingCollection<object> bc = new BlockingCollection<string>())
+using(BlockingCollection< object> bc = new BlockingCollection< string>())
 {
 	...
 }
@@ -294,82 +294,82 @@ BlockingCollection will automatically dispose at the end of the using block.
 Constructors:  
 ()		Initializing BlockingCollection without upperbounds.  
 (int upperbound)	Initialize BlockingCollection with upperbounds.  
-(IProducerConsumerCollection<T> datastore)	Initializes a new instance using the IProducerConsumerCollection as an underlying data store.  
-(IproducerConsumerCollection<T> datastore, int upperbounds)		Uses IProducerConsumerCollection as a data store and defines an upperbounds.  
+(IProducerConsumerCollection< T> datastore)	Initializes a new instance using the IProducerConsumerCollection as an underlying data store.  
+(IproducerConsumerCollection< T> datastore, int upperbounds)		Uses IProducerConsumerCollection as a data store and defines an upperbounds.  
 
 Properties:  
-BoundedCapacity - Gets the bounded capacity of this BlockingCollection<T> instance.  
+BoundedCapacity - Gets the bounded capacity of this BlockingCollection< T> instance.  
 Count - Gets the number of items  
-IsAddingCompleted - Gets whether this BlockingCollection<T> has been makred as completed for adding.  
-IsCompleted - Gets whether this BlockingCollection<T> has been marked as complete for addign and is empty.  
+IsAddingCompleted - Gets whether this BlockingCollection< T> has been makred as completed for adding.  
+IsCompleted - Gets whether this BlockingCollection< T> has been marked as complete for addign and is empty.  
 
 Methods:  
 Add(T) - Adds an item  
 Add(T, CancellationToken) - Adds an item but the process can be cancelled by using a CancellationToken.  
-AddToAny(BlockingCollection[], T) - Adds the specified item to any one of the specified BlockCollection<T> instances.  
-AddToAny(BlockingCollection<t>[], T, CancellationToken)	- Adds the specified item to any one of the specified BlockColletion<T> Instances.  
-CompleteAdding() - Marks theBlockingCollection<T> instance as not accepting any more additions.  
+AddToAny(BlockingCollection[], T) - Adds the specified item to any one of the specified BlockCollection< T> instances.  
+AddToAny(BlockingCollection< t>[], T, CancellationToken)	- Adds the specified item to any one of the specified BlockColletion< T> Instances.  
+CompleteAdding() - Marks theBlockingCollection< T> instance as not accepting any more additions.  
 CopyTo(T[], int) - Copies all of the items to a compatible one-dimensional array, starting at the specified index.  
 Dispose - Release all resources used by the current instance of the class.  
 Dispose(bool) - release resources used by hte instance.  
 Equals - Determine if this object is equal to another.  
 Finalize() - Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.  
-GetConsumingEnumerable - Provides a consuming IEnumerator<T> for items in the collection.  
+GetConsumingEnumerable - Provides a consuming IEnumerator< T> for items in the collection.  
 GetConsumingEnumerable(CancellationToken) - same but can be cancelled.  
 GetHashCode() - Serves as the default hash function.  
 GetType() - returns the objects Type.  
 MemberwiseClone() - Creates a shwllow copy of the current object.  
 Take() - Removes an item from the collection  
 Take(CancellationToken) - Cancellable remove command.  
-TakeFromAny(BlockingCollection<T>[], T) - Takes an item from any one of the specified instances.  
-TakeFromAny(BlockingCollection<T>[], T, CancellationToken) - Same but can be cancelled.  
+TakeFromAny(BlockingCollection< T>[], T) - Takes an item from any one of the specified instances.  
+TakeFromAny(BlockingCollection< T>[], T, CancellationToken) - Same but can be cancelled.  
 ToArray() - Returns an array of items in collection.  
 ToString() - Returns a string that resprents the current object.  
-TryAdd(T) - Tries to add the specified item to the BlockingCollection<T>.  
-TryAdd(T, int) - Tries to add the specified item to the BlockingCollection<T> within the specified time period.  
+TryAdd(T) - Tries to add the specified item to the BlockingCollection< T>.  
+TryAdd(T, int) - Tries to add the specified item to the BlockingCollection< T> within the specified time period.  
 TryAdd(T, int, CancellationToken) - Same but can be cancelled.  
-TryAddToAny(BlockingCollection<T>[], T) - Tries to add an object to any of the provided collections.  
+TryAddToAny(BlockingCollection< T>[], T) - Tries to add an object to any of the provided collections.  
 TryAddToAny(BlockingCollection, T, int32, CancellationToken) - same but within a time span with a cancellation token.  
-TryAddToAny(BlockingCollection<T>[], T, Timespan) - Same but no cancellation and uses a TimeSpan object for the timeout.  
+TryAddToAny(BlockingCollection< T>[], T, Timespan) - Same but no cancellation and uses a TimeSpan object for the timeout.  
 TryTake(T) - Tries to remove an object  
 TryTake(T, int) - Tries to remove object within a specific time.  
 TryTake(T, int, CancellationToken) - Same but cancellable.  
 TryTake(T, TimeSpan) - Uses TimeSpan object instead of int to set time out.  
-TryTakeFromAny(BlockingCollection<T>[], T) - Try to remove an object from any of the provided BlockingCollections  
-TryTakeFromAny(BlockingCollection<T>[], T, int) - same but wtihin a time frame.  
-TryTakeFromAny(BlockingCollection<T>[], T, int, CancellationToken) - Same but can be cancelled  
-TryTakeFromAny(BlockingCollection<T>[], T, TimeSpan) - same but not cancellation and uses TimeSpan for timeout instead of int.  
+TryTakeFromAny(BlockingCollection< T>[], T) - Try to remove an object from any of the provided BlockingCollections  
+TryTakeFromAny(BlockingCollection< T>[], T, int) - same but wtihin a time frame.  
+TryTakeFromAny(BlockingCollection< T>[], T, int, CancellationToken) - Same but can be cancelled  
+TryTakeFromAny(BlockingCollection< T>[], T, TimeSpan) - same but not cancellation and uses TimeSpan for timeout instead of int.  
 
 Explicit Interface Implementations:  
-IEnumerable<T>.GetEnumerator() - Gets an IEnumerator<T> which can be used for things like foreach loops.  
-ICollection.CopyTo(Array, int) - Copies all of the items in the BlockingCollection<T> instance to a compatible on-dimensional arra, startin at the specified index of the target array.  
+IEnumerable< T>.GetEnumerator() - Gets an IEnumerator< T> which can be used for things like foreach loops.  
+ICollection.CopyTo(Array, int) - Copies all of the items in the BlockingCollection< T> instance to a compatible on-dimensional arra, startin at the specified index of the target array.  
 IEnumerable.GetEnumerator() - Provides an IEnumerator for items in the collection, used for things like foreach loops.  
 ICollection.IsSyncrhonized - Gets a value indicating whether access to the ICollection is synchronized.  
 ICollection.SyncRoot - Gets an object that can be used to synchronize access to the ICollection. This property is not supported.  
 
-### ConcurrentBag<T>
+### ConcurrentBag< T>
 Represents thread-safe unorder collection objects.
 
 Otherwise functions like any standard List.
 
 Accepts ```null``` as a valid value for reference types.
 
-### ConcurrentDictionary<T,U>
+### ConcurrentDictionary< T,U>
 A thread-safe dictionary.
 
-It work like a ```Dictionary<T,U>``` except it's thraed safe.
+It work like a ```Dictionary< T,U>``` except it's thraed safe.
 
-### ConcurrentQueue<T>
+### ConcurrentQueue< T>
 A thread-safe Queue
 
-It works like a ```Queue<T>``` except it's thread safe.
+It works like a ```Queue< T>``` except it's thread safe.
 
-### ConcurrentStack<T>
+### ConcurrentStack< T>
 A thread-safe Stack
 
-It works like a ```Stack<T>``` except it's thread safe.
+It works like a ```Stack< T>``` except it's thread safe.
 
-### OrderablePartitioner<TSource>
+### OrderablePartitioner< TSource>
 Splits an orderable data source into multiple partitions
 
 Constructors:  
@@ -399,15 +399,15 @@ Create(int32, int32) -  Creats a partition that chunks the user-specified range.
 Create(int32, int32, int32 - ) - same  
 Create(int64, int64) - same  
 Create(int64, int64, int64) - same  
-Create<TSource>(TSource[], bool) - Creats an orderable partition from an Array instance. Bool sets the object to dynamically load balance or statically load balance.  
-Craete<TSource>(IEnumerable<TSource>, EnumerablePartitionerOptions) - Same but with an IEnumerable, EnumerablePartitionOptions allows you to set the buffering behavior of the partition.  
-Create<TSource>(IList<TSource>, Boolean) - Creates an orderable partitioner from an IList<T> object. Bool sets the object to dynamically load balance or statically load balance.  
+Create< TSource>(TSource[], bool) - Creats an orderable partition from an Array instance. Bool sets the object to dynamically load balance or statically load balance.  
+Craete< TSource>(IEnumerable< TSource>, EnumerablePartitionerOptions) - Same but with an IEnumerable, EnumerablePartitionOptions allows you to set the buffering behavior of the partition.  
+Create< TSource>(IList< TSource>, Boolean) - Creates an orderable partitioner from an IList< T> object. Bool sets the object to dynamically load balance or statically load balance.  
 
-### Partitioner<TSource>
+### Partitioner< TSource>
 Represents a particular manner of splitting a data source into multiple partitions
 
 Constructor:  
-Partitioner<TSource>() - Creates a new partitioner instance.
+Partitioner< TSource>() - Creates a new partitioner instance.
 
 Properties:  
 SupportsDynamicPartitions - Gets whether additional parittions can be created dynamically.  
@@ -465,10 +465,10 @@ switch(varcheck)
 ### for
 **for** loops are simple loops that will loop a set amount of times. loop.
 ```C#
-for(int i = 0;i < 10;i++)
+for(int i = 0;i <  10;i++)
 	DoSomething();
 
-for(int i = 0; i < variable;i++)
+for(int i = 0; i <  variable;i++)
 	DoSomething();
 ```
 
@@ -576,12 +576,12 @@ public void MyNewMethod(string info)
 ```
 Whenever the delegatehandler is called it will execute the method passed to the delegate.
 
-#### Func<T,U>
+#### Func< T,U>
 ```Func``` is a generic delegate that takes and input and returns an output.
 ```C#
 public class functest
 {
-	public Func<string, string> concatfunc;
+	public Func< string, string> concatfunc;
 
 	public functest()
 	{
@@ -611,16 +611,16 @@ It also returns a what ever type you have set.
 The first call prints the return, but at the same time it updates inputoutput.
 This allows the second console.writeline code to print SecondFirst instead of just Second.
 
-#### Action<t>
+#### Action< t>
 Action is like func except it doesn't return anything, not even with ```out``` parameters.
 It can have a lot of input parameters though. Invoke the same way, don't expect any returns.
 
-#### Comparison<T>
+#### Comparison< T>
 Delegate that returns a custom comparison by int form.
 ```
 public void Main()
 {
-	List<object> objectlist = new List<object>();
+	List< object> objectlist = new List< object>();
 	objectlist.Sort(compare);
 }
 
@@ -628,13 +628,13 @@ public int compare(object find, object compare)
 {
 	if(find > compare)
 		return 1;
-	if(find < compare)
+	if(find <  compare)
 		return -1;
 	if(find == compare)
 		return 0;
 }
 ```
-Sort uses a Compare<T> delegate. You can pass a method to it that must return a 1, 0, or -1 in order to function.
+Sort uses a Compare< T> delegate. You can pass a method to it that must return a 1, 0, or -1 in order to function.
 
 You can create multiple methods for different cases.
 ```C#
@@ -642,8 +642,8 @@ Array.Sort(Collection, Collection.PropertyToSortBy);
 ```
 Array.Sort's first parameter is an out param. Collection is updated on execution without return.
 
-#### Predicate<T>
-Predicate<T> set a particular constraint and filter items that do not conform to the constraint.
+#### Predicate< T>
+Predicate< T> set a particular constraint and filter items that do not conform to the constraint.
 ```
 //Find the first number in a string.
 public bool search(char c)
@@ -659,17 +659,17 @@ public void Main()
 ```
 THe above code will return the first number in a string.
 
-#### EventHandler<TEventArgs>
+#### EventHandler< TEventArgs>
 You can create custom EventArgs by inheriting from EventArgs. Then you can use it an a generic inside of an EventHandler to pass event arguments.
 
 Events conform to the following
 ```C#
 //The event
-EventHandler<CustomerEventArgs> eventhandler = CustomMethod;
+EventHandler< CustomerEventArgs> eventhandler = CustomMethod;
 //The event method.
 public void EventMethod(sender o, CustomEventArgs cea)
 ```
-EventHandler<T> will pass the event args input during invoke so you can pass information into the trigger method. It also passes the object that trigger the event.
+EventHandler< T> will pass the event args input during invoke so you can pass information into the trigger method. It also passes the object that trigger the event.
 
 ### lambda Expressions/Anonymous Methods
 Lambda Expressions and Anonymous Methods are the same thing.
@@ -816,29 +816,29 @@ You can implement existing Generic types, or create custom Generic types.
 ### Generic type parameters
 ```C#
 //This defines an object called GenericList which takes in a type parameter. The generic list now expects floats to interact with in some way.
-//This is common with collections. List<T> when declared can dynamically add new object equivalent to the type provided at T.
-GenericList<float> list1 = new GenericList<float>()
+//This is common with collections. List< T> when declared can dynamically add new object equivalent to the type provided at T.
+GenericList< float> list1 = new GenericList< float>()
 ```
 
 #### Type Parameter Naming Guidlines
 
 Name generic type parameters with descripting names, unless a single letter name is completely self explanatory and a descriptive name would not add value.
 ```C#
-public interface ISeesionChannel<TSession>{//...}
-public delegate TOutput Converter<TInput, TOutPut(TInput from);
-public class List<T>{//...}
+public interface ISeesionChannel< TSession>{//...}
+public delegate TOutput Converter< TInput, TOutPut(TInput from);
+public class List< T>{//...}
 ```
 
 Consider using T as the type parameter name for types with ong single letter type parameter.
 ```C#
-public int ICompare<t>() {return 0; }
-public delegate bool Predicate<t>(T item);
-public struct Nullable<t> where T | struct {//...}
+public int ICompare< t>() {return 0; }
+public delegate bool Predicate< t>(T item);
+public struct Nullable< t> where T | struct {//...}
 ```
 
 Prefix descriptive type parameter names with "T"
 ```C#
-public interface ISessionChannel<TSession>
+public interface ISessionChannel< TSession>
 {
 	TSession Session {get;}
 }
@@ -905,7 +905,7 @@ You can extend objects by creating a static method that references it's first pa
 public static int Sigma(this int x)
 {
 	int newx = 0;
-	for(int i = 0; i <= x; i++ )
+	for(int i = 0; i < = x; i++ )
 		newx += x * i;
 	return newx;
 }
@@ -954,7 +954,7 @@ Static Variables can also be used to access information between objects and thre
 ```C#
 public class StaticVariableAndMethod
 {
-	public static Dictionary<string, Queue<string>> taskqueue = new Dictionary<string, Queue<string>>();
+	public static Dictionary< string, Queue< string>> taskqueue = new Dictionary< string, Queue< string>>();
 
 	public static string CheckForUpdate(string idnum)
 	{
@@ -1120,12 +1120,12 @@ A class that's able to interact and manipulate files.
 Appends lines to a file. Creates a file if one doesn't exist. Closes file when finished.
 
 overload methods:  
-(string path, IEnumerable<string> contents)  
-(string path, IEnumerable<string> contents, Encoding encoding)		When the file is created or written to it uses the specified text encoding.  
+(string path, IEnumerable< string> contents)  
+(string path, IEnumerable< string> contents, Encoding encoding)		When the file is created or written to it uses the specified text encoding.  
 
 example:
 ```C#
-List<string> listofstrings = new List<string>(new string[] { 
+List< string> listofstrings = new List< string>(new string[] { 
 		"This is a test", 
 		"yes it is", 
 		"this is a test", 
@@ -1340,14 +1340,14 @@ foreach(string line in File.ReadLine(path))
 Creates a file if needed, writes a collection of strings to a file, closes the file.
 
 overload methods:
-(string path, IEnumerable<string> stringlist)
-(string path, IEnumerable<string> stringlist, Encoding.UTF8)	Specifies text encoding.
+(string path, IEnumerable< string> stringlist)
+(string path, IEnumerable< string> stringlist, Encoding.UTF8)	Specifies text encoding.
 (string path, string[] content)		Uses an array instead of a list
 (string path, string[] content, Encoding.UTF8)	Uses an array and specifies text encoding.
 
 example:
 ```C#
-List<string> stringlist = new List<string>(new string[] {
+List< string> stringlist = new List< string>(new string[] {
 	"we are testing",
 	"yes we are"
 });
@@ -1495,24 +1495,24 @@ Provides a stream for a file, supporting both synchronous and asynchronous read 
 
 Language-Integrated Query - LINQ - Introduced in .Net 3.5
 Must be used against Strongly Typed collections
-LINQ is a unified model for querying any IEnumerable or IEnumerable<T> in a safe manner.
+LINQ is a unified model for querying any IEnumerable or IEnumerable< T> in a safe manner.
 LINQ to Objects is the name for LINQ queries in memory.
 
-Can be used to query SQL Server, XML Documents, ADO.NET Datasets, IEnumerable or IEnumerable<T>.
+Can be used to query SQL Server, XML Documents, ADO.NET Datasets, IEnumerable or IEnumerable< T>.
 
 ## Basic LINQ Queries
 
 Query is an expression that retieves data from a data source. LINQ simplifies queries between languages.
 
-<ol>
-	<il>Obtain the data source.</il>
-	<il>Create the query.</il>
-	<il>Execute the query.</il>
-</ol>
+< ol>
+	< il>Obtain the data source.< /il>
+	< il>Create the query.< /il>
+	< il>Execute the query.< /il>
+< /ol>
 
 ### Query Example
 Example calls an array which executes foreach to query the information.
-Foreach can only be executed on objects that inherit from IEnumerable, Ienumerable<T>, IQueryable<T> or any derived interface.
+Foreach can only be executed on objects that inherit from IEnumerable, Ienumerable< T>, IQueryable< T> or any derived interface.
 Classes that inherit from those interfaces are called Queryable Types.
 LINQ natively supports Queriable Types.
 
@@ -1554,11 +1554,11 @@ The following assumes there is a table called customers imported to an object th
 Northwnd db = new Northwnd(@"C:\northwnd.mdf");
 
 // submit query
-IQueryable<Customer> custQuery = from cust in db.Customers
+IQueryable< Customer> custQuery = from cust in db.Customers
 								 where cust.City == "London"
 								 select cust;
 ```
-A LINQ data source is any object that inherits the generic IEnumerable<T> interface or any interface that derives from it.
+A LINQ data source is any object that inherits the generic IEnumerable< T> interface or any interface that derives from it.
 
 ### The Query
 Queries are stored in a query variable and initialized with a query expression
@@ -1582,7 +1582,7 @@ int count = Query.Count();
 ```
 To force immediate execution you can always you can call ToList() or ToArray()
 ```C#
-List<int> query1 = //or int[] query1
+List< int> query1 = //or int[] query1
 	(from num in numbers
 	 where (num % 2) == 0
 	 select num).ToList(); // or ToArray()
@@ -1590,7 +1590,7 @@ List<int> query1 = //or int[] query1
 ## LINQ and Generic Types
 
 ```C#
-IEnumerable<Customer> query = //LINQ query...
+IEnumerable< Customer> query = //LINQ query...
 ```
 Query returns a list of objects called customer.
 
@@ -1602,8 +1602,8 @@ var query = //LINQ query...
 ## Basic LINQ Query Operations
 
 ### Documentation
-<a href="https://msdn.microsoft.com/en-us/library/bb397927(v=vs.110).aspx">Microsoft Basic LINQ Query Operations</a>
-<a href="https://msdn.microsoft.com/en-us/library/bb311040(v=vs.110).aspx">Microsoft Join clause documentation</a>
+< a href="https://msdn.microsoft.com/en-us/library/bb397927(v=vs.110).aspx">Microsoft Basic LINQ Query Operations< /a>
+< a href="https://msdn.microsoft.com/en-us/library/bb311040(v=vs.110).aspx">Microsoft Join clause documentation< /a>
 
 ### Obtaining a Data Source
 from defines the range variable (range of data)
@@ -1634,7 +1634,7 @@ orderby cust.Name ascending
 The ```group``` clause enables you to gorup your results based on a key that you specify.
 example: group by city so all cities are in a group.
 ```C#
-// queryCustomerByCity is an Ienumerable<IGrouping<string, Customer>>
+// queryCustomerByCity is an Ienumerable< IGrouping< string, Customer>>
 var queryCustomerByCity =
 	from cust in customers
 	group cust by cust.City;
@@ -1701,15 +1701,15 @@ LINQ to SQL stores the primary and seconadary key tables in the object
 You can test for equality of multiple values by using a composite key.
 
 ## Data Transformation with LINQ
-<a href="https://msdn.microsoft.com/en-us/library/bb397914(v=vs.110).aspx">Microsoft Data Transformations with LINQ Documentation</a>
+< a href="https://msdn.microsoft.com/en-us/library/bb397914(v=vs.110).aspx">Microsoft Data Transformations with LINQ Documentation< /a>
 
 Can transform data
-<ul>
-	<li>Merge multiple input sequences into a single output sequence that has a new type.</li>
-	<li>Create output sequences whose elements consist of only one or several properties of each element in the source sequence.</il>
-	<li>Create output sequences who elements conssit of the results of operations perform on the source data.</li>
-	<li>Create output sequence in a different format. For example, you can transform data from SQL rows or test files into XML.</li>
-</ul>
+< ul>
+	< li>Merge multiple input sequences into a single output sequence that has a new type.< /li>
+	< li>Create output sequences whose elements consist of only one or several properties of each element in the source sequence.< /il>
+	< li>Create output sequences who elements conssit of the results of operations perform on the source data.< /li>
+	< li>Create output sequence in a different format. For example, you can transform data from SQL rows or test files into XML.< /li>
+< /ul>
 
 ### Joining Multiple Inputs into One Output Sequence Example
 ```C#
@@ -1721,7 +1721,7 @@ class Student
 	public int ID { get; set; }
 	public string Street { get; set; }
 	public string City { get; set; }
-	public List<int> Scores { get; set; }
+	public List< int> Scores { get; set; }
 }
 
 class Teacher
@@ -1737,30 +1737,30 @@ class DataTransformation
 	static void Main()
 	{
         // Create the first data source.
-        List<Student> students = new List<Student>()
+        List< Student> students = new List< Student>()
         {
             new Student {First="Svetlana",
                 Last="Omelchenko", 
                 ID=111, 
                 Street="123 Main Street",
                 City="Seattle",
-                Scores= new List<int> {97, 92, 81, 60}},
+                Scores= new List< int> {97, 92, 81, 60}},
             new Student {First="Claire",
                 Last="O’Donnell", 
                 ID=112,
                 Street="124 Main Street",
                 City="Redmond",
-                Scores= new List<int> {75, 84, 91, 39}},
+                Scores= new List< int> {75, 84, 91, 39}},
             new Student {First="Sven",
                 Last="Mortensen",
                 ID=113,
                 Street="125 Main Street",
                 City="Lake City",
-                Scores= new List<int> {88, 94, 65, 91}},
+                Scores= new List< int> {88, 94, 65, 91}},
         };
 
 		 // Create the second data source.
-        List<Teacher> teachers = new List<Teacher>()
+        List< Teacher> teachers = new List< Teacher>()
         {                
             new Teacher {First="Ann", Last="Beebe", ID=945, City = "Seattle"},
             new Teacher {First="Alex", Last="Robinson", ID=956, City = "Redmond"},
@@ -1816,23 +1816,23 @@ Then use standard LINQ queries by referencing the ```LinqToSQLDataContext``` obj
 ## Generic Collections
 Collections of like objects.
 
-### Dictionary<T,U>
+### Dictionary< T,U>
 ```C#
-Dictionary<string, int> dict = new Dictionary<string,int>();
+Dictionary< string, int> dict = new Dictionary< string,int>();
 dict[key];
 ```
 A Dictionary takes an object as a key and allows you to use those objects as indexers. it has a dynamic size.
 
-### List<T>
+### List< T>
 ```C#
-List<int> newlist = new List<int>();
+List< int> newlist = new List< int>();
 newlist[0];
 ```
 A list holds a set of numbers that can be referenced like an array. It has a dynamic size.
 
-### Queue<T>
+### Queue< T>
 ```C#
-Queue<object> aqueue = new Queue<object>();
+Queue< object> aqueue = new Queue< object>();
 //enqueue object
 aqueue.Enqueue(new object());
 //Look at next in line
@@ -1842,14 +1842,14 @@ aqueue.Dequeue();
 ```
 A queue uses the first in first out principal. You can add items to the back of the line with ```Dequeue()``` , see whats at the front with ```Peak()``` , and remove the first item from the Queue with ```Dequeue()```
 
-### SortedList<T,U>
-A collcetion of Key/Value pairs that are sorted by key based on the associeted IComparer<T> implementation.
+### SortedList< T,U>
+A collcetion of Key/Value pairs that are sorted by key based on the associeted IComparer< T> implementation.
 
 Pretty much a Dictionary but doesn't follow input order. Sorts by key.
 
-### Stack<T>
+### Stack< T>
 ```C#
-Stack<int> newstack = new Stack<int>();
+Stack< int> newstack = new Stack< int>();
 //Push an object to the top of the stack.
 newstack.Push(1);
 //Look at the top of the stack
