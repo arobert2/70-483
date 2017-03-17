@@ -13,6 +13,8 @@
 			1. [ What is a Parallel Query](#what-is-a-parallel-query)
 		1. [ Tasks and TaskFactories](#tasks-and-taskfactories)
 			1. [ Task](#task)
+				1. [ Constructors](#constructors)
+				1. [ Examples of running tasks](#examples-of-running-tasks)
 			1. [ TaskFactory](#taskfactory)
 	1. [ Locks, Deadlocks, and Race Conditions](#locks-deadlocks-and-race-conditions)
 		1. [ Race Condition](#race-condition)
@@ -30,27 +32,34 @@
 	1. [ Concurrent Collections](#concurrent-collections)
 		1. [ IProducerConsumerCollection< T>](#iproducerconsumercollection-t)
 		1. [ BlockingCollection< T>](#blockingcollection-t)
-				1. [ Constructors  ](#constructors--)
-			1. [ Properties  ](#properties--)
-			1. [ Methods ](#methods-)
-			1. [ Explicit Interface Implementations   ](#explicit-interface-implementations---)
+			1. [ Constructors](#constructors)
+			1. [ Properties](#properties)
+			1. [ Methods](#methods)
+			1. [ Explicit Interface Implementations](#explicit-interface-implementations)
 		1. [ ConcurrentBag< T>](#concurrentbag-t)
 		1. [ ConcurrentDictionary< T,U>](#concurrentdictionary-tu)
 		1. [ ConcurrentQueue< T>](#concurrentqueue-t)
 		1. [ ConcurrentStack< T>](#concurrentstack-t)
 		1. [ OrderablePartitioner< TSource>](#orderablepartitioner-tsource)
-			1. [ Constructors  ](#constructors--)
-			1. [ Properties  ](#properties--)
-			1. [ Methods  ](#methods--)
+			1. [ Constructors](#constructors)
+			1. [ Properties](#properties)
+			1. [ Methods](#methods)
 		1. [ Partitioner](#partitioner)
-			1. [ Methods  ](#methods--)
+			1. [ Methods](#methods)
 		1. [ Partitioner< TSource>](#partitioner-tsource)
-			1. [ Methods  ](#methods--)
+			1. [ Constructor](#constructor)
+			1. [ Properties](#properties)
+			1. [ Methods](#methods)
 	1. [ Cancellation Tokens](#cancellation-tokens)
 		1. [ CancellationTokenSource](#cancellationtokensource)
 			1. [ Constructors](#constructors)
 			1. [ Properties](#properties)
 			1. [ Methods](#methods)
+		1. [ CancellationToken](#cancellationtoken)
+			1. [ Constructor](#constructor)
+			1. [ Properties](#properties)
+			1. [ Methods](#methods)
+			1. [ Operators](#operators)
 		1. [ Example](#example)
 	1. [ Control Statements](#control-statements)
 		1. [ if/else](#ifelse)
@@ -89,7 +98,7 @@
 	1. [ Generics](#generics)
 		1. [ Generic type parameters](#generic-type-parameters)
 			1. [ Type Parameter Naming Guidlines](#type-parameter-naming-guidlines)
-	1. [ Methods](#methods)
+	1. [ Object Methods](#object-methods)
 		1. [ Optional Parameters](#optional-parameters)
 		1. [ Named Parameters](#named-parameters)
 		1. [ Passing by Reference vs. Passing by Value](#passing-by-reference-vs-passing-by-value)
@@ -111,7 +120,7 @@
 			1. [ File.AppendAllText](#fileappendalltext)
 			1. [ File.AppendTest](#fileappendtest)
 			1. [ File.Copy](#filecopy)
-				1. [ overload methods  ](#overload-methods--)
+				1. [ overload methods](#overload-methods)
 				1. [ example](#example)
 			1. [ File.Create](#filecreate)
 			1. [ File.ReadAllLines()](#filereadalllines)
@@ -126,6 +135,7 @@
 				1. [ overload methods](#overload-methods)
 				1. [ example](#example)
 			1. [ File.Exists](#fileexists)
+			1. [ example](#example)
 			1. [ File.GetAccessControl](#filegetaccesscontrol)
 				1. [ overload methods](#overload-methods)
 				1. [ example](#example)
@@ -150,11 +160,11 @@
 				1. [example](#example)
 		1. [ System.IO.FileMode](#systemiofilemode)
 			1. [ Append](#append)
-			1. [ Create ](#create-)
+			1. [ Create](#create)
 			1. [ CreateNew](#createnew)
 			1. [ Open](#open)
 			1. [ OpenOrCreate](#openorcreate)
-			1. [ Truncate ](#truncate-)
+			1. [ Truncate](#truncate)
 		1. [ System.IO.FileAccess](#systemiofileaccess)
 			1. [ Read](#read)
 			1. [ Write](#write)
@@ -305,7 +315,6 @@ Parallel.ForEach(enumerablecollection, () => {
 ### Dataflow
 [top](#index)  
 
-
 ### PLINQ
 [top](#index)  
 
@@ -318,7 +327,21 @@ Parallel.ForEach(enumerablecollection, () => {
 
 #### Task
 [top](#index)  
-Examples of running tasks
+Run a block of code on a seperate thread.
+
+##### Constructors
+[top](#index)  
+(Action)	Initializes a new Task with the specified action.  
+(Action, CancellationToken)	Initialize a Task with the specified action and CancellationToken  
+(Action, CancellationToken, TaskCreationOptions)	Initializes a new Task with the specified action and creation options.  
+(Action, TaskCreationOptions)	Initializes a new Task with the specified action and creation options.  
+(Action<Object>, Object)	Initializes a new Task with the specified action and state.  
+Task(Action<Object>, Object, CancellationToken)		Initializes a new Task with the specified action, state, and options.  
+Task(Action<Object>, Object, CancellationToken, TaskCreationOptions)	Initializes a new Task with the specified action, state, and options  
+(Action<Object>, Object, TaskCreationOptions)	Initializes a new Task with the specified action, state, and options.  
+
+##### Examples of running tasks
+[top](#index)  
 ```C#
 //creates a task and starts it.
 Task newtask = Task(() => {
@@ -349,6 +372,7 @@ TaskFactory.StartNew.Unwrap will automatically return the result. Task.Run does 
 ## Locks, Deadlocks, and Race Conditions
 [top](#index)  
 Common multithreading error and how to deal with them.
+
 ### Race Condition
 [top](#index)  
 Race conditions occure when more than one thread is trying to access a shared variable at the same time.
@@ -536,21 +560,21 @@ using(BlockingCollection< object> bc = new BlockingCollection< string>())
 ```
 BlockingCollection will automatically dispose at the end of the using block.
 
-##### Constructors  
+#### Constructors
 [top](#index)  
 ()		Initializing BlockingCollection without upperbounds.  
 (int upperbound)	Initialize BlockingCollection with upperbounds.  
 (IProducerConsumerCollection< T> datastore)	Initializes a new instance using the IProducerConsumerCollection as an underlying data store.  
 (IproducerConsumerCollection< T> datastore, int upperbounds)		Uses IProducerConsumerCollection as a data store and defines an upperbounds.  
 
-#### Properties  
+#### Properties
 [top](#index)  
 BoundedCapacity - Gets the bounded capacity of this BlockingCollection< T> instance.  
 Count - Gets the number of items  
 IsAddingCompleted - Gets whether this BlockingCollection< T> has been makred as completed for adding.  
 IsCompleted - Gets whether this BlockingCollection< T> has been marked as complete for addign and is empty.  
 
-#### Methods 
+#### Methods
 [top](#index)  
 Add(T) - Adds an item  
 Add(T, CancellationToken) - Adds an item but the process can be cancelled by using a CancellationToken.  
@@ -588,7 +612,7 @@ TryTakeFromAny(BlockingCollection< T>[], T, int) - same but wtihin a time frame.
 TryTakeFromAny(BlockingCollection< T>[], T, int, CancellationToken) - Same but can be cancelled  
 TryTakeFromAny(BlockingCollection< T>[], T, TimeSpan) - same but not cancellation and uses TimeSpan for timeout instead of int.  
 
-#### Explicit Interface Implementations   
+#### Explicit Interface Implementations
 [top](#index)  
 IEnumerable< T>.GetEnumerator() - Gets an IEnumerator< T> which can be used for things like foreach loops.  
 ICollection.CopyTo(Array, int) - Copies all of the items in the BlockingCollection< T> instance to a compatible on-dimensional arra, startin at the specified index of the target array.  
@@ -626,7 +650,7 @@ It works like a ```Stack< T>``` except it's thread safe.
 [top](#index)  
 Splits an orderable data source into multiple partitions
 
-#### Constructors  
+#### Constructors
 [top](#index)  
 (bool KeysOrderedInEachPartition, bool KeysOrderedAcrossPartitions, bool KeysNormalized)  
 
@@ -634,14 +658,14 @@ Splits an orderable data source into multiple partitions
 **KeysOrderedAcrossPartition** - Indicates whether elements in an earlier partition always come before elements in a later partition. If true, each element in aprtition 0 has a smaller order key than any element in partition 1, each element in partition 1 has a smaller order key than any element in partition 2, and so on.  
 **KeysNormalized** - Indicates whether keys are normalized. If true, all order keys are distinct integers in the range [0 .. numberOfElements - 1] if false, order keys must still be distinct, but only their relative order is considered, not their absolute values.  
 
-#### Properties  
+#### Properties
 [top](#index)  
 KeysNormalized - Gets whether order keys are normalized.  
 KeysOrderedAcrossPartition - Gets whether elements in any earlier partition always come before elements in a later partition.  
 KeysOrderedInEachPartition - Gets whether elements in each partition are yielded in the order of increasing keys.  
 SupportsDynamicPartitions - Gets whether additional partitions can be created dynamically.  
 
-#### Methods  
+#### Methods
 [top](#index)  
 GetDynamicPartitions() - Creates an object that can partition the underlying collection into a variable number of partitions.  
 GetOrderablDynamicPartitions - Creates an object that can partition the underlying collection into a variable number of partitions.  
@@ -652,7 +676,7 @@ GetPartitions(int numberofpartitions) - Partitions the underlying collction into
 [top](#index)  
 Static class provides common parittioning startegies for arrays, lists, and enumerables.
 
-#### Methods  
+#### Methods
 [top](#index)  
 Create(int32, int32) -  Creats a partition that chunks the user-specified range.  
 Create(int32, int32, int32 - ) - same  
@@ -666,13 +690,15 @@ Create< TSource>(IList< TSource>, Boolean) - Creates an orderable partitioner fr
 [top](#index)  
 Represents a particular manner of splitting a data source into multiple partitions
 
-Constructor:  
+#### Constructor
+[top](#index)  
 Partitioner< TSource>() - Creates a new partitioner instance.
 
-Properties:  
+#### Properties
+[top](#index)  
 SupportsDynamicPartitions - Gets whether additional parittions can be created dynamically.  
 
-#### Methods  
+#### Methods
 [top](#index)  
 GetDynamicPartition() - Creates an object that can partition the underlying collection into a variable number of partitions.  
 GetPartitions(int32) - Partitions the underlying collection into the given number of partitions.  
@@ -707,6 +733,38 @@ CreateLinkedTokenSource(CancellationToken, CancellationToken) - Links these to
 CreateLinkedTokenSource(CancellationToken[]) - Same but links an array of tokens.  
 Dispose() - Release all resources  
 Dispose(bool) - release all unmanaged resources, set bool true to release all Managed resources also.
+
+### CancellationToken
+[top](#index)  
+This token can be referenced to initialize a cancel of a task or block of code.  
+Itr is generated by the ```CancellationTokenSource```
+
+#### Constructor
+[top](#index)  
+CancellationToken(boolean)	Initializes the CancellationToken  
+
+#### Properties
+[top](#index)  
+CanBeCanceled - Gets whether this token is capable of being in the canceled state.  
+IsCancellationRequested - Gets whether cancellation has been requested for this token.  
+None - Returns an empty CancellationToken value.  
+WaitHandle - Gets a WaitHandle that is signaled when the token is canceled.  
+
+#### Methods
+[top](#index)  
+Equals(CancellationToken) - Determines whether the current CancellationToken instance is equal to the specified token.  
+Equals(Object) - Determines whether the current CancellationToken instance is equal to the specified Object.(Overrides ValueType.Equals(Object).)  
+GetHashCode() - Serves as a hash function for CancellationToken (Overrides ValueType.GetHashCode())  
+Register(Action) - Registers a delegate that will be called when the CancellationToken is canceled.  
+Register(Action, Boolean) - same  
+Register(Action<Object>, Object) - same  
+Register(Action<Object>, Object, Boolean) - same  
+ThrowIfCancellationRequested() - Throws a OperationCanceledException if this token has had cancellation requested.  
+
+#### Operators
+[top](#index)  
+Equality(CancellationToken, CancellationToken) - Determines if these 2 ```CancellationToken``` instances are equal.
+Inequality(CancellationToken, CancellationToken) - Determines if these 2 ```CancellationToken``` instances are not equal.
 
 ### Example
 [top](#index)  
@@ -1149,7 +1207,6 @@ ne3 = (NewEnum3).25 //NewEnum.val2
 
 ## Generics
 [top](#index)  
-
 Generics are the implementation of the concept of a Type parameter.
 you can provide a type to this object on creation. Previously you would need to make a custom class for each object you wanted to interact with.
 
@@ -1165,7 +1222,6 @@ GenericList< float> list1 = new GenericList< float>()
 
 #### Type Parameter Naming Guidlines
 [top](#index)  
-
 Name generic type parameters with descripting names, unless a single letter name is completely self explanatory and a descriptive name would not add value.
 ```C#
 public interface ISeesionChannel< TSession>{//...}
@@ -1188,7 +1244,7 @@ public interface ISessionChannel< TSession>
 }
 ```
 
-## Methods
+## Object Methods
 [top](#index)  
 Methods are blocks of codes within a class or struct that execute on variables that are passed into them or local variables within the class.
 ```C#
@@ -1537,7 +1593,7 @@ using(StreamWriter sw = File.AppendText(path))
 [top](#index)  
 Copies an existing file to a new file
 
-##### overload methods  
+##### overload methods
 [top](#index)  
 (string source, string dest)					overwriting existing files is not allowed  
 (string source, string dest, bool overwrite)	overwriting is allowed.  
@@ -1631,7 +1687,8 @@ Checks to see if a file exists
 overload methods:
 (string path)
 
-example:
+#### example
+[top](#index)  
 ```C#
 string path = "path\\to\\file";
 File.Exists(path);
@@ -1772,7 +1829,7 @@ using(FileStream fs = FileStream(path, FileMode.Append, FileAccess.Write))
 }
 ```
 
-#### Create 
+#### Create
 [top](#index)  
 ```FileMode.Create``` Creates a new file, if the file already exists it will be overwritten. Throws ```UnauthorizedAccessException``` if the file is hidden.
 
@@ -1812,7 +1869,7 @@ using(FileStream fs = FileStream(path, FileMode.Open, FileAccess.ReadWrite))
 [top](#index)  
 ```OpenOrCreate``` Tries to open a file, if it can't be found it creates a new one.
 
-#### Truncate 
+#### Truncate
 [top](#index)  
 ```Truncate``` Opens an existing file and then deletes all contents. Reading from it throw sArgumentException.
 
@@ -2029,7 +2086,6 @@ List< int> query1 = //or int[] query1
 ```
 ## LINQ and Generic Types
 [top](#index)  
-
 ```C#
 IEnumerable< Customer> query = //LINQ query...
 ```

@@ -46,12 +46,12 @@ Tasks
 ~~ConcurrentDictionary~~
 ~~ConccurrentQueue~~
 ~~BlockingCollection~~
-### Cancelation Tokens
-CancellationTokenSource, CancellationToken
-Passing into Task
-Cancelling a Task
+~~### Cancelation Tokens~~
+~~CancellationTokenSource, CancellationToken~~
+~~Passing into Task~~
+~~Cancelling a Task~~
 ~~### Locks~~
-### Thread-safe methods
+~~### Thread-safe methods~~
 ~~### Control Statements~~
 ~~if/else~~
 ~~while~~
