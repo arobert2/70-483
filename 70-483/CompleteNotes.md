@@ -13,8 +13,8 @@ System.Threading.Tasks
 The purpose of the TPL is to make developers more productive by simplifying the process of adding parallelism and concurrency to applications.  
 Scales processes to use the processor most efficiently.  
 
-Benefits of using Tasks: More efficient and more scalable use of system resources
-						 More programmatic control than is possible with a thread or work item.
+Benefits of using Tasks: More efficient and more scalable use of system resources  
+						 More programmatic control than is possible with a thread or work item.  
 
 ### Data Parallelism
 Data parallelism - The Scenario in which the same operation is performed concurrently on elements in a source collection or array.  
@@ -291,19 +291,19 @@ using(BlockingCollection< object> bc = new BlockingCollection< string>())
 ```
 BlockingCollection will automatically dispose at the end of the using block.
 
-Constructors:  
+##### Constructors  
 ()		Initializing BlockingCollection without upperbounds.  
 (int upperbound)	Initialize BlockingCollection with upperbounds.  
 (IProducerConsumerCollection< T> datastore)	Initializes a new instance using the IProducerConsumerCollection as an underlying data store.  
 (IproducerConsumerCollection< T> datastore, int upperbounds)		Uses IProducerConsumerCollection as a data store and defines an upperbounds.  
 
-Properties:  
+#### Properties  
 BoundedCapacity - Gets the bounded capacity of this BlockingCollection< T> instance.  
 Count - Gets the number of items  
 IsAddingCompleted - Gets whether this BlockingCollection< T> has been makred as completed for adding.  
 IsCompleted - Gets whether this BlockingCollection< T> has been marked as complete for addign and is empty.  
 
-Methods:  
+#### Methods 
 Add(T) - Adds an item  
 Add(T, CancellationToken) - Adds an item but the process can be cancelled by using a CancellationToken.  
 AddToAny(BlockingCollection[], T) - Adds the specified item to any one of the specified BlockCollection< T> instances.  
@@ -340,7 +340,7 @@ TryTakeFromAny(BlockingCollection< T>[], T, int) - same but wtihin a time frame.
 TryTakeFromAny(BlockingCollection< T>[], T, int, CancellationToken) - Same but can be cancelled  
 TryTakeFromAny(BlockingCollection< T>[], T, TimeSpan) - same but not cancellation and uses TimeSpan for timeout instead of int.  
 
-Explicit Interface Implementations:  
+#### Explicit Interface Implementations   
 IEnumerable< T>.GetEnumerator() - Gets an IEnumerator< T> which can be used for things like foreach loops.  
 ICollection.CopyTo(Array, int) - Copies all of the items in the BlockingCollection< T> instance to a compatible on-dimensional arra, startin at the specified index of the target array.  
 IEnumerable.GetEnumerator() - Provides an IEnumerator for items in the collection, used for things like foreach loops.  
@@ -372,20 +372,20 @@ It works like a ```Stack< T>``` except it's thread safe.
 ### OrderablePartitioner< TSource>
 Splits an orderable data source into multiple partitions
 
-Constructors:  
+#### Constructors  
 (bool KeysOrderedInEachPartition, bool KeysOrderedAcrossPartitions, bool KeysNormalized)  
 
 **KeysOrderedIneachPartition** - Inidcates whether the elemnts in each partition are yielded in the order of increasing keys.  
 **KeysOrderedAcrossPartition** - Indicates whether elements in an earlier partition always come before elements in a later partition. If true, each element in aprtition 0 has a smaller order key than any element in partition 1, each element in partition 1 has a smaller order key than any element in partition 2, and so on.  
 **KeysNormalized** - Indicates whether keys are normalized. If true, all order keys are distinct integers in the range [0 .. numberOfElements - 1] if false, order keys must still be distinct, but only their relative order is considered, not their absolute values.  
 
-Properties:  
+#### Properties  
 KeysNormalized - Gets whether order keys are normalized.  
 KeysOrderedAcrossPartition - Gets whether elements in any earlier partition always come before elements in a later partition.  
 KeysOrderedInEachPartition - Gets whether elements in each partition are yielded in the order of increasing keys.  
 SupportsDynamicPartitions - Gets whether additional partitions can be created dynamically.  
 
-Methods:  
+#### Methods  
 GetDynamicPartitions() - Creates an object that can partition the underlying collection into a variable number of partitions.  
 GetOrderablDynamicPartitions - Creates an object that can partition the underlying collection into a variable number of partitions.  
 GetOrderableParittions(int numberofpartitions) - Partitions the underlying collection into the specified number of orderable partitions.  
@@ -394,7 +394,7 @@ GetPartitions(int numberofpartitions) - Partitions the underlying collction into
 ### Partitioner
 Static class provides common parittioning startegies for arrays, lists, and enumerables.
 
-Methods:  
+#### Methods  
 Create(int32, int32) -  Creats a partition that chunks the user-specified range.  
 Create(int32, int32, int32 - ) - same  
 Create(int64, int64) - same  
@@ -412,9 +412,49 @@ Partitioner< TSource>() - Creates a new partitioner instance.
 Properties:  
 SupportsDynamicPartitions - Gets whether additional parittions can be created dynamically.  
 
-Methods:  
+#### Methods  
 GetDynamicPartition() - Creates an object that can partition the underlying collection into a variable number of partitions.  
 GetPartitions(int32) - Partitions the underlying collection into the given number of partitions.  
+
+## Cancellation Tokens
+```CancellationToken``` enables cooperative cancellation between threads, thread pool work items, or Task objects. AN object creates a cencellation token by using a CancellationTokenSource, and then apsses the cancellation token to any number of threads or objects that should recieve notice of a cancellation.
+The token cannot be used to initiate a cancellation. When the owning object calls Cancel on the ```CancellationTokenSource```, ```the IsCanncellationRequested``` property on every copy of the cancellation token is set to tru. The objects that receive the notification can respond in whatever manner is appropriate.
+
+### CancellationTokenSource
+Used to create and coordinate ```CancellationToken```  
+
+#### Constructors
+()  
+(int cancelafterthismanymiliseconds)  
+(TimeSpan cancelafterthistimepasses)  
+
+#### Properties
+IsCancellationRequested - Can be checked to see if a cancel has been requested  
+Token - CancellationToken that is associated with this CancellationTokenSource  
+
+#### Methods
+Cancel() - Sends a cancel request setting IsCancellationRequested to true.  
+Cancel(bool) - Same, but also sets whether this cancel will throw an exception blocking all threads from running. True = so important everything needs to stop.  
+CancelAfter(int) - Cancel after this many miliseconds  
+CancelAfter(TimeSpan) - Cancel after this time interval.  
+CreateLinkedTokenSource(CancellationToken, CancellationToken) - Links these tokens together. If either of their sources are canceled the other is too.  
+CreateLinkedTokenSource(CancellationToken[]) - Same but links an array of tokens.  
+Dispose() - Release all resources  
+Dispose(bool) - release all unmanaged resources, set bool true to release all Managed resources also.
+
+### Example
+```C#
+int Main()
+{
+	CancellationTokenSource cts = new CancellationTokenSource();
+	public void runTask()
+	{
+		Task.Factory.Startnew(() => DoSomething(), cts.Token)
+	}
+	//This cancels the task.
+	cts.Cancel();
+}
+```
 
 ## Control Statements
 
@@ -888,13 +928,13 @@ bottom line, passing by value(default) will not effect the variable that was pas
 
 #### Ref vs. Out
 They are basically the same except for key points.
-|ref|out|
-|---|---|
-|must be initialized before passing|can be uninitialized when passed.|
-|Not required to return anything|Must return something|
-|Good for modifying parameter|Good for returning multiple values|
-|Doesn't need to be initialized in the calling method|Must be initialized in the calling method.|
-|Ref passes data bi-drecitonaly|out passas data uni-directionaly|
+|ref													|out										|
+|------------------------------------------------------:|------------------------------------------:|
+|must be initialized before passing						|can be uninitialized when passed.			|
+|Not required to return anything						|Must return something						|
+|Good for modifying parameter							|Good for returning multiple values			|
+|Doesn't need to be initialized in the calling method	|Must be initialized in the calling method.	|
+|Ref passes data bi-drecitonaly							|out passas data uni-directionaly			|
 
 Both ref and out ar etreatd differently at runtime and they are treated the same at compile time.
 Properties are not variables, therfore it cannot be passed as an out or ref parameter.
@@ -1171,11 +1211,11 @@ using(StreamWriter sw = File.AppendText(path))
 #### File.Copy
 Copies an existing file to a new file
 
-overload methods:  
+##### overload methods  
 (string source, string dest)					overwriting existing files is not allowed  
 (string source, string dest, bool overwrite)	overwriting is allowed.  
 
-example:
+##### example
 ```C#
 string filetocopy = "path\\to\\file";
 string wheretocopy = "path\\to\\destination"
@@ -1199,7 +1239,7 @@ Creates or opens a file writing UTF-8 encoded text
 overload methods:
 (string path)
 
-example:
+##### example
 ```C#
 string path "path\\to\\file";
 using(StreamWriter sw = File.CreateText(path))
@@ -1211,10 +1251,10 @@ using(StreamWriter sw = File.CreateText(path))
 #### File.Decrypt(string)
 Decrypt a file that was encrypted by the current account using the Encrypt method.
 
-overload methods:
+##### overload methods
 (string path)
 
-example:
+##### example
 ```C#
 string path = "path\\to\\file";
 File.Decrypt(path);
@@ -1223,10 +1263,10 @@ File.Decrypt(path);
 #### File.Encrypt
 Encrypt a file
 
-overload methods:
+##### overload methods
 (string path)
 
-example:
+##### example
 ```C#
 string path = "path\\to\\file"
 File.Encrypt(path);
@@ -1235,10 +1275,10 @@ File.Encrypt(path);
 #### File.Delete
 Delete a file
 
-overload methods:
+##### overload methods
 (string path)
 
-example:
+##### example
 ```C#
 string path = "path\\to\\file"
 File.Delete(path);
@@ -1259,11 +1299,11 @@ File.Exists(path);
 #### File.GetAccessControl
 Gets the FileSecurity object that encapsulates the access control list.
 
-overload methods:
+##### overload methods
 (string path)
 (string path, AccessControlSections.Owner)	specifies the type of access control list information to receive.
 
-example:
+##### example
 ```C#
 string path = "path\\to\\file";
 FileSecurity filesecurity = File.GetAccessControl(path);
@@ -1273,10 +1313,10 @@ FileSecurity morefilesecurity = File.GetAccessControl(path, AccessControlSection
 #### File.GetAttribute
 Gets the attribuets of a file
 
-overload methods;
+##### overload methods
 (string path)
 
-example:
+##### example
 ```C#
 File.GetAttributes(path)
 ```
@@ -1311,12 +1351,12 @@ File.Move(dest,target)
 #### File.Open
 Opens a file and sets the file mode.
 
-overload methods:
+##### overload methods
 (string path, FileMode.Create)
 (string path, FileMode.Append, FileAccess.ReadWrite)	Sets file access as well
 (string path, FileMode.Open, FileAccess.Read, FileShare.Write) sets file access and stream access with FileShare.
 
-example:
+##### example
 ```C#
 using(FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
 {
@@ -1326,11 +1366,11 @@ using(FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.
 #### File.ReadLine
 Reads the lines of a file
 
-overload methods:
+##### overload methods
 (stirng path)
 (string path, Encode.Unicode)	What encoding is needed to read.
 
-examples:
+##### examples
 ```C#
 foreach(string line in File.ReadLine(path))
 	Console.WriteLine(line);
@@ -1339,13 +1379,13 @@ foreach(string line in File.ReadLine(path))
 #### File.WriteAllLines
 Creates a file if needed, writes a collection of strings to a file, closes the file.
 
-overload methods:
+##### overload methods
 (string path, IEnumerable< string> stringlist)
 (string path, IEnumerable< string> stringlist, Encoding.UTF8)	Specifies text encoding.
 (string path, string[] content)		Uses an array instead of a list
 (string path, string[] content, Encoding.UTF8)	Uses an array and specifies text encoding.
 
-example:
+#####example
 ```C#
 List< string> stringlist = new List< string>(new string[] {
 	"we are testing",

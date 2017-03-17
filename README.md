@@ -28,15 +28,30 @@
 		1. [ Return types](#return-types)
 		1. [ Naming Convention](#naming-convention)
 	1. [ Concurrent Collections](#concurrent-collections)
-		1. [ IProducerConsumerCollection<T>](#iproducerconsumercollectiont)
-		1. [ BlockingCollection<T>](#blockingcollectiont)
-		1. [ ConcurrentBag<T>](#concurrentbagt)
-		1. [ ConcurrentDictionary<T,U>](#concurrentdictionarytu)
-		1. [ ConcurrentQueue<T>](#concurrentqueuet)
-		1. [ ConcurrentStack<T>](#concurrentstackt)
-		1. [ OrderablePartitioner<TSource>](#orderablepartitionertsource)
+		1. [ IProducerConsumerCollection< T>](#iproducerconsumercollection-t)
+		1. [ BlockingCollection< T>](#blockingcollection-t)
+				1. [ Constructors  ](#constructors--)
+			1. [ Properties  ](#properties--)
+			1. [ Methods ](#methods-)
+			1. [ Explicit Interface Implementations   ](#explicit-interface-implementations---)
+		1. [ ConcurrentBag< T>](#concurrentbag-t)
+		1. [ ConcurrentDictionary< T,U>](#concurrentdictionary-tu)
+		1. [ ConcurrentQueue< T>](#concurrentqueue-t)
+		1. [ ConcurrentStack< T>](#concurrentstack-t)
+		1. [ OrderablePartitioner< TSource>](#orderablepartitioner-tsource)
+			1. [ Constructors  ](#constructors--)
+			1. [ Properties  ](#properties--)
+			1. [ Methods  ](#methods--)
 		1. [ Partitioner](#partitioner)
-		1. [ Partitioner<TSource>](#partitionertsource)
+			1. [ Methods  ](#methods--)
+		1. [ Partitioner< TSource>](#partitioner-tsource)
+			1. [ Methods  ](#methods--)
+	1. [ Cancellation Tokens](#cancellation-tokens)
+		1. [ CancellationTokenSource](#cancellationtokensource)
+			1. [ Constructors](#constructors)
+			1. [ Properties](#properties)
+			1. [ Methods](#methods)
+		1. [ Example](#example)
 	1. [ Control Statements](#control-statements)
 		1. [ if/else](#ifelse)
 		1. [ while](#while)
@@ -52,11 +67,11 @@
 		1. [ Enumerable.Range(int,int)](#enumerablerangeintint)
 	1. [ Events and Delegates](#events-and-delegates)
 		1. [ Delegates](#delegates)
-			1. [ Func<T,U>](#functu)
-			1. [ Action<t>](#actiont)
-			1. [ Comparison<T>](#comparisont)
-			1. [ Predicate<T>](#predicatet)
-			1. [ EventHandler<TEventArgs>](#eventhandlerteventargs)
+			1. [ Func< T,U>](#func-tu)
+			1. [ Action< t>](#action-t)
+			1. [ Comparison< T>](#comparison-t)
+			1. [ Predicate< T>](#predicate-t)
+			1. [ EventHandler< TEventArgs>](#eventhandler-teventargs)
 		1. [ lambda Expressions/Anonymous Methods](#lambda-expressionsanonymous-methods)
 		1. [ Subscribing/Unsubscriping from events](#subscribingunsubscriping-from-events)
 1. [ Create and Use Types](#create-and-use-types)
@@ -96,14 +111,27 @@
 			1. [ File.AppendAllText](#fileappendalltext)
 			1. [ File.AppendTest](#fileappendtest)
 			1. [ File.Copy](#filecopy)
+				1. [ overload methods  ](#overload-methods--)
+				1. [ example](#example)
 			1. [ File.Create](#filecreate)
 			1. [ File.ReadAllLines()](#filereadalllines)
+				1. [ example](#example)
 			1. [ File.Decrypt(string)](#filedecryptstring)
+				1. [ overload methods](#overload-methods)
+				1. [ example](#example)
 			1. [ File.Encrypt](#fileencrypt)
+				1. [ overload methods](#overload-methods)
+				1. [ example](#example)
 			1. [ File.Delete](#filedelete)
+				1. [ overload methods](#overload-methods)
+				1. [ example](#example)
 			1. [ File.Exists](#fileexists)
 			1. [ File.GetAccessControl](#filegetaccesscontrol)
+				1. [ overload methods](#overload-methods)
+				1. [ example](#example)
 			1. [ File.GetAttribute](#filegetattribute)
+				1. [ overload methods](#overload-methods)
+				1. [ example](#example)
 			1. [ File.GetCreationTime](#filegetcreationtime)
 			1. [ File.GetCreationTimeUtc](#filegetcreationtimeutc)
 			1. [ File.GetLastAccessTime](#filegetlastaccesstime)
@@ -112,8 +140,14 @@
 			1. [ File.GetLastWriteTimeUtc](#filegetlastwritetimeutc)
 			1. [ File.Move](#filemove)
 			1. [ File.Open](#fileopen)
+				1. [ overload methods](#overload-methods)
+				1. [ example](#example)
 			1. [ File.ReadLine](#filereadline)
+				1. [ overload methods](#overload-methods)
+				1. [ examples](#examples)
 			1. [ File.WriteAllLines](#filewritealllines)
+				1. [ overload methods](#overload-methods)
+				1. [example](#example)
 		1. [ System.IO.FileMode](#systemiofilemode)
 			1. [ Append](#append)
 			1. [ Create ](#create-)
@@ -171,11 +205,11 @@
 		1. [ Transforming in-Memory Objects into XML](#transforming-in-memory-objects-into-xml)
 	1. [ Connect LINQ to a databse](#connect-linq-to-a-databse)
 	1. [ Generic Collections](#generic-collections)
-		1. [ Dictionary<T,U>](#dictionarytu)
-		1. [ List<T>](#listt)
-		1. [ Queue<T>](#queuet)
-		1. [ SortedList<T,U>](#sortedlisttu)
-		1. [ Stack<T>](#stackt)
+		1. [ Dictionary< T,U>](#dictionary-tu)
+		1. [ List< T>](#list-t)
+		1. [ Queue< T>](#queue-t)
+		1. [ SortedList< T,U>](#sortedlist-tu)
+		1. [ Stack< T>](#stack-t)
 1. [ Example Questions](#example-questions)
 
 # 70-483 Complete Notes
@@ -196,8 +230,8 @@ System.Threading.Tasks
 The purpose of the TPL is to make developers more productive by simplifying the process of adding parallelism and concurrency to applications.  
 Scales processes to use the processor most efficiently.  
 
-Benefits of using Tasks: More efficient and more scalable use of system resources
-						 More programmatic control than is possible with a thread or work item.
+Benefits of using Tasks: More efficient and more scalable use of system resources  
+						 More programmatic control than is possible with a thread or work item.  
 
 ### Data Parallelism
 [top](#index)  
@@ -223,7 +257,7 @@ Parallel.Invoke(() => DoWork(), () => DoMoreWork());
 #### Creating and Running Tasks Explicitly
 [top](#index)  
 System.Threading.Tasks.Task are Tasks that do not return anything.
-System.Threading.Tasks.Task<TResult> are Tasks that return a value.
+System.Threading.Tasks.Task< TResult> are Tasks that return a value.
 Task.Status will return whether the Task has run or not.
 Task.Status is returned as a TaskStatus enumeration.
 
@@ -305,7 +339,7 @@ using Task.Wait() will cause your application to wait until all tasks are finish
 [top](#index)  
 ```C#
 //Task factory examples of Task.Run();
-TaskFactory.StartNew<string>(() => {
+TaskFactory.StartNew< string>(() => {
 	DoSomething();
 });
 ```
@@ -395,11 +429,11 @@ The async and await keyword are the heart of async programming. They use resourc
 
 ```C#
 //This is an async method
-public async Task<int> AccessTheWebAsync()
+public async Task< int> AccessTheWebAsync()
 {
 	HttpClient client = new HttpClient();
 	//Runs asynchrounously because of the call to Task. Code will not wait.
-	Task<String> getStringTask = client.GetStringAsync("http://www.google.com")
+	Task< String> getStringTask = client.GetStringAsync("http://www.google.com")
 	//This cannot rely on getStringTask because it may still be waiting for client.GetStringAsync to return information.
 	ExecuteSomeCode()
 	//The await keyword lets the program know that if getStringTask isn't populated yet it will wait until it is.
@@ -419,7 +453,7 @@ string urlContents = await client.GetStringAsync();
 * ```async``` keyword used
 * Method name ends with Async to help the user know this is an async method.
 * The return type is of the following
-	* Task<TResult>
+	* Task< TResult>
 	* Task
 	* void
 * usually have atleast one await statement.
@@ -460,7 +494,7 @@ You can't use ```ref``` or ```out``` on async methods.
 
 Asynchronous APIs in Windows Runtime programmign have on eo fhte following return types, which are similar to tasks:
 
-* IAsyncOperations, which corresponds to Task<TResult>
+* IAsyncOperations, which corresponds to Task< TResult>
 * IAsyncAction, which corresponds to Task
 * IAsyncActionWithProgress
 * IAsyncOperationWithProgress
@@ -477,88 +511,92 @@ Provides several thraed-safe collection classes taht should be used in place of 
 
 Members accessed through one of the interfaces implemented by the current collection are not garaunteed to be thread-safe, including extension methods, and may need to be synchronized by the caller.
 
-### IProducerConsumerCollection<T>
+### IProducerConsumerCollection< T>
 [top](#index)  
 
-Interface defines methods to manipulate thread-safe collections intended for producer/consumer usage. This interface provides a unified representation for producer/consumer collections fo that higher level abstractions such as System.Collections.Concurrent.BlockingCollection<T> can use the collection as a data-store.
+Interface defines methods to manipulate thread-safe collections intended for producer/consumer usage. This interface provides a unified representation for producer/consumer collections fo that higher level abstractions such as System.Collections.Concurrent.BlockingCollection< T> can use the collection as a data-store.
 
-### BlockingCollection<T>
+### BlockingCollection< T>
 [top](#index)  
-Provides blocking and bounding capabilities for thread-safe collections that implement ```IProducerConsumerCollections<T>```
+Provides blocking and bounding capabilities for thread-safe collections that implement ```IProducerConsumerCollections< T>```
 
 Implements IDisposable interface. When you have finished using the type, you should dispose of it either directly or inderectly. To dispose of it directly call Dispose in a try/catch block. To dispose of it directly call it in a using block
 ```C#
 //Direct disposal
-BlockingCollection<object> bc = new BlockingCollection<object>();
+BlockingCollection< object> bc = new BlockingCollection< object>();
 try{
 	bc.Dispose()
 }
 
 //indirect disposal
-using(BlockingCollection<object> bc = new BlockingCollection<string>())
+using(BlockingCollection< object> bc = new BlockingCollection< string>())
 {
 	...
 }
 ```
 BlockingCollection will automatically dispose at the end of the using block.
 
-Constructors:  
+##### Constructors  
+[top](#index)  
 ()		Initializing BlockingCollection without upperbounds.  
 (int upperbound)	Initialize BlockingCollection with upperbounds.  
-(IProducerConsumerCollection<T> datastore)	Initializes a new instance using the IProducerConsumerCollection as an underlying data store.  
-(IproducerConsumerCollection<T> datastore, int upperbounds)		Uses IProducerConsumerCollection as a data store and defines an upperbounds.  
+(IProducerConsumerCollection< T> datastore)	Initializes a new instance using the IProducerConsumerCollection as an underlying data store.  
+(IproducerConsumerCollection< T> datastore, int upperbounds)		Uses IProducerConsumerCollection as a data store and defines an upperbounds.  
 
-Properties:  
-BoundedCapacity - Gets the bounded capacity of this BlockingCollection<T> instance.  
+#### Properties  
+[top](#index)  
+BoundedCapacity - Gets the bounded capacity of this BlockingCollection< T> instance.  
 Count - Gets the number of items  
-IsAddingCompleted - Gets whether this BlockingCollection<T> has been makred as completed for adding.  
-IsCompleted - Gets whether this BlockingCollection<T> has been marked as complete for addign and is empty.  
+IsAddingCompleted - Gets whether this BlockingCollection< T> has been makred as completed for adding.  
+IsCompleted - Gets whether this BlockingCollection< T> has been marked as complete for addign and is empty.  
 
-Methods:  
+#### Methods 
+[top](#index)  
 Add(T) - Adds an item  
 Add(T, CancellationToken) - Adds an item but the process can be cancelled by using a CancellationToken.  
-AddToAny(BlockingCollection[], T) - Adds the specified item to any one of the specified BlockCollection<T> instances.  
-AddToAny(BlockingCollection<t>[], T, CancellationToken)	- Adds the specified item to any one of the specified BlockColletion<T> Instances.  
-CompleteAdding() - Marks theBlockingCollection<T> instance as not accepting any more additions.  
+AddToAny(BlockingCollection[], T) - Adds the specified item to any one of the specified BlockCollection< T> instances.  
+AddToAny(BlockingCollection< t>[], T, CancellationToken)	- Adds the specified item to any one of the specified BlockColletion< T> Instances.  
+CompleteAdding() - Marks theBlockingCollection< T> instance as not accepting any more additions.  
 CopyTo(T[], int) - Copies all of the items to a compatible one-dimensional array, starting at the specified index.  
 Dispose - Release all resources used by the current instance of the class.  
 Dispose(bool) - release resources used by hte instance.  
 Equals - Determine if this object is equal to another.  
 Finalize() - Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.  
-GetConsumingEnumerable - Provides a consuming IEnumerator<T> for items in the collection.  
+GetConsumingEnumerable - Provides a consuming IEnumerator< T> for items in the collection.  
 GetConsumingEnumerable(CancellationToken) - same but can be cancelled.  
 GetHashCode() - Serves as the default hash function.  
 GetType() - returns the objects Type.  
 MemberwiseClone() - Creates a shwllow copy of the current object.  
 Take() - Removes an item from the collection  
 Take(CancellationToken) - Cancellable remove command.  
-TakeFromAny(BlockingCollection<T>[], T) - Takes an item from any one of the specified instances.  
-TakeFromAny(BlockingCollection<T>[], T, CancellationToken) - Same but can be cancelled.  
+TakeFromAny(BlockingCollection< T>[], T) - Takes an item from any one of the specified instances.  
+TakeFromAny(BlockingCollection< T>[], T, CancellationToken) - Same but can be cancelled.  
 ToArray() - Returns an array of items in collection.  
 ToString() - Returns a string that resprents the current object.  
-TryAdd(T) - Tries to add the specified item to the BlockingCollection<T>.  
-TryAdd(T, int) - Tries to add the specified item to the BlockingCollection<T> within the specified time period.  
+TryAdd(T) - Tries to add the specified item to the BlockingCollection< T>.  
+TryAdd(T, int) - Tries to add the specified item to the BlockingCollection< T> within the specified time period.  
 TryAdd(T, int, CancellationToken) - Same but can be cancelled.  
-TryAddToAny(BlockingCollection<T>[], T) - Tries to add an object to any of the provided collections.  
+TryAddToAny(BlockingCollection< T>[], T) - Tries to add an object to any of the provided collections.  
 TryAddToAny(BlockingCollection, T, int32, CancellationToken) - same but within a time span with a cancellation token.  
-TryAddToAny(BlockingCollection<T>[], T, Timespan) - Same but no cancellation and uses a TimeSpan object for the timeout.  
+TryAddToAny(BlockingCollection< T>[], T, Timespan) - Same but no cancellation and uses a TimeSpan object for the timeout.  
 TryTake(T) - Tries to remove an object  
 TryTake(T, int) - Tries to remove object within a specific time.  
 TryTake(T, int, CancellationToken) - Same but cancellable.  
 TryTake(T, TimeSpan) - Uses TimeSpan object instead of int to set time out.  
-TryTakeFromAny(BlockingCollection<T>[], T) - Try to remove an object from any of the provided BlockingCollections  
-TryTakeFromAny(BlockingCollection<T>[], T, int) - same but wtihin a time frame.  
-TryTakeFromAny(BlockingCollection<T>[], T, int, CancellationToken) - Same but can be cancelled  
-TryTakeFromAny(BlockingCollection<T>[], T, TimeSpan) - same but not cancellation and uses TimeSpan for timeout instead of int.  
+TryTakeFromAny(BlockingCollection< T>[], T) - Try to remove an object from any of the provided BlockingCollections  
+TryTakeFromAny(BlockingCollection< T>[], T, int) - same but wtihin a time frame.  
+TryTakeFromAny(BlockingCollection< T>[], T, int, CancellationToken) - Same but can be cancelled  
+TryTakeFromAny(BlockingCollection< T>[], T, TimeSpan) - same but not cancellation and uses TimeSpan for timeout instead of int.  
 
-Explicit Interface Implementations:  
-IEnumerable<T>.GetEnumerator() - Gets an IEnumerator<T> which can be used for things like foreach loops.  
-ICollection.CopyTo(Array, int) - Copies all of the items in the BlockingCollection<T> instance to a compatible on-dimensional arra, startin at the specified index of the target array.  
+#### Explicit Interface Implementations   
+[top](#index)  
+IEnumerable< T>.GetEnumerator() - Gets an IEnumerator< T> which can be used for things like foreach loops.  
+ICollection.CopyTo(Array, int) - Copies all of the items in the BlockingCollection< T> instance to a compatible on-dimensional arra, startin at the specified index of the target array.  
 IEnumerable.GetEnumerator() - Provides an IEnumerator for items in the collection, used for things like foreach loops.  
 ICollection.IsSyncrhonized - Gets a value indicating whether access to the ICollection is synchronized.  
 ICollection.SyncRoot - Gets an object that can be used to synchronize access to the ICollection. This property is not supported.  
 
-### ConcurrentBag<T>
+### ConcurrentBag< T>
 [top](#index)  
 Represents thread-safe unorder collection objects.
 
@@ -566,42 +604,45 @@ Otherwise functions like any standard List.
 
 Accepts ```null``` as a valid value for reference types.
 
-### ConcurrentDictionary<T,U>
+### ConcurrentDictionary< T,U>
 [top](#index)  
 A thread-safe dictionary.
 
-It work like a ```Dictionary<T,U>``` except it's thraed safe.
+It work like a ```Dictionary< T,U>``` except it's thraed safe.
 
-### ConcurrentQueue<T>
+### ConcurrentQueue< T>
 [top](#index)  
 A thread-safe Queue
 
-It works like a ```Queue<T>``` except it's thread safe.
+It works like a ```Queue< T>``` except it's thread safe.
 
-### ConcurrentStack<T>
+### ConcurrentStack< T>
 [top](#index)  
 A thread-safe Stack
 
-It works like a ```Stack<T>``` except it's thread safe.
+It works like a ```Stack< T>``` except it's thread safe.
 
-### OrderablePartitioner<TSource>
+### OrderablePartitioner< TSource>
 [top](#index)  
 Splits an orderable data source into multiple partitions
 
-Constructors:  
+#### Constructors  
+[top](#index)  
 (bool KeysOrderedInEachPartition, bool KeysOrderedAcrossPartitions, bool KeysNormalized)  
 
 **KeysOrderedIneachPartition** - Inidcates whether the elemnts in each partition are yielded in the order of increasing keys.  
 **KeysOrderedAcrossPartition** - Indicates whether elements in an earlier partition always come before elements in a later partition. If true, each element in aprtition 0 has a smaller order key than any element in partition 1, each element in partition 1 has a smaller order key than any element in partition 2, and so on.  
 **KeysNormalized** - Indicates whether keys are normalized. If true, all order keys are distinct integers in the range [0 .. numberOfElements - 1] if false, order keys must still be distinct, but only their relative order is considered, not their absolute values.  
 
-Properties:  
+#### Properties  
+[top](#index)  
 KeysNormalized - Gets whether order keys are normalized.  
 KeysOrderedAcrossPartition - Gets whether elements in any earlier partition always come before elements in a later partition.  
 KeysOrderedInEachPartition - Gets whether elements in each partition are yielded in the order of increasing keys.  
 SupportsDynamicPartitions - Gets whether additional partitions can be created dynamically.  
 
-Methods:  
+#### Methods  
+[top](#index)  
 GetDynamicPartitions() - Creates an object that can partition the underlying collection into a variable number of partitions.  
 GetOrderablDynamicPartitions - Creates an object that can partition the underlying collection into a variable number of partitions.  
 GetOrderableParittions(int numberofpartitions) - Partitions the underlying collection into the specified number of orderable partitions.  
@@ -611,28 +652,76 @@ GetPartitions(int numberofpartitions) - Partitions the underlying collction into
 [top](#index)  
 Static class provides common parittioning startegies for arrays, lists, and enumerables.
 
-Methods:  
+#### Methods  
+[top](#index)  
 Create(int32, int32) -  Creats a partition that chunks the user-specified range.  
 Create(int32, int32, int32 - ) - same  
 Create(int64, int64) - same  
 Create(int64, int64, int64) - same  
-Create<TSource>(TSource[], bool) - Creats an orderable partition from an Array instance. Bool sets the object to dynamically load balance or statically load balance.  
-Craete<TSource>(IEnumerable<TSource>, EnumerablePartitionerOptions) - Same but with an IEnumerable, EnumerablePartitionOptions allows you to set the buffering behavior of the partition.  
-Create<TSource>(IList<TSource>, Boolean) - Creates an orderable partitioner from an IList<T> object. Bool sets the object to dynamically load balance or statically load balance.  
+Create< TSource>(TSource[], bool) - Creats an orderable partition from an Array instance. Bool sets the object to dynamically load balance or statically load balance.  
+Craete< TSource>(IEnumerable< TSource>, EnumerablePartitionerOptions) - Same but with an IEnumerable, EnumerablePartitionOptions allows you to set the buffering behavior of the partition.  
+Create< TSource>(IList< TSource>, Boolean) - Creates an orderable partitioner from an IList< T> object. Bool sets the object to dynamically load balance or statically load balance.  
 
-### Partitioner<TSource>
+### Partitioner< TSource>
 [top](#index)  
 Represents a particular manner of splitting a data source into multiple partitions
 
 Constructor:  
-Partitioner<TSource>() - Creates a new partitioner instance.
+Partitioner< TSource>() - Creates a new partitioner instance.
 
 Properties:  
 SupportsDynamicPartitions - Gets whether additional parittions can be created dynamically.  
 
-Methods:  
+#### Methods  
+[top](#index)  
 GetDynamicPartition() - Creates an object that can partition the underlying collection into a variable number of partitions.  
 GetPartitions(int32) - Partitions the underlying collection into the given number of partitions.  
+
+## Cancellation Tokens
+[top](#index)  
+```CancellationToken``` enables cooperative cancellation between threads, thread pool work items, or Task objects. AN object creates a cencellation token by using a CancellationTokenSource, and then apsses the cancellation token to any number of threads or objects that should recieve notice of a cancellation.
+The token cannot be used to initiate a cancellation. When the owning object calls Cancel on the ```CancellationTokenSource```, ```the IsCanncellationRequested``` property on every copy of the cancellation token is set to tru. The objects that receive the notification can respond in whatever manner is appropriate.
+
+### CancellationTokenSource
+[top](#index)  
+Used to create and coordinate ```CancellationToken```  
+
+#### Constructors
+[top](#index)  
+()  
+(int cancelafterthismanymiliseconds)  
+(TimeSpan cancelafterthistimepasses)  
+
+#### Properties
+[top](#index)  
+IsCancellationRequested - Can be checked to see if a cancel has been requested  
+Token - CancellationToken that is associated with this CancellationTokenSource  
+
+#### Methods
+[top](#index)  
+Cancel() - Sends a cancel request setting IsCancellationRequested to true.  
+Cancel(bool) - Same, but also sets whether this cancel will throw an exception blocking all threads from running. True = so important everything needs to stop.  
+CancelAfter(int) - Cancel after this many miliseconds  
+CancelAfter(TimeSpan) - Cancel after this time interval.  
+CreateLinkedTokenSource(CancellationToken, CancellationToken) - Links these tokens together. If either of their sources are canceled the other is too.  
+CreateLinkedTokenSource(CancellationToken[]) - Same but links an array of tokens.  
+Dispose() - Release all resources  
+Dispose(bool) - release all unmanaged resources, set bool true to release all Managed resources also.
+
+### Example
+[top](#index)  
+```C#
+int Main()
+{
+	CancellationTokenSource cts = new CancellationTokenSource();
+	public void runTask()
+	{
+		Task.Factory.Startnew(() => DoSomething(), cts.Token)
+	}
+	//This cancels the task.
+	cts.Cancel();
+}
+```
 
 ## Control Statements
 [top](#index)  
@@ -689,10 +778,10 @@ switch(varcheck)
 [top](#index)  
 **for** loops are simple loops that will loop a set amount of times. loop.
 ```C#
-for(int i = 0;i < 10;i++)
+for(int i = 0;i <  10;i++)
 	DoSomething();
 
-for(int i = 0; i < variable;i++)
+for(int i = 0; i <  variable;i++)
 	DoSomething();
 ```
 
@@ -809,13 +898,13 @@ public void MyNewMethod(string info)
 ```
 Whenever the delegatehandler is called it will execute the method passed to the delegate.
 
-#### Func<T,U>
+#### Func< T,U>
 [top](#index)  
 ```Func``` is a generic delegate that takes and input and returns an output.
 ```C#
 public class functest
 {
-	public Func<string, string> concatfunc;
+	public Func< string, string> concatfunc;
 
 	public functest()
 	{
@@ -845,18 +934,18 @@ It also returns a what ever type you have set.
 The first call prints the return, but at the same time it updates inputoutput.
 This allows the second console.writeline code to print SecondFirst instead of just Second.
 
-#### Action<t>
+#### Action< t>
 [top](#index)  
 Action is like func except it doesn't return anything, not even with ```out``` parameters.
 It can have a lot of input parameters though. Invoke the same way, don't expect any returns.
 
-#### Comparison<T>
+#### Comparison< T>
 [top](#index)  
 Delegate that returns a custom comparison by int form.
 ```
 public void Main()
 {
-	List<object> objectlist = new List<object>();
+	List< object> objectlist = new List< object>();
 	objectlist.Sort(compare);
 }
 
@@ -864,13 +953,13 @@ public int compare(object find, object compare)
 {
 	if(find > compare)
 		return 1;
-	if(find < compare)
+	if(find <  compare)
 		return -1;
 	if(find == compare)
 		return 0;
 }
 ```
-Sort uses a Compare<T> delegate. You can pass a method to it that must return a 1, 0, or -1 in order to function.
+Sort uses a Compare< T> delegate. You can pass a method to it that must return a 1, 0, or -1 in order to function.
 
 You can create multiple methods for different cases.
 ```C#
@@ -878,9 +967,9 @@ Array.Sort(Collection, Collection.PropertyToSortBy);
 ```
 Array.Sort's first parameter is an out param. Collection is updated on execution without return.
 
-#### Predicate<T>
+#### Predicate< T>
 [top](#index)  
-Predicate<T> set a particular constraint and filter items that do not conform to the constraint.
+Predicate< T> set a particular constraint and filter items that do not conform to the constraint.
 ```
 //Find the first number in a string.
 public bool search(char c)
@@ -896,18 +985,18 @@ public void Main()
 ```
 THe above code will return the first number in a string.
 
-#### EventHandler<TEventArgs>
+#### EventHandler< TEventArgs>
 [top](#index)  
 You can create custom EventArgs by inheriting from EventArgs. Then you can use it an a generic inside of an EventHandler to pass event arguments.
 
 Events conform to the following
 ```C#
 //The event
-EventHandler<CustomerEventArgs> eventhandler = CustomMethod;
+EventHandler< CustomerEventArgs> eventhandler = CustomMethod;
 //The event method.
 public void EventMethod(sender o, CustomEventArgs cea)
 ```
-EventHandler<T> will pass the event args input during invoke so you can pass information into the trigger method. It also passes the object that trigger the event.
+EventHandler< T> will pass the event args input during invoke so you can pass information into the trigger method. It also passes the object that trigger the event.
 
 ### lambda Expressions/Anonymous Methods
 [top](#index)  
@@ -1070,8 +1159,8 @@ You can implement existing Generic types, or create custom Generic types.
 [top](#index)  
 ```C#
 //This defines an object called GenericList which takes in a type parameter. The generic list now expects floats to interact with in some way.
-//This is common with collections. List<T> when declared can dynamically add new object equivalent to the type provided at T.
-GenericList<float> list1 = new GenericList<float>()
+//This is common with collections. List< T> when declared can dynamically add new object equivalent to the type provided at T.
+GenericList< float> list1 = new GenericList< float>()
 ```
 
 #### Type Parameter Naming Guidlines
@@ -1079,21 +1168,21 @@ GenericList<float> list1 = new GenericList<float>()
 
 Name generic type parameters with descripting names, unless a single letter name is completely self explanatory and a descriptive name would not add value.
 ```C#
-public interface ISeesionChannel<TSession>{//...}
-public delegate TOutput Converter<TInput, TOutPut(TInput from);
-public class List<T>{//...}
+public interface ISeesionChannel< TSession>{//...}
+public delegate TOutput Converter< TInput, TOutPut(TInput from);
+public class List< T>{//...}
 ```
 
 Consider using T as the type parameter name for types with ong single letter type parameter.
 ```C#
-public int ICompare<t>() {return 0; }
-public delegate bool Predicate<t>(T item);
-public struct Nullable<t> where T | struct {//...}
+public int ICompare< t>() {return 0; }
+public delegate bool Predicate< t>(T item);
+public struct Nullable< t> where T | struct {//...}
 ```
 
 Prefix descriptive type parameter names with "T"
 ```C#
-public interface ISessionChannel<TSession>
+public interface ISessionChannel< TSession>
 {
 	TSession Session {get;}
 }
@@ -1148,13 +1237,13 @@ bottom line, passing by value(default) will not effect the variable that was pas
 #### Ref vs. Out
 [top](#index)  
 They are basically the same except for key points.
-|ref|out|
-|---|---|
-|must be initialized before passing|can be uninitialized when passed.|
-|Not required to return anything|Must return something|
-|Good for modifying parameter|Good for returning multiple values|
-|Doesn't need to be initialized in the calling method|Must be initialized in the calling method.|
-|Ref passes data bi-drecitonaly|out passas data uni-directionaly|
+|ref													|out										|
+|------------------------------------------------------:|------------------------------------------:|
+|must be initialized before passing						|can be uninitialized when passed.			|
+|Not required to return anything						|Must return something						|
+|Good for modifying parameter							|Good for returning multiple values			|
+|Doesn't need to be initialized in the calling method	|Must be initialized in the calling method.	|
+|Ref passes data bi-drecitonaly							|out passas data uni-directionaly			|
 
 Both ref and out ar etreatd differently at runtime and they are treated the same at compile time.
 Properties are not variables, therfore it cannot be passed as an out or ref parameter.
@@ -1166,7 +1255,7 @@ You can extend objects by creating a static method that references it's first pa
 public static int Sigma(this int x)
 {
 	int newx = 0;
-	for(int i = 0; i <= x; i++ )
+	for(int i = 0; i < = x; i++ )
 		newx += x * i;
 	return newx;
 }
@@ -1217,7 +1306,7 @@ Static Variables can also be used to access information between objects and thre
 ```C#
 public class StaticVariableAndMethod
 {
-	public static Dictionary<string, Queue<string>> taskqueue = new Dictionary<string, Queue<string>>();
+	public static Dictionary< string, Queue< string>> taskqueue = new Dictionary< string, Queue< string>>();
 
 	public static string CheckForUpdate(string idnum)
 	{
@@ -1394,12 +1483,12 @@ A class that's able to interact and manipulate files.
 Appends lines to a file. Creates a file if one doesn't exist. Closes file when finished.
 
 overload methods:  
-(string path, IEnumerable<string> contents)  
-(string path, IEnumerable<string> contents, Encoding encoding)		When the file is created or written to it uses the specified text encoding.  
+(string path, IEnumerable< string> contents)  
+(string path, IEnumerable< string> contents, Encoding encoding)		When the file is created or written to it uses the specified text encoding.  
 
 example:
 ```C#
-List<string> listofstrings = new List<string>(new string[] { 
+List< string> listofstrings = new List< string>(new string[] { 
 		"This is a test", 
 		"yes it is", 
 		"this is a test", 
@@ -1448,11 +1537,13 @@ using(StreamWriter sw = File.AppendText(path))
 [top](#index)  
 Copies an existing file to a new file
 
-overload methods:  
+##### overload methods  
+[top](#index)  
 (string source, string dest)					overwriting existing files is not allowed  
 (string source, string dest, bool overwrite)	overwriting is allowed.  
 
-example:
+##### example
+[top](#index)  
 ```C#
 string filetocopy = "path\\to\\file";
 string wheretocopy = "path\\to\\destination"
@@ -1478,7 +1569,8 @@ Creates or opens a file writing UTF-8 encoded text
 overload methods:
 (string path)
 
-example:
+##### example
+[top](#index)  
 ```C#
 string path "path\\to\\file";
 using(StreamWriter sw = File.CreateText(path))
@@ -1491,10 +1583,12 @@ using(StreamWriter sw = File.CreateText(path))
 [top](#index)  
 Decrypt a file that was encrypted by the current account using the Encrypt method.
 
-overload methods:
+##### overload methods
+[top](#index)  
 (string path)
 
-example:
+##### example
+[top](#index)  
 ```C#
 string path = "path\\to\\file";
 File.Decrypt(path);
@@ -1504,10 +1598,12 @@ File.Decrypt(path);
 [top](#index)  
 Encrypt a file
 
-overload methods:
+##### overload methods
+[top](#index)  
 (string path)
 
-example:
+##### example
+[top](#index)  
 ```C#
 string path = "path\\to\\file"
 File.Encrypt(path);
@@ -1517,10 +1613,12 @@ File.Encrypt(path);
 [top](#index)  
 Delete a file
 
-overload methods:
+##### overload methods
+[top](#index)  
 (string path)
 
-example:
+##### example
+[top](#index)  
 ```C#
 string path = "path\\to\\file"
 File.Delete(path);
@@ -1543,11 +1641,13 @@ File.Exists(path);
 [top](#index)  
 Gets the FileSecurity object that encapsulates the access control list.
 
-overload methods:
+##### overload methods
+[top](#index)  
 (string path)
 (string path, AccessControlSections.Owner)	specifies the type of access control list information to receive.
 
-example:
+##### example
+[top](#index)  
 ```C#
 string path = "path\\to\\file";
 FileSecurity filesecurity = File.GetAccessControl(path);
@@ -1558,10 +1658,12 @@ FileSecurity morefilesecurity = File.GetAccessControl(path, AccessControlSection
 [top](#index)  
 Gets the attribuets of a file
 
-overload methods;
+##### overload methods
+[top](#index)  
 (string path)
 
-example:
+##### example
+[top](#index)  
 ```C#
 File.GetAttributes(path)
 ```
@@ -1604,12 +1706,14 @@ File.Move(dest,target)
 [top](#index)  
 Opens a file and sets the file mode.
 
-overload methods:
+##### overload methods
+[top](#index)  
 (string path, FileMode.Create)
 (string path, FileMode.Append, FileAccess.ReadWrite)	Sets file access as well
 (string path, FileMode.Open, FileAccess.Read, FileShare.Write) sets file access and stream access with FileShare.
 
-example:
+##### example
+[top](#index)  
 ```C#
 using(FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
 {
@@ -1620,11 +1724,13 @@ using(FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.
 [top](#index)  
 Reads the lines of a file
 
-overload methods:
+##### overload methods
+[top](#index)  
 (stirng path)
 (string path, Encode.Unicode)	What encoding is needed to read.
 
-examples:
+##### examples
+[top](#index)  
 ```C#
 foreach(string line in File.ReadLine(path))
 	Console.WriteLine(line);
@@ -1634,15 +1740,17 @@ foreach(string line in File.ReadLine(path))
 [top](#index)  
 Creates a file if needed, writes a collection of strings to a file, closes the file.
 
-overload methods:
-(string path, IEnumerable<string> stringlist)
-(string path, IEnumerable<string> stringlist, Encoding.UTF8)	Specifies text encoding.
+##### overload methods
+[top](#index)  
+(string path, IEnumerable< string> stringlist)
+(string path, IEnumerable< string> stringlist, Encoding.UTF8)	Specifies text encoding.
 (string path, string[] content)		Uses an array instead of a list
 (string path, string[] content, Encoding.UTF8)	Uses an array and specifies text encoding.
 
-example:
+#####example
+[top](#index)  
 ```C#
-List<string> stringlist = new List<string>(new string[] {
+List< string> stringlist = new List< string>(new string[] {
 	"we are testing",
 	"yes we are"
 });
@@ -1822,26 +1930,26 @@ Provides a stream for a file, supporting both synchronous and asynchronous read 
 
 Language-Integrated Query - LINQ - Introduced in .Net 3.5
 Must be used against Strongly Typed collections
-LINQ is a unified model for querying any IEnumerable or IEnumerable<T> in a safe manner.
+LINQ is a unified model for querying any IEnumerable or IEnumerable< T> in a safe manner.
 LINQ to Objects is the name for LINQ queries in memory.
 
-Can be used to query SQL Server, XML Documents, ADO.NET Datasets, IEnumerable or IEnumerable<T>.
+Can be used to query SQL Server, XML Documents, ADO.NET Datasets, IEnumerable or IEnumerable< T>.
 
 ## Basic LINQ Queries
 [top](#index)  
 
 Query is an expression that retieves data from a data source. LINQ simplifies queries between languages.
 
-<ol>
-	<il>Obtain the data source.</il>
-	<il>Create the query.</il>
-	<il>Execute the query.</il>
-</ol>
+< ol>
+	< il>Obtain the data source.< /il>
+	< il>Create the query.< /il>
+	< il>Execute the query.< /il>
+< /ol>
 
 ### Query Example
 [top](#index)  
 Example calls an array which executes foreach to query the information.
-Foreach can only be executed on objects that inherit from IEnumerable, Ienumerable<T>, IQueryable<T> or any derived interface.
+Foreach can only be executed on objects that inherit from IEnumerable, Ienumerable< T>, IQueryable< T> or any derived interface.
 Classes that inherit from those interfaces are called Queryable Types.
 LINQ natively supports Queriable Types.
 
@@ -1884,11 +1992,11 @@ The following assumes there is a table called customers imported to an object th
 Northwnd db = new Northwnd(@"C:\northwnd.mdf");
 
 // submit query
-IQueryable<Customer> custQuery = from cust in db.Customers
+IQueryable< Customer> custQuery = from cust in db.Customers
 								 where cust.City == "London"
 								 select cust;
 ```
-A LINQ data source is any object that inherits the generic IEnumerable<T> interface or any interface that derives from it.
+A LINQ data source is any object that inherits the generic IEnumerable< T> interface or any interface that derives from it.
 
 ### The Query
 [top](#index)  
@@ -1914,7 +2022,7 @@ int count = Query.Count();
 ```
 To force immediate execution you can always you can call ToList() or ToArray()
 ```C#
-List<int> query1 = //or int[] query1
+List< int> query1 = //or int[] query1
 	(from num in numbers
 	 where (num % 2) == 0
 	 select num).ToList(); // or ToArray()
@@ -1923,7 +2031,7 @@ List<int> query1 = //or int[] query1
 [top](#index)  
 
 ```C#
-IEnumerable<Customer> query = //LINQ query...
+IEnumerable< Customer> query = //LINQ query...
 ```
 Query returns a list of objects called customer.
 
@@ -1937,8 +2045,8 @@ var query = //LINQ query...
 
 ### Documentation
 [top](#index)  
-<a href="https://msdn.microsoft.com/en-us/library/bb397927(v=vs.110).aspx">Microsoft Basic LINQ Query Operations</a>
-<a href="https://msdn.microsoft.com/en-us/library/bb311040(v=vs.110).aspx">Microsoft Join clause documentation</a>
+< a href="https://msdn.microsoft.com/en-us/library/bb397927(v=vs.110).aspx">Microsoft Basic LINQ Query Operations< /a>
+< a href="https://msdn.microsoft.com/en-us/library/bb311040(v=vs.110).aspx">Microsoft Join clause documentation< /a>
 
 ### Obtaining a Data Source
 [top](#index)  
@@ -1973,7 +2081,7 @@ orderby cust.Name ascending
 The ```group``` clause enables you to gorup your results based on a key that you specify.
 example: group by city so all cities are in a group.
 ```C#
-// queryCustomerByCity is an Ienumerable<IGrouping<string, Customer>>
+// queryCustomerByCity is an Ienumerable< IGrouping< string, Customer>>
 var queryCustomerByCity =
 	from cust in customers
 	group cust by cust.City;
@@ -2048,15 +2156,15 @@ You can test for equality of multiple values by using a composite key.
 
 ## Data Transformation with LINQ
 [top](#index)  
-<a href="https://msdn.microsoft.com/en-us/library/bb397914(v=vs.110).aspx">Microsoft Data Transformations with LINQ Documentation</a>
+< a href="https://msdn.microsoft.com/en-us/library/bb397914(v=vs.110).aspx">Microsoft Data Transformations with LINQ Documentation< /a>
 
 Can transform data
-<ul>
-	<li>Merge multiple input sequences into a single output sequence that has a new type.</li>
-	<li>Create output sequences whose elements consist of only one or several properties of each element in the source sequence.</il>
-	<li>Create output sequences who elements conssit of the results of operations perform on the source data.</li>
-	<li>Create output sequence in a different format. For example, you can transform data from SQL rows or test files into XML.</li>
-</ul>
+< ul>
+	< li>Merge multiple input sequences into a single output sequence that has a new type.< /li>
+	< li>Create output sequences whose elements consist of only one or several properties of each element in the source sequence.< /il>
+	< li>Create output sequences who elements conssit of the results of operations perform on the source data.< /li>
+	< li>Create output sequence in a different format. For example, you can transform data from SQL rows or test files into XML.< /li>
+< /ul>
 
 ### Joining Multiple Inputs into One Output Sequence Example
 [top](#index)  
@@ -2069,7 +2177,7 @@ class Student
 	public int ID { get; set; }
 	public string Street { get; set; }
 	public string City { get; set; }
-	public List<int> Scores { get; set; }
+	public List< int> Scores { get; set; }
 }
 
 class Teacher
@@ -2085,30 +2193,30 @@ class DataTransformation
 	static void Main()
 	{
         // Create the first data source.
-        List<Student> students = new List<Student>()
+        List< Student> students = new List< Student>()
         {
             new Student {First="Svetlana",
                 Last="Omelchenko", 
                 ID=111, 
                 Street="123 Main Street",
                 City="Seattle",
-                Scores= new List<int> {97, 92, 81, 60}},
+                Scores= new List< int> {97, 92, 81, 60}},
             new Student {First="Claire",
                 Last="O’Donnell", 
                 ID=112,
                 Street="124 Main Street",
                 City="Redmond",
-                Scores= new List<int> {75, 84, 91, 39}},
+                Scores= new List< int> {75, 84, 91, 39}},
             new Student {First="Sven",
                 Last="Mortensen",
                 ID=113,
                 Street="125 Main Street",
                 City="Lake City",
-                Scores= new List<int> {88, 94, 65, 91}},
+                Scores= new List< int> {88, 94, 65, 91}},
         };
 
 		 // Create the second data source.
-        List<Teacher> teachers = new List<Teacher>()
+        List< Teacher> teachers = new List< Teacher>()
         {                
             new Teacher {First="Ann", Last="Beebe", ID=945, City = "Seattle"},
             new Teacher {First="Alex", Last="Robinson", ID=956, City = "Redmond"},
@@ -2168,26 +2276,26 @@ Then use standard LINQ queries by referencing the ```LinqToSQLDataContext``` obj
 [top](#index)  
 Collections of like objects.
 
-### Dictionary<T,U>
+### Dictionary< T,U>
 [top](#index)  
 ```C#
-Dictionary<string, int> dict = new Dictionary<string,int>();
+Dictionary< string, int> dict = new Dictionary< string,int>();
 dict[key];
 ```
 A Dictionary takes an object as a key and allows you to use those objects as indexers. it has a dynamic size.
 
-### List<T>
+### List< T>
 [top](#index)  
 ```C#
-List<int> newlist = new List<int>();
+List< int> newlist = new List< int>();
 newlist[0];
 ```
 A list holds a set of numbers that can be referenced like an array. It has a dynamic size.
 
-### Queue<T>
+### Queue< T>
 [top](#index)  
 ```C#
-Queue<object> aqueue = new Queue<object>();
+Queue< object> aqueue = new Queue< object>();
 //enqueue object
 aqueue.Enqueue(new object());
 //Look at next in line
@@ -2197,16 +2305,16 @@ aqueue.Dequeue();
 ```
 A queue uses the first in first out principal. You can add items to the back of the line with ```Dequeue()``` , see whats at the front with ```Peak()``` , and remove the first item from the Queue with ```Dequeue()```
 
-### SortedList<T,U>
+### SortedList< T,U>
 [top](#index)  
-A collcetion of Key/Value pairs that are sorted by key based on the associeted IComparer<T> implementation.
+A collcetion of Key/Value pairs that are sorted by key based on the associeted IComparer< T> implementation.
 
 Pretty much a Dictionary but doesn't follow input order. Sorts by key.
 
-### Stack<T>
+### Stack< T>
 [top](#index)  
 ```C#
-Stack<int> newstack = new Stack<int>();
+Stack< int> newstack = new Stack< int>();
 //Push an object to the top of the stack.
 newstack.Push(1);
 //Look at the top of the stack
